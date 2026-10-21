@@ -13,6 +13,8 @@ body { background: #f5f4ef; overflow: hidden; }
 
 button, a { font: inherit; }
 
+button { appearance: none; }
+
 .page-shell { min-height: 100dvh; padding: 0; }
 
 .intro {
@@ -92,6 +94,12 @@ button, a { font: inherit; }
   overflow: hidden;
 }
 
+.menu-orb {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
 .lime-orb { background: #d0ff43; }
 .blue-orb { background: #3d5be1; }
 .yellow-orb { background: #ffe176; }
@@ -153,6 +161,49 @@ button, a { font: inherit; }
 
 .round-button:focus-visible, .brand-mark:focus-visible { outline: 2px solid #3d5be1; outline-offset: 3px; }
 .round-button:active { transform: scale(.97); }
+.menu-orb:active { transform: scale(.98); }
+
+.ornament-scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--paper, #f5f4ef);
+}
+
+.ornament-scene[hidden] { display: none; }
+
+.ornament-grid {
+  --ellipse-size: min(50vw, 78dvh);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, var(--ellipse-size));
+  grid-template-rows: repeat(3, var(--ellipse-size));
+  gap: calc(var(--ellipse-size) * -0.5);
+  transform: translate(-50%, -50%);
+}
+
+.ornament-ellipse {
+  width: var(--ellipse-size);
+  height: var(--ellipse-size);
+  border: 1px solid rgb(21 21 21 / 24%);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ornament-ellipse:focus-visible,
+.menu-orb:focus-visible {
+  outline: 2px solid #3d5be1;
+  outline-offset: 3px;
+}
+
+.ornament-ellipse:active { background: rgb(21 21 21 / 4%); }
+
+@media (max-width: 680px) {
+  .ornament-grid { --ellipse-size: 72vw; }
+}
 
 @media (max-width: 680px) {
   body { overflow: auto; }

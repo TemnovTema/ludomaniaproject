@@ -60,37 +60,21 @@ button, a { font: inherit; }
   position: relative;
   display: grid;
   width: 230px;
-  height: 90px;
+  aspect-ratio: 338 / 132;
   place-items: center;
-  border-radius: 999px;
   background: transparent;
-  isolation: isolate;
   text-decoration: none;
 }
 
-.brand-fill {
+.brand-shape {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  background: #151515;
+  width: 100%;
+  height: 100%;
+  fill: #151515;
 }
 
-.brand-mark::before, .brand-mark::after {
-  position: absolute;
-  left: 50%;
-  width: 72px;
-  height: 60px;
-  border-radius: 50%;
-  background: var(--paper);
-  content: "";
-  transform: translateX(-50%);
-}
-
-.brand-mark::before { top: -30px; }
-.brand-mark::after { bottom: -30px; }
-.brand-mark::before, .brand-mark::after { z-index: 1; }
-.brand-mark span:last-child { position: relative; z-index: 2; display: inline-block; }
+.brand-mark span { position: relative; z-index: 1; display: inline-block; }
 
 .orb-grid {
   display: grid;
@@ -175,16 +159,13 @@ button, a { font: inherit; }
   .intro { height: auto; min-height: 100dvh; }
   .navigation { padding: 12px; }
   .round-button { width: 58px; font-size: 12px; }
-  .brand-mark { width: 168px; height: 66px; font-size: 12px; }
-  .brand-mark::before, .brand-mark::after { width: 66px; height: 66px; }
-  .brand-mark::before { top: -33px; }
-  .brand-mark::after { bottom: -33px; }
+  .brand-mark { width: 168px; font-size: 12px; }
   .orb-grid { --orb: min(36vw, 168px); gap: 20px; margin-top: 72px; }
 }
 
 @media (max-width: 420px) {
   .navigation { grid-template-columns: 58px 1fr 58px; }
-  .brand-mark { justify-self: center; width: 145px; height: 58px; font-size: 11px; }
+  .brand-mark { justify-self: center; width: 145px; font-size: 11px; }
   .orb-grid { --orb: min(39vw, 144px); gap: 14px; margin-top: 62px; }
   .statement { margin-bottom: 32px; }
 }

@@ -155,9 +155,20 @@ function activateStorySequence() {
         <div class="story-disc story-disc--first">
           <div class="story-copy story-copy--one"><p>История</p><h1>Блок текста 1</h1></div>
           <div class="story-copy story-copy--two"><p>История</p><h1>Блок текста 2</h1></div>
+          <div class="story-alice-copy">
+            <p>Алиса, 25 лет</p>
+            <p>Узнала, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
+          </div>
         </div>
         <div class="story-disc story-disc--second">
-          <img src="/story-couple.png" alt="Пара стоит рядом" />
+          <div class="story-disc-flip">
+            <div class="story-disc-face story-disc-face--front">
+              <img src="/story-couple.png" alt="Пара стоит рядом" />
+            </div>
+            <div class="story-disc-face story-disc-face--back">
+              <img src="/story-alice.png" alt="Портрет Алисы" />
+            </div>
+          </div>
         </div>
       </div>
     </div>

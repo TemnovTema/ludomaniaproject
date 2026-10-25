@@ -275,7 +275,7 @@ button { appearance: none; }
 
 .story-sequence {
   position: relative;
-  height: 400dvh;
+  height: 560dvh;
   background: #f5f4ef;
 }
 
@@ -299,7 +299,7 @@ button { appearance: none; }
   inset: 0;
   animation: story-pan linear both;
   animation-timeline: scroll(root);
-  animation-range: 45% 100%;
+  animation-range: 36% 68%;
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
@@ -319,6 +319,9 @@ button { appearance: none; }
 .story-disc--first {
   left: 50%;
   transform: translate3d(-50%, 0, 0);
+  animation: story-shrink-first linear both;
+  animation-timeline: scroll(root);
+  animation-range: 73% 100%;
 }
 
 .story-disc--second {
@@ -327,10 +330,29 @@ button { appearance: none; }
   transform: translate3d(-50%, 0, 0);
   animation: story-reveal-second linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 44%;
+  animation-range: 0% 35%;
 }
 
-.story-disc--second img {
+.story-disc-flip {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: story-flip-second linear both;
+  animation-timeline: scroll(root);
+  animation-range: 73% 100%;
+  will-change: transform;
+}
+
+.story-disc-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.story-disc-face--back { transform: rotateY(180deg); }
+
+.story-disc-face img {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -340,6 +362,11 @@ button { appearance: none; }
   object-fit: contain;
   object-position: center bottom;
   transform: translateX(-50%);
+}
+
+.story-disc-face--back img {
+  width: 87%;
+  height: 92%;
 }
 
 .story-copy {
@@ -371,15 +398,39 @@ button { appearance: none; }
   opacity: 1;
   animation: story-copy-one linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 42%;
+  animation-range: 0% 34%;
 }
 
 .story-copy--two {
   opacity: 0;
-  animation: story-copy-two linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 42%;
+  animation:
+    story-copy-two linear both,
+    story-fade-story-copy linear both;
+  animation-timeline: scroll(root), scroll(root);
+  animation-range: 0% 34%, 73% 100%;
 }
+
+.story-alice-copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(76%, 25rem);
+  opacity: 0;
+  text-align: center;
+  transform: translate(-50%, -50%) scale(1.6);
+  animation: story-reveal-alice-copy linear both;
+  animation-timeline: scroll(root);
+  animation-range: 73% 100%;
+  will-change: opacity;
+}
+
+.story-alice-copy p {
+  margin: 0;
+  font-size: clamp(13px, 1.2vw, 17px);
+  line-height: 1.05;
+}
+
+.story-alice-copy p + p { margin-top: 10px; }
 
 @keyframes story-copy-one {
   0%, 38% { opacity: 1; }
@@ -399,6 +450,26 @@ button { appearance: none; }
 @keyframes story-pan {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-100dvh, 0, 0); }
+}
+
+@keyframes story-shrink-first {
+  from { transform: translate3d(-50%, 0, 0) scale(1); }
+  to { transform: translate3d(calc(-50% + 35dvh), 0, 0) scale(.4); }
+}
+
+@keyframes story-flip-second {
+  0%, 12% { transform: rotateY(0deg); }
+  88%, 100% { transform: rotateY(180deg); }
+}
+
+@keyframes story-reveal-alice-copy {
+  0%, 64% { opacity: 0; }
+  82%, 100% { opacity: 1; }
+}
+
+@keyframes story-fade-story-copy {
+  0%, 18% { opacity: 1; }
+  46%, 100% { opacity: 0; }
 }
 
 .menu-orb:focus-visible {
@@ -536,7 +607,7 @@ button { appearance: none; }
   .content-intro { margin-top: 28px; }
   .content-image { height: 48dvh; }
   .story-orb-copy { padding: 18%; }
-  .story-disc--second img { width: 88%; }
+  .story-disc-face img { width: 88%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

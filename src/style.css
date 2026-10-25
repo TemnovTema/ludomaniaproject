@@ -383,7 +383,7 @@ button { appearance: none; }
   place-content: center;
   padding: 16%;
   text-align: center;
-  will-change: opacity;
+  will-change: opacity, transform;
 }
 
 .story-copy p {
@@ -401,20 +401,25 @@ button { appearance: none; }
   line-height: .94;
 }
 
+.story-body {
+  max-width: 35ch;
+  margin: 22px auto 0;
+  font-size: clamp(15px, 1.35vw, 20px);
+  line-height: 1.2;
+}
+
 .story-copy--one {
   opacity: 1;
   animation: story-copy-one linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 34%;
+  animation-range: 0% 100%;
 }
 
 .story-copy--two {
   opacity: 0;
-  animation:
-    story-copy-two linear both,
-    story-fade-story-copy linear both;
-  animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 34%, 73% 100%;
+  animation: story-copy-two linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
 }
 
 .story-alice-copy {
@@ -440,13 +445,14 @@ button { appearance: none; }
 .story-alice-copy p + p { margin-top: 10px; }
 
 @keyframes story-copy-one {
-  0%, 38% { opacity: 1; }
-  58%, 100% { opacity: 0; }
+  0%, 12% { opacity: 1; transform: translateY(0); }
+  18%, 100% { opacity: 0; transform: translateY(-18px); }
 }
 
 @keyframes story-copy-two {
-  0%, 38% { opacity: 0; }
-  58%, 100% { opacity: 1; }
+  0%, 22% { opacity: 0; transform: translateY(18px); }
+  28%, 70% { opacity: 1; transform: translateY(0); }
+  78%, 100% { opacity: 0; transform: translateY(-18px); }
 }
 
 @keyframes story-reveal-second {
@@ -479,10 +485,6 @@ button { appearance: none; }
   82%, 100% { opacity: 1; }
 }
 
-@keyframes story-fade-story-copy {
-  0%, 18% { opacity: 1; }
-  46%, 100% { opacity: 0; }
-}
 
 .menu-orb:focus-visible {
   outline: 2px solid #3d5be1;

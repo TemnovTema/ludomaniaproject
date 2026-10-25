@@ -163,8 +163,16 @@ function activateStorySequence() {
       <button class="story-back story-back--sequence" type="button">назад</button>
       <div class="story-track">
         <div class="story-disc story-disc--first">
-          <div class="story-copy story-copy--one"><p>История</p><h1>Блок текста 1</h1></div>
-          <div class="story-copy story-copy--two"><p>История</p><h1>Блок текста 2</h1></div>
+          <div class="story-copy story-copy--one">
+            <p>История</p>
+            <h1>Блок текста 1</h1>
+            <p class="story-body">Сначала я думала, что это просто сложный период.<br />Но вопросы о деньгах и исчезающие вечера<br />стали повторяться слишком часто.<br />Тогда я начала искать объяснение.</p>
+          </div>
+          <div class="story-copy story-copy--two">
+            <p>История</p>
+            <h1>Блок текста 2</h1>
+            <p class="story-body">Я узнала, что зависимость касается не одного человека.<br />Она меняет разговоры, планы и чувство безопасности.<br />И всё же можно не оставаться с этим в одиночку.<br />Первый шаг начинается с признания происходящего.</p>
+          </div>
           <div class="story-alice-copy">
             <p>Алиса, 25 лет</p>
             <p>Узнала, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>

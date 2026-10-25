@@ -275,13 +275,17 @@ button { appearance: none; }
 
 .story-sequence {
   --small-scale: .4;
+  --ending-scale: .24;
   --alice-copy-scale: 1.6;
   --first-shift-alice: 35dvh;
   --first-shift-igor: 70dvh;
   --second-shift-alice: 0px;
   --second-shift-igor: -35dvh;
+  --first-shift-ending: 70dvh;
+  --second-shift-ending: -12dvh;
+  --ending-y: 38dvh;
   position: relative;
-  height: 760dvh;
+  height: 940dvh;
   background: #f5f4ef;
 }
 
@@ -298,6 +302,22 @@ button { appearance: none; }
   z-index: 3;
   opacity: 1;
   pointer-events: auto;
+}
+
+.story-ending-hint {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(24px, 7vh, 72px);
+  left: 50%;
+  margin: 0;
+  opacity: 0;
+  color: #151515;
+  font-size: clamp(11px, .9vw, 14px);
+  transform: translateX(-50%);
+  animation: story-reveal-ending-hint linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+  will-change: opacity;
 }
 
 .story-track {
@@ -335,6 +355,7 @@ button { appearance: none; }
   left: calc(50% + var(--disc-size));
   opacity: 0;
   transform: translate3d(-50%, 0, 0);
+  transform-origin: center top;
   animation:
     story-reveal-second linear both,
     story-position-second linear both;
@@ -471,6 +492,28 @@ button { appearance: none; }
 
 .story-alice-copy p + p { margin-top: 10px; }
 
+.story-disc-image {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: story-reveal-ending-alice linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+  will-change: opacity;
+}
+
+.story-disc-image img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 87%;
+  height: 92%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateX(-50%);
+}
+
 .story-igor-copy {
   position: absolute;
   top: 50%;
@@ -517,19 +560,21 @@ button { appearance: none; }
 @keyframes story-position-first {
   0%, 52% { transform: translate3d(-50%, 0, 0) scale(1); }
   68% { transform: translate3d(calc(-50% + var(--first-shift-alice)), 0, 0) scale(var(--small-scale)); }
-  100% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
+  82% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
+  100% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-position-second {
   0%, 52% { transform: translate3d(-50%, 0, 0); }
   68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
-  100% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
+  82% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
+  100% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-flip-second {
   0%, 52% { transform: rotateY(0deg); }
   68% { transform: rotateY(180deg); }
-  100% { transform: rotateY(360deg); }
+  82%, 100% { transform: rotateY(360deg); }
 }
 
 @keyframes story-reveal-alice-copy {
@@ -540,12 +585,23 @@ button { appearance: none; }
 
 @keyframes story-reveal-igor-copy {
   0%, 84% { opacity: 0; }
-  94%, 100% { opacity: 1; }
+  86%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
 }
 
 @keyframes story-show-igor {
   0%, 78% { opacity: 0; }
-  86%, 100% { opacity: 1; }
+  84%, 100% { opacity: 1; }
+}
+
+@keyframes story-reveal-ending-alice {
+  0%, 90% { opacity: 0; }
+  96%, 100% { opacity: 1; }
+}
+
+@keyframes story-reveal-ending-hint {
+  0%, 94% { opacity: 0; }
+  98%, 100% { opacity: 1; }
 }
 
 @keyframes story-hide-couple {

@@ -146,15 +146,26 @@ function activateStorySequence() {
   const firstShiftIgor = window.innerWidth / 2 + viewportHeight - availableWidth / 2;
   const secondShiftAlice = window.innerWidth / 2 - viewportHeight / 2;
   const secondShiftIgor = viewportHeight / 2 - window.innerWidth / 2;
+  const endingScale = .24;
+  const compactSize = viewportHeight * endingScale;
+  const compactGap = Math.max(4, Math.min(window.innerWidth * .005, 8));
+  const endingY = (viewportHeight - compactSize) / 2;
+  const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
+  const secondShiftEnding = -compactSize / 2 - compactGap / 2;
   storySequence.style.setProperty('--small-scale', smallScale);
+  storySequence.style.setProperty('--ending-scale', endingScale);
   storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
   storySequence.style.setProperty('--first-shift-alice', `${firstShiftAlice}px`);
   storySequence.style.setProperty('--first-shift-igor', `${firstShiftIgor}px`);
   storySequence.style.setProperty('--second-shift-alice', `${secondShiftAlice}px`);
   storySequence.style.setProperty('--second-shift-igor', `${secondShiftIgor}px`);
+  storySequence.style.setProperty('--first-shift-ending', `${firstShiftEnding}px`);
+  storySequence.style.setProperty('--second-shift-ending', `${secondShiftEnding}px`);
+  storySequence.style.setProperty('--ending-y', `${endingY}px`);
   storySequence.innerHTML = `
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>
+      <p class="story-ending-hint">Кликните на персонажей, по очереди</p>
       <div class="story-track">
         <div class="story-disc story-disc--first">
           <div class="story-copy story-copy--one">
@@ -174,6 +185,9 @@ function activateStorySequence() {
           <div class="story-igor-copy">
             <p>Игорь, 25 лет</p>
             <p>Узнал, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
+          </div>
+          <div class="story-disc-image story-disc-image--alice">
+            <img src="/story-alice.png" alt="Портрет Алисы" />
           </div>
         </div>
         <div class="story-disc story-disc--second">

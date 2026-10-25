@@ -149,7 +149,7 @@ function activateStorySequence() {
   storySequence.className = 'story-sequence';
   storySequence.setAttribute('aria-label', 'История');
   const viewportHeight = window.innerHeight;
-  const gap = Math.max(18, Math.min(window.innerWidth * 0.025, 34));
+  const gap = Math.max(6, Math.min(window.innerWidth * 0.006, 10));
   const availableWidth = Math.max(viewportHeight * 0.34, window.innerWidth - viewportHeight - gap);
   const smallScale = Math.min(0.82, availableWidth / viewportHeight);
   const firstShift = availableWidth / 2 - window.innerWidth / 2 + viewportHeight;

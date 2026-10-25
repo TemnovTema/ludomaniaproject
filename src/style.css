@@ -586,7 +586,7 @@ button { appearance: none; }
   0%, 52% { transform: translate3d(-50%, 0, 0) scale(1); }
   68% { transform: translate3d(calc(-50% + var(--first-shift-alice)), 0, 0) scale(var(--small-scale)); }
   82% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
-  90% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  90%, 97% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
   100% { transform: translate3d(calc(-50% + var(--first-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
@@ -594,7 +594,7 @@ button { appearance: none; }
   0%, 52% { transform: translate3d(-50%, 0, 0); }
   68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
   82% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
-  90% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  90%, 97% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
   100% { transform: translate3d(calc(-50% + var(--second-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
@@ -612,8 +612,8 @@ button { appearance: none; }
 
 @keyframes story-reveal-igor-copy {
   0%, 84% { opacity: 0; }
-  86%, 90% { opacity: 1; }
-  96%, 100% { opacity: 0; }
+  86%, 92.8% { opacity: 1; }
+  93%, 100% { opacity: 0; }
 }
 
 @keyframes story-show-igor {
@@ -622,8 +622,8 @@ button { appearance: none; }
 }
 
 @keyframes story-reveal-ending-alice {
-  0%, 90% { opacity: 0; }
-  96%, 100% { opacity: 1; }
+  0%, 93% { opacity: 0; }
+  93.2%, 100% { opacity: 1; }
 }
 
 @keyframes story-reveal-ending-hint {
@@ -632,8 +632,8 @@ button { appearance: none; }
 }
 
 @keyframes story-problem-arrive {
-  0%, 86% { opacity: 0; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(0); }
-  90% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(var(--ending-scale)); }
+  0%, 96% { opacity: 0; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(0); }
+  98% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(var(--ending-scale)); }
   100% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 

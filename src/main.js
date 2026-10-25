@@ -152,8 +152,8 @@ function activateStorySequence() {
   const endingY = (viewportHeight - compactSize) / 2;
   const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
   const secondShiftEnding = -compactSize / 2 - compactGap / 2;
-  const firstShiftSeparated = viewportHeight - window.innerWidth * .25;
-  const secondShiftSeparated = window.innerWidth * .25;
+  const firstShiftSeparated = viewportHeight + window.innerWidth * .25;
+  const secondShiftSeparated = -window.innerWidth * .25;
   storySequence.style.setProperty('--small-scale', smallScale);
   storySequence.style.setProperty('--ending-scale', endingScale);
   storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);

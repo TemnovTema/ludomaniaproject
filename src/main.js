@@ -148,6 +148,16 @@ function activateStorySequence() {
   storySequence = document.createElement('section');
   storySequence.className = 'story-sequence';
   storySequence.setAttribute('aria-label', 'История');
+  const viewportHeight = window.innerHeight;
+  const gap = Math.max(18, Math.min(window.innerWidth * 0.025, 34));
+  const availableWidth = Math.max(viewportHeight * 0.34, window.innerWidth - viewportHeight - gap);
+  const smallScale = Math.min(0.82, availableWidth / viewportHeight);
+  const firstShift = availableWidth / 2 - window.innerWidth / 2 + viewportHeight;
+  const secondShift = window.innerWidth / 2 - viewportHeight / 2;
+  storySequence.style.setProperty('--small-scale', smallScale);
+  storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
+  storySequence.style.setProperty('--first-shift-x', `${firstShift}px`);
+  storySequence.style.setProperty('--second-shift-x', `${secondShift}px`);
   storySequence.innerHTML = `
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>

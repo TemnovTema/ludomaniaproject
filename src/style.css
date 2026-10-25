@@ -283,9 +283,11 @@ button { appearance: none; }
   --second-shift-igor: -35dvh;
   --first-shift-ending: 70dvh;
   --second-shift-ending: -12dvh;
+  --first-shift-separated: 45dvh;
+  --second-shift-separated: 25dvh;
   --ending-y: 38dvh;
   position: relative;
-  height: 940dvh;
+  height: 1040dvh;
   background: #f5f4ef;
 }
 
@@ -361,6 +363,29 @@ button { appearance: none; }
     story-position-second linear both;
   animation-timeline: scroll(root), scroll(root);
   animation-range: 0% 24%, 0% 100%;
+}
+
+.story-disc--problem {
+  top: 0;
+  left: 50%;
+  opacity: 0;
+  transform: translate3d(-50%, 0, 0) scale(0);
+  transform-origin: center top;
+  animation: story-problem-arrive linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+  will-change: opacity, transform;
+}
+
+.story-problem-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #151515;
+  transform: translate(-50%, -50%);
 }
 
 .story-disc-flip {
@@ -561,14 +586,16 @@ button { appearance: none; }
   0%, 52% { transform: translate3d(-50%, 0, 0) scale(1); }
   68% { transform: translate3d(calc(-50% + var(--first-shift-alice)), 0, 0) scale(var(--small-scale)); }
   82% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
-  100% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  90% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  100% { transform: translate3d(calc(-50% + var(--first-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-position-second {
   0%, 52% { transform: translate3d(-50%, 0, 0); }
   68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
   82% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
-  100% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  90% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  100% { transform: translate3d(calc(-50% + var(--second-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-flip-second {
@@ -602,6 +629,12 @@ button { appearance: none; }
 @keyframes story-reveal-ending-hint {
   0%, 94% { opacity: 0; }
   98%, 100% { opacity: 1; }
+}
+
+@keyframes story-problem-arrive {
+  0%, 86% { opacity: 0; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(0); }
+  90% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(var(--ending-scale)); }
+  100% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-hide-couple {

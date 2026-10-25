@@ -276,10 +276,12 @@ button { appearance: none; }
 .story-sequence {
   --small-scale: .4;
   --alice-copy-scale: 1.6;
-  --first-shift-x: 35dvh;
-  --second-shift-x: 0px;
+  --first-shift-alice: 35dvh;
+  --first-shift-igor: 70dvh;
+  --second-shift-alice: 0px;
+  --second-shift-igor: -35dvh;
   position: relative;
-  height: 560dvh;
+  height: 760dvh;
   background: #f5f4ef;
 }
 
@@ -303,7 +305,7 @@ button { appearance: none; }
   inset: 0;
   animation: story-pan linear both;
   animation-timeline: scroll(root);
-  animation-range: 36% 68%;
+  animation-range: 24% 46%;
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
@@ -324,9 +326,9 @@ button { appearance: none; }
   left: 50%;
   transform: translate3d(-50%, 0, 0);
   transform-origin: center top;
-  animation: story-shrink-first linear both;
+  animation: story-position-first linear both;
   animation-timeline: scroll(root);
-  animation-range: 73% 100%;
+  animation-range: 0% 100%;
 }
 
 .story-disc--second {
@@ -335,9 +337,9 @@ button { appearance: none; }
   transform: translate3d(-50%, 0, 0);
   animation:
     story-reveal-second linear both,
-    story-shift-second linear both;
+    story-position-second linear both;
   animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 35%, 73% 100%;
+  animation-range: 0% 24%, 0% 100%;
 }
 
 .story-disc-flip {
@@ -346,7 +348,7 @@ button { appearance: none; }
   transform-style: preserve-3d;
   animation: story-flip-second linear both;
   animation-timeline: scroll(root);
-  animation-range: 73% 100%;
+  animation-range: 0% 100%;
   will-change: transform;
 }
 
@@ -358,6 +360,26 @@ button { appearance: none; }
 }
 
 .story-disc-face--back { transform: rotateY(180deg); }
+
+.story-disc-face--front {
+  animation: story-hide-couple linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.story-disc-face--back {
+  animation: story-show-alice-face linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
+
+.story-disc-face--igor {
+  opacity: 0;
+  transform: rotateY(360deg);
+  animation: story-show-igor linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+}
 
 .story-disc-face img {
   position: absolute;
@@ -374,6 +396,11 @@ button { appearance: none; }
 .story-disc-face--back img {
   width: 87%;
   height: 92%;
+}
+
+.story-disc-face--igor img {
+  width: 88%;
+  height: 94%;
 }
 
 .story-copy {
@@ -432,7 +459,7 @@ button { appearance: none; }
   transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
   animation: story-reveal-alice-copy linear both;
   animation-timeline: scroll(root);
-  animation-range: 73% 100%;
+  animation-range: 0% 100%;
   will-change: opacity;
 }
 
@@ -444,6 +471,28 @@ button { appearance: none; }
 
 .story-alice-copy p + p { margin-top: 10px; }
 
+.story-igor-copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(76%, 25rem);
+  opacity: 0;
+  text-align: center;
+  transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
+  animation: story-reveal-igor-copy linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 100%;
+  will-change: opacity;
+}
+
+.story-igor-copy p {
+  margin: 0;
+  font-size: clamp(13px, 1.2vw, 17px);
+  line-height: 1.05;
+}
+
+.story-igor-copy p + p { margin-top: 10px; }
+
 @keyframes story-copy-one {
   0%, 12% { opacity: 1; transform: translateY(0); }
   18%, 100% { opacity: 0; transform: translateY(-18px); }
@@ -451,8 +500,8 @@ button { appearance: none; }
 
 @keyframes story-copy-two {
   0%, 22% { opacity: 0; transform: translateY(18px); }
-  28%, 70% { opacity: 1; transform: translateY(0); }
-  78%, 100% { opacity: 0; transform: translateY(-18px); }
+  28%, 52% { opacity: 1; transform: translateY(0); }
+  60%, 100% { opacity: 0; transform: translateY(-18px); }
 }
 
 @keyframes story-reveal-second {
@@ -465,24 +514,49 @@ button { appearance: none; }
   to { transform: translate3d(-100dvh, 0, 0); }
 }
 
-@keyframes story-shrink-first {
-  from { transform: translate3d(-50%, 0, 0) scale(1); }
-  to { transform: translate3d(calc(-50% + var(--first-shift-x)), 0, 0) scale(var(--small-scale)); }
+@keyframes story-position-first {
+  0%, 52% { transform: translate3d(-50%, 0, 0) scale(1); }
+  68% { transform: translate3d(calc(-50% + var(--first-shift-alice)), 0, 0) scale(var(--small-scale)); }
+  100% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
 }
 
-@keyframes story-shift-second {
-  from { transform: translate3d(-50%, 0, 0); }
-  to { transform: translate3d(calc(-50% + var(--second-shift-x)), 0, 0); }
+@keyframes story-position-second {
+  0%, 52% { transform: translate3d(-50%, 0, 0); }
+  68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
+  100% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
 }
 
 @keyframes story-flip-second {
-  0%, 12% { transform: rotateY(0deg); }
-  88%, 100% { transform: rotateY(180deg); }
+  0%, 52% { transform: rotateY(0deg); }
+  68% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 @keyframes story-reveal-alice-copy {
-  0%, 64% { opacity: 0; }
-  82%, 100% { opacity: 1; }
+  0%, 54% { opacity: 0; }
+  62%, 72% { opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+
+@keyframes story-reveal-igor-copy {
+  0%, 84% { opacity: 0; }
+  94%, 100% { opacity: 1; }
+}
+
+@keyframes story-show-igor {
+  0%, 78% { opacity: 0; }
+  86%, 100% { opacity: 1; }
+}
+
+@keyframes story-hide-couple {
+  0%, 52% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+@keyframes story-show-alice-face {
+  0%, 54% { opacity: 0; }
+  62%, 72% { opacity: 1; }
+  80%, 100% { opacity: 0; }
 }
 
 

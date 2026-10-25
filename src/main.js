@@ -142,12 +142,16 @@ function activateStorySequence() {
   const gap = Math.max(6, Math.min(window.innerWidth * 0.006, 10));
   const availableWidth = Math.max(viewportHeight * 0.34, window.innerWidth - viewportHeight - gap);
   const smallScale = Math.min(0.82, availableWidth / viewportHeight);
-  const firstShift = availableWidth / 2 - window.innerWidth / 2 + viewportHeight;
-  const secondShift = window.innerWidth / 2 - viewportHeight / 2;
+  const firstShiftAlice = availableWidth / 2 - window.innerWidth / 2 + viewportHeight;
+  const firstShiftIgor = window.innerWidth / 2 + viewportHeight - availableWidth / 2;
+  const secondShiftAlice = window.innerWidth / 2 - viewportHeight / 2;
+  const secondShiftIgor = viewportHeight / 2 - window.innerWidth / 2;
   storySequence.style.setProperty('--small-scale', smallScale);
   storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
-  storySequence.style.setProperty('--first-shift-x', `${firstShift}px`);
-  storySequence.style.setProperty('--second-shift-x', `${secondShift}px`);
+  storySequence.style.setProperty('--first-shift-alice', `${firstShiftAlice}px`);
+  storySequence.style.setProperty('--first-shift-igor', `${firstShiftIgor}px`);
+  storySequence.style.setProperty('--second-shift-alice', `${secondShiftAlice}px`);
+  storySequence.style.setProperty('--second-shift-igor', `${secondShiftIgor}px`);
   storySequence.innerHTML = `
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>
@@ -167,6 +171,10 @@ function activateStorySequence() {
             <p>Алиса, 25 лет</p>
             <p>Узнала, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
           </div>
+          <div class="story-igor-copy">
+            <p>Игорь, 25 лет</p>
+            <p>Узнал, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
+          </div>
         </div>
         <div class="story-disc story-disc--second">
           <div class="story-disc-flip">
@@ -175,6 +183,9 @@ function activateStorySequence() {
             </div>
             <div class="story-disc-face story-disc-face--back">
               <img src="/story-alice.png" alt="Портрет Алисы" />
+            </div>
+            <div class="story-disc-face story-disc-face--igor">
+              <img src="/story-igor.png" alt="Портрет Игоря" />
             </div>
           </div>
         </div>

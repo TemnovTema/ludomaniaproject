@@ -5,6 +5,7 @@ const contentScreen = document.querySelector('[data-screen="content"]');
 const contentLayout = document.querySelector('#content-layout');
 let storyOrb = null;
 let storyBack = null;
+let storySequence = null;
 
 const sections = {
   story: {
@@ -106,7 +107,7 @@ function startStoryTransition() {
   storyOrb.insertAdjacentHTML('beforeend', `
     <div class="story-orb-copy">
       <p>История</p>
-      <h1>Когда игра становится частью жизни семьи</h1>
+      <h1>Блок текста 1</h1>
     </div>
   `);
 
@@ -126,10 +127,43 @@ function startStoryTransition() {
       storyOrb?.classList.add('is-ready');
       storyBack?.classList.add('is-ready');
       storyBack?.focus({ preventScroll: true });
+      window.setTimeout(activateStorySequence, reduceMotion ? 0 : 240);
     }, reduceMotion ? 0 : 780);
   };
 
   window.setTimeout(expand, reduceMotion ? 0 : 380);
+}
+
+function activateStorySequence() {
+  if (!storyOrb) return;
+
+  storyOrb.remove();
+  storyBack?.remove();
+  storyOrb = null;
+  storyBack = null;
+  homeScreen.hidden = true;
+  document.body.classList.remove('is-story-transitioning');
+  document.body.classList.add('is-story-reading');
+
+  storySequence = document.createElement('section');
+  storySequence.className = 'story-sequence';
+  storySequence.setAttribute('aria-label', 'История');
+  storySequence.innerHTML = `
+    <div class="story-stage">
+      <button class="story-back story-back--sequence" type="button">назад</button>
+      <div class="story-disc story-disc--first">
+        <div class="story-copy story-copy--one"><p>История</p><h1>Блок текста 1</h1></div>
+        <div class="story-copy story-copy--two"><p>История</p><h1>Блок текста 2</h1></div>
+      </div>
+      <div class="story-disc story-disc--second">
+        <img src="/story-couple.png" alt="Пара стоит рядом" />
+      </div>
+    </div>
+  `;
+
+  storySequence.querySelector('.story-back').addEventListener('click', goHome);
+  document.querySelector('.page-shell').append(storySequence);
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function goHome() {
@@ -140,6 +174,13 @@ function goHome() {
     storyBack = null;
     document.body.classList.remove('is-story-transitioning');
     homeScreen.classList.remove('is-story-transition');
+  }
+
+  if (storySequence) {
+    storySequence.remove();
+    storySequence = null;
+    document.body.classList.remove('is-story-reading');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   showScreen('home');

@@ -1,6 +1,10 @@
 const screens = [...document.querySelectorAll('[data-screen]')];
+const homeScreen = document.querySelector('[data-screen="home"]');
+const storyTrigger = document.querySelector('[data-section="story"]');
 const contentScreen = document.querySelector('[data-screen="content"]');
 const contentLayout = document.querySelector('#content-layout');
+let storyOrb = null;
+let storyBack = null;
 
 const sections = {
   story: {
@@ -78,13 +82,79 @@ function openSection(name) {
   contentScreen.focus({ preventScroll: true });
 }
 
+function startStoryTransition() {
+  if (storyOrb) return;
+
+  const bounds = storyTrigger.getBoundingClientRect();
+  const finalDiameter = window.innerHeight;
+  const shiftX = window.innerWidth / 2 - (bounds.left + bounds.width / 2);
+  const shiftY = window.innerHeight / 2 - (bounds.top + bounds.height / 2);
+  const scale = finalDiameter / bounds.width;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  storyOrb = storyTrigger.cloneNode(true);
+  storyOrb.classList.add('story-orb');
+  storyOrb.removeAttribute('data-section');
+  storyOrb.setAttribute('aria-hidden', 'true');
+  storyOrb.style.setProperty('--story-shift-x', `${shiftX}px`);
+  storyOrb.style.setProperty('--story-shift-y', `${shiftY}px`);
+  storyOrb.style.setProperty('--story-scale', scale);
+  storyOrb.style.left = `${bounds.left}px`;
+  storyOrb.style.top = `${bounds.top}px`;
+  storyOrb.style.width = `${bounds.width}px`;
+  storyOrb.style.height = `${bounds.height}px`;
+  storyOrb.insertAdjacentHTML('beforeend', `
+    <div class="story-orb-copy">
+      <p>История</p>
+      <h1>Когда игра становится частью жизни семьи</h1>
+    </div>
+  `);
+
+  storyBack = document.createElement('button');
+  storyBack.className = 'story-back';
+  storyBack.type = 'button';
+  storyBack.textContent = 'назад';
+  storyBack.addEventListener('click', goHome);
+
+  document.body.append(storyOrb, storyBack);
+  document.body.classList.add('is-story-transitioning');
+  homeScreen.classList.add('is-story-transition');
+
+  const expand = () => {
+    storyOrb.classList.add('is-expanded');
+    window.setTimeout(() => {
+      storyOrb?.classList.add('is-ready');
+      storyBack?.classList.add('is-ready');
+      storyBack?.focus({ preventScroll: true });
+    }, reduceMotion ? 0 : 780);
+  };
+
+  window.setTimeout(expand, reduceMotion ? 0 : 380);
+}
+
 function goHome() {
+  if (storyOrb) {
+    storyOrb.remove();
+    storyBack?.remove();
+    storyOrb = null;
+    storyBack = null;
+    document.body.classList.remove('is-story-transitioning');
+    homeScreen.classList.remove('is-story-transition');
+  }
+
   showScreen('home');
-  document.querySelector('[data-section="story"]')?.focus({ preventScroll: true });
+  storyTrigger?.focus({ preventScroll: true });
 }
 
 document.querySelectorAll('[data-section]').forEach((button) => {
-  button.addEventListener('click', () => openSection(button.dataset.section));
+  button.addEventListener('click', () => {
+    if (button.dataset.section === 'story') {
+      startStoryTransition();
+      return;
+    }
+
+    openSection(button.dataset.section);
+  });
 });
 document.querySelectorAll('[data-home]').forEach((control) => {
   control.addEventListener('click', (event) => {
@@ -94,6 +164,10 @@ document.querySelectorAll('[data-home]').forEach((control) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && !document.querySelector('[data-screen="home"]').hidden) return;
+  if (event.key === 'Escape' && storyOrb) {
+    goHome();
+    return;
+  }
+  if (event.key === 'Escape' && !homeScreen.hidden) return;
   if (event.key === 'Escape') goHome();
 });

@@ -1,9 +1,16 @@
 const screens = [...document.querySelectorAll('[data-screen]')];
-const sceneTrigger = document.querySelector('[data-scene-trigger]');
 const contentScreen = document.querySelector('[data-screen="content"]');
 const contentLayout = document.querySelector('#content-layout');
 
 const sections = {
+  story: {
+    eyebrow: 'История',
+    title: 'Когда игра становится частью жизни семьи',
+    imagePosition: '50% 0%',
+    intro: 'Здесь позже появится история, собранная из эпизодов и голосов близких. Пока это спокойная точка входа без декоративного орнамента.',
+    items: ['Что замечают близкие в самом начале.', 'Как меняются разговоры, деньги и доверие.', 'Почему обратиться за поддержкой можно до критической точки.'],
+    note: 'Эту страницу продолжим после того, как определим формат истории.'
+  },
   signs: {
     eyebrow: 'Как понять, что происходит',
     title: 'Признаки, которые нельзя оставлять без внимания',
@@ -73,10 +80,9 @@ function openSection(name) {
 
 function goHome() {
   showScreen('home');
-  sceneTrigger.focus({ preventScroll: true });
+  document.querySelector('[data-section="story"]')?.focus({ preventScroll: true });
 }
 
-sceneTrigger.addEventListener('click', () => showScreen('ornament'));
 document.querySelectorAll('[data-section]').forEach((button) => {
   button.addEventListener('click', () => openSection(button.dataset.section));
 });

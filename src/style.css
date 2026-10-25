@@ -165,68 +165,10 @@ button { appearance: none; }
 .round-button:active { transform: scale(.97); }
 .menu-orb:active { transform: scale(.98); }
 
-.ornament-scene {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  background: var(--paper, #f5f4ef);
-}
-
-.ornament-scene[hidden] { display: none; }
-
-.ornament-grid {
-  --ellipse-size: min(50vw, 78dvh);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--ellipse-size);
-  height: var(--ellipse-size);
-  transform: translate(-100%, -100%);
-}
-
-.ornament-ellipse {
-  position: absolute;
-  width: var(--ellipse-size);
-  height: var(--ellipse-size);
-  border: 1px solid rgb(21 21 21 / 24%);
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-}
-
-.ornament-ellipse:nth-child(1),
-.ornament-ellipse:nth-child(4),
-.ornament-ellipse:nth-child(7) { left: 0; }
-
-.ornament-ellipse:nth-child(2),
-.ornament-ellipse:nth-child(5),
-.ornament-ellipse:nth-child(8) { left: calc(var(--ellipse-size) / 2); }
-
-.ornament-ellipse:nth-child(3),
-.ornament-ellipse:nth-child(6),
-.ornament-ellipse:nth-child(9) { left: var(--ellipse-size); }
-
-.ornament-ellipse:nth-child(1),
-.ornament-ellipse:nth-child(2),
-.ornament-ellipse:nth-child(3) { top: 0; }
-
-.ornament-ellipse:nth-child(4),
-.ornament-ellipse:nth-child(5),
-.ornament-ellipse:nth-child(6) { top: calc(var(--ellipse-size) / 2); }
-
-.ornament-ellipse:nth-child(7),
-.ornament-ellipse:nth-child(8),
-.ornament-ellipse:nth-child(9) { top: var(--ellipse-size); }
-
-.ornament-ellipse:focus-visible,
 .menu-orb:focus-visible {
   outline: 2px solid #3d5be1;
   outline-offset: 3px;
 }
-
-.ornament-ellipse:active { background: rgb(21 21 21 / 4%); }
-
-.scene-back,
 .back-button,
 .content-help {
   border: 0;
@@ -234,16 +176,6 @@ button { appearance: none; }
   color: #151515;
   cursor: pointer;
   font-weight: 700;
-}
-
-.scene-back {
-  position: relative;
-  z-index: 1;
-  margin: 24px;
-  padding: 12px 16px;
-  border: 1px solid rgb(21 21 21 / 30%);
-  border-radius: 999px;
-  background: #f5f4ef;
 }
 
 .content-screen {
@@ -351,10 +283,6 @@ button { appearance: none; }
   object-fit: cover;
   object-position: var(--image-position);
   filter: grayscale(1);
-}
-
-@media (max-width: 680px) {
-  .ornament-grid { --ellipse-size: 72vw; }
 }
 
 @media (max-width: 680px) {

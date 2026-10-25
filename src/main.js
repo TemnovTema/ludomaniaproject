@@ -104,14 +104,6 @@ function startStoryTransition() {
   storyOrb.style.top = `${bounds.top}px`;
   storyOrb.style.width = `${bounds.width}px`;
   storyOrb.style.height = `${bounds.height}px`;
-  storyOrb.insertAdjacentHTML('beforeend', `
-    <div class="story-orb-copy">
-      <p>История</p>
-      <h1>Блок текста 1</h1>
-      <p class="story-body">Сначала я думала, что это просто сложный период.<br />Но вопросы о деньгах и исчезающие вечера<br />стали повторяться слишком часто.<br />Тогда я начала искать объяснение.</p>
-    </div>
-  `);
-
   storyBack = document.createElement('button');
   storyBack.className = 'story-back';
   storyBack.type = 'button';
@@ -125,10 +117,7 @@ function startStoryTransition() {
   const expand = () => {
     storyOrb.classList.add('is-expanded');
     window.setTimeout(() => {
-      storyOrb?.classList.add('is-ready');
-      storyBack?.classList.add('is-ready');
-      storyBack?.focus({ preventScroll: true });
-      window.setTimeout(activateStorySequence, reduceMotion ? 0 : 240);
+      activateStorySequence();
     }, reduceMotion ? 0 : 780);
   };
 

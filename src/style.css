@@ -611,9 +611,9 @@ button { appearance: none; }
 }
 
 @keyframes story-reveal-igor-copy {
-  0%, 84% { opacity: 0; }
-  86%, 92.8% { opacity: 1; }
-  93%, 100% { opacity: 0; }
+  0%, 70% { opacity: 0; }
+  76%, 82% { opacity: 1; }
+  84%, 100% { opacity: 0; }
 }
 
 @keyframes story-show-igor {
@@ -622,8 +622,8 @@ button { appearance: none; }
 }
 
 @keyframes story-reveal-ending-alice {
-  0%, 93% { opacity: 0; }
-  93.2%, 100% { opacity: 1; }
+  0%, 83.8% { opacity: 0; }
+  88%, 100% { opacity: 1; }
 }
 
 @keyframes story-reveal-ending-hint {

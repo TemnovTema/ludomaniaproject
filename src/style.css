@@ -267,7 +267,11 @@ button { appearance: none; }
 
 .story-back:focus-visible { outline: 2px solid #3d5be1; outline-offset: 3px; }
 
-.is-story-reading { overflow-x: hidden; overflow-y: auto; }
+.is-story-reading {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: none;
+}
 
 .story-sequence {
   position: relative;
@@ -281,12 +285,23 @@ button { appearance: none; }
   height: 100dvh;
   overflow: hidden;
   background: #f5f4ef;
+  contain: layout paint;
 }
 
 .story-back--sequence {
   z-index: 3;
   opacity: 1;
   pointer-events: auto;
+}
+
+.story-track {
+  position: absolute;
+  inset: 0;
+  animation: story-pan linear both;
+  animation-timeline: scroll(root);
+  animation-range: 45% 100%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .story-disc {
@@ -298,26 +313,21 @@ button { appearance: none; }
   border-radius: 50%;
   background: #d0ff43;
   overflow: hidden;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
 
 .story-disc--first {
   left: 50%;
   transform: translate3d(-50%, 0, 0);
-  animation: story-pan-first linear both;
-  animation-timeline: scroll(root);
-  animation-range: 45% 100%;
 }
 
 .story-disc--second {
   left: calc(50% + var(--disc-size));
   opacity: 0;
   transform: translate3d(-50%, 0, 0);
-  animation:
-    story-reveal-second linear both,
-    story-pan-second linear both;
-  animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 44%, 45% 100%;
+  animation: story-reveal-second linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0% 44%;
 }
 
 .story-disc--second img {
@@ -386,14 +396,9 @@ button { appearance: none; }
   76%, 100% { opacity: 1; }
 }
 
-@keyframes story-pan-first {
-  from { transform: translate3d(-50%, 0, 0); }
-  to { transform: translate3d(calc(-50% - 100dvh), 0, 0); }
-}
-
-@keyframes story-pan-second {
-  from { transform: translate3d(-50%, 0, 0); }
-  to { transform: translate3d(calc(-50% - 100dvh), 0, 0); }
+@keyframes story-pan {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-100dvh, 0, 0); }
 }
 
 .menu-orb:focus-visible {

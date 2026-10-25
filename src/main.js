@@ -151,12 +151,14 @@ function activateStorySequence() {
   storySequence.innerHTML = `
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>
-      <div class="story-disc story-disc--first">
-        <div class="story-copy story-copy--one"><p>История</p><h1>Блок текста 1</h1></div>
-        <div class="story-copy story-copy--two"><p>История</p><h1>Блок текста 2</h1></div>
-      </div>
-      <div class="story-disc story-disc--second">
-        <img src="/story-couple.png" alt="Пара стоит рядом" />
+      <div class="story-track">
+        <div class="story-disc story-disc--first">
+          <div class="story-copy story-copy--one"><p>История</p><h1>Блок текста 1</h1></div>
+          <div class="story-copy story-copy--two"><p>История</p><h1>Блок текста 2</h1></div>
+        </div>
+        <div class="story-disc story-disc--second">
+          <img src="/story-couple.png" alt="Пара стоит рядом" />
+        </div>
       </div>
     </div>
   `;

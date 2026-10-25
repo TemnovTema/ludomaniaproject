@@ -6,6 +6,7 @@ const contentLayout = document.querySelector('#content-layout');
 let storyOrb = null;
 let storyBack = null;
 let storySequence = null;
+let diceObserver = null;
 
 const sections = {
   story: {
@@ -208,14 +209,31 @@ function activateStorySequence() {
           </div>
         </div>
         <div class="story-disc story-disc--problem" aria-hidden="true">
-          <span class="story-problem-core"></span>
+          <div class="story-problem-die">
+            <span class="story-dot-set story-dot-set--one"><i style="--x:50%;--y:50%"></i></span>
+            <span class="story-dot-set story-dot-set--two"><i style="--x:50%;--y:32%"></i><i style="--x:50%;--y:68%"></i></span>
+            <span class="story-dot-set story-dot-set--three"><i style="--x:30%;--y:30%"></i><i style="--x:50%;--y:50%"></i><i style="--x:70%;--y:70%"></i></span>
+            <span class="story-dot-set story-dot-set--four"><i style="--x:30%;--y:30%"></i><i style="--x:70%;--y:30%"></i><i style="--x:30%;--y:70%"></i><i style="--x:70%;--y:70%"></i></span>
+            <span class="story-dot-set story-dot-set--five"><i style="--x:30%;--y:30%"></i><i style="--x:70%;--y:30%"></i><i style="--x:50%;--y:50%"></i><i style="--x:30%;--y:70%"></i><i style="--x:70%;--y:70%"></i></span>
+            <span class="story-dot-set story-dot-set--six"><i style="--x:30%;--y:26%"></i><i style="--x:70%;--y:26%"></i><i style="--x:30%;--y:50%"></i><i style="--x:70%;--y:50%"></i><i style="--x:30%;--y:74%"></i><i style="--x:70%;--y:74%"></i></span>
+          </div>
         </div>
       </div>
     </div>
+    <span class="story-dice-trigger" aria-hidden="true"></span>
   `;
 
   storySequence.querySelector('.story-back').addEventListener('click', goHome);
   document.querySelector('.page-shell').append(storySequence);
+  const diceTrigger = storySequence.querySelector('.story-dice-trigger');
+  diceObserver?.disconnect();
+  diceObserver = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    storySequence?.classList.add('is-counting-dots');
+    diceObserver?.disconnect();
+    diceObserver = null;
+  });
+  diceObserver.observe(diceTrigger);
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -230,6 +248,8 @@ function goHome() {
   }
 
   if (storySequence) {
+    diceObserver?.disconnect();
+    diceObserver = null;
     storySequence.remove();
     storySequence = null;
     document.body.classList.remove('is-story-reading');

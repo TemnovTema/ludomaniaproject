@@ -377,15 +377,44 @@ button { appearance: none; }
   will-change: opacity, transform;
 }
 
-.story-problem-core {
+.story-problem-die,
+.story-dot-set {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset: 0;
+}
+
+.story-dot-set {
+  display: block;
+  opacity: 0;
+  transform: scale(.72);
+}
+
+.story-dot-set--one { opacity: 1; transform: scale(1); }
+
+.story-dot-set i {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
   width: 18%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: #151515;
   transform: translate(-50%, -50%);
+}
+
+.is-counting-dots .story-dot-set--one { animation: story-die-face 1.2s ease-in-out both; }
+.is-counting-dots .story-dot-set--two { animation: story-die-face 1.2s ease-in-out 1.15s both; }
+.is-counting-dots .story-dot-set--three { animation: story-die-face 1.2s ease-in-out 2.3s both; }
+.is-counting-dots .story-dot-set--four { animation: story-die-face 1.2s ease-in-out 3.45s both; }
+.is-counting-dots .story-dot-set--five { animation: story-die-face 1.2s ease-in-out 4.6s both; }
+.is-counting-dots .story-dot-set--six { animation: story-die-face-last 1.2s ease-in-out 5.75s both; }
+
+.story-dice-trigger {
+  position: absolute;
+  top: calc(100% - 2dvh);
+  left: 0;
+  width: 1px;
+  height: 1px;
 }
 
 .story-disc-flip {
@@ -637,6 +666,17 @@ button { appearance: none; }
   100% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
+@keyframes story-die-face {
+  0% { opacity: 0; transform: scale(.72); }
+  16%, 80% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(.72); }
+}
+
+@keyframes story-die-face-last {
+  0% { opacity: 0; transform: scale(.72); }
+  20%, 100% { opacity: 1; transform: scale(1); }
+}
+
 @keyframes story-hide-couple {
   0%, 52% { opacity: 1; }
   60%, 100% { opacity: 0; }
@@ -795,6 +835,8 @@ button { appearance: none; }
   .story-orb .six-rings,
   .story-orb-copy,
   .story-back { transition-duration: 1ms; }
+  .is-counting-dots .story-dot-set { animation: none; opacity: 0; transform: scale(1); }
+  .is-counting-dots .story-dot-set--six { opacity: 1; }
 }
 
 @media (max-width: 420px) {

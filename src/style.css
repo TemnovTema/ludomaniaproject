@@ -424,7 +424,7 @@ button { appearance: none; }
   pointer-events: none;
   animation: question-layer-show linear both;
   animation-timeline: scroll(root);
-  animation-range: 72% 73%;
+  animation-range: 71.8% 72%;
   perspective: 1100px;
 }
 
@@ -442,12 +442,12 @@ button { appearance: none; }
 }
 
 .question-orb--alice {
-  left: 75%;
+  left: 73.3%;
   z-index: 1;
 }
 
 .question-orb--igor {
-  left: 25%;
+  left: 43%;
   z-index: 4;
   animation: question-igor-question linear both;
   animation-timeline: scroll(root);
@@ -541,11 +541,11 @@ button { appearance: none; }
 .question-options button.is-selected { background: #f5f4ef; color: #151515; box-shadow: 0 0 0 4px #151515; }
 
 @keyframes question-layer-show { 0% { opacity: 0; pointer-events: none; } .1%, 100% { opacity: 1; pointer-events: auto; } }
-@keyframes story-track-hide { 0%, 72% { opacity: 1; } 72.2%, 100% { opacity: 0; } }
+@keyframes story-track-hide { 0%, 71.99% { opacity: 1; } 72%, 100% { opacity: 0; } }
 @keyframes story-ending-hint-visibility { 0%, 72% { visibility: visible; } 72.2%, 100% { visibility: hidden; } }
 @keyframes question-igor-question {
   0%, 30% {
-    left: 25%;
+    left: 43%;
     width: var(--question-size);
     height: var(--question-size);
   }

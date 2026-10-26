@@ -287,7 +287,7 @@ button { appearance: none; }
   --second-shift-separated: 25dvh;
   --ending-y: 38dvh;
   position: relative;
-  height: 1640dvh;
+  height: 1400dvh;
   background: #f5f4ef;
 }
 
@@ -318,7 +318,7 @@ button { appearance: none; }
   transform: translateX(-50%);
   animation: story-reveal-ending-hint linear both, story-ending-hint-visibility linear both;
   animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 61%, 0% 100%;
+  animation-range: 0% 72%, 0% 100%;
   will-change: opacity;
 }
 
@@ -350,7 +350,7 @@ button { appearance: none; }
   transform-origin: center top;
   animation: story-position-first linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-disc--second {
@@ -362,7 +362,7 @@ button { appearance: none; }
     story-reveal-second linear both,
     story-position-second linear both;
   animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 15%, 0% 61%;
+  animation-range: 0% 18%, 0% 72%;
 }
 
 .story-disc--problem {
@@ -373,7 +373,7 @@ button { appearance: none; }
   transform-origin: center top;
   animation: story-problem-arrive linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
   will-change: opacity, transform;
 }
 
@@ -406,12 +406,11 @@ button { appearance: none; }
 .is-counting-dots .story-dot-set--two { animation: story-die-face 1.2s ease-in-out 1.15s both; }
 .is-counting-dots .story-dot-set--three { animation: story-die-face 1.2s ease-in-out 2.3s both; }
 .is-counting-dots .story-dot-set--four { animation: story-die-face 1.2s ease-in-out 3.45s both; }
-.is-counting-dots .story-dot-set--five { animation: story-die-face 1.2s ease-in-out 4.6s both; }
-.is-counting-dots .story-dot-set--six { animation: story-die-face-last 1.2s ease-in-out 5.75s both; }
+.is-counting-dots .story-dot-set--five { animation: story-die-face-last 1.2s ease-in-out 4.6s both; }
 
 .story-dice-trigger {
   position: absolute;
-  top: 63%;
+  top: 72%;
   left: 0;
   width: 1px;
   height: 1px;
@@ -425,7 +424,7 @@ button { appearance: none; }
   pointer-events: none;
   animation: question-layer-show linear both;
   animation-timeline: scroll(root);
-  animation-range: 61% 62%;
+  animation-range: 72% 73%;
 }
 
 .question-orb {
@@ -443,15 +442,18 @@ button { appearance: none; }
 
 .question-orb--alice {
   left: 75%;
-  z-index: 2;
+  z-index: 1;
+  animation: question-alice-hide linear both;
+  animation-timeline: scroll(root);
+  animation-range: 72% 100%;
 }
 
 .question-orb--igor {
   left: 25%;
-  z-index: 1;
+  z-index: 2;
   animation: question-igor-question linear both;
   animation-timeline: scroll(root);
-  animation-range: 61% 100%;
+  animation-range: 72% 100%;
 }
 
 .question-orb--die {
@@ -459,7 +461,7 @@ button { appearance: none; }
   z-index: 3;
   animation: question-die-grow linear both;
   animation-timeline: scroll(root);
-  animation-range: 61% 100%;
+  animation-range: 72% 100%;
 }
 
 .question-orb img {
@@ -488,13 +490,13 @@ button { appearance: none; }
   text-align: center;
   animation: question-igor-copy-show linear both;
   animation-timeline: scroll(root);
-  animation-range: 61% 100%;
+  animation-range: 72% 100%;
 }
 
 .question-pips,
 .question-options { position: absolute; inset: 0; }
 
-.question-pips { animation: question-pips-hide linear both; animation-timeline: scroll(root); animation-range: 61% 100%; }
+.question-pips { animation: question-pips-hide linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
 
 .question-pips i {
   position: absolute;
@@ -510,7 +512,7 @@ button { appearance: none; }
 .question-pips i:nth-child(4) { left: 22%; bottom: 22%; }
 .question-pips i:nth-child(5) { right: 22%; bottom: 22%; }
 
-.question-options { opacity: 0; animation: question-options-show linear both; animation-timeline: scroll(root); animation-range: 61% 100%; }
+.question-options { opacity: 0; animation: question-options-show linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
 
 .question-options button {
   position: absolute;
@@ -539,17 +541,22 @@ button { appearance: none; }
 .question-options button.is-selected { background: #f5f4ef; color: #151515; box-shadow: 0 0 0 4px #151515; }
 
 @keyframes question-layer-show { 0% { opacity: 0; pointer-events: none; } .1%, 100% { opacity: 1; pointer-events: auto; } }
-@keyframes story-track-hide { 0%, 61% { opacity: 1; } 61.2%, 100% { opacity: 0; } }
-@keyframes story-ending-hint-visibility { 0%, 61% { visibility: visible; } 61.2%, 100% { visibility: hidden; } }
+@keyframes story-track-hide { 0%, 72% { opacity: 1; } 72.2%, 100% { opacity: 0; } }
+@keyframes story-ending-hint-visibility { 0%, 72% { visibility: visible; } 72.2%, 100% { visibility: hidden; } }
 @keyframes question-igor-question {
   0%, 48% { left: 25%; width: var(--question-size); height: var(--question-size); }
   76%, 100% { left: 20%; width: 44dvh; height: 44dvh; }
+}
+@keyframes question-alice-hide {
+  0%, 48% { left: 75%; opacity: 1; }
+  76% { left: 25%; opacity: 1; }
+  76.2%, 100% { left: 25%; opacity: 0; }
 }
 @keyframes question-die-grow {
   0%, 48% { left: 50%; width: var(--question-size); height: var(--question-size); }
   76%, 100% { left: calc(100% - 50dvh); width: 100dvh; height: 100dvh; }
 }
-.question-orb--igor img { animation: question-igor-image-hide linear both; animation-timeline: scroll(root); animation-range: 61% 100%; }
+.question-orb--igor img { animation: question-igor-image-hide linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
 @keyframes question-igor-image-hide { 0%, 76% { opacity: 1; transform: translateX(-50%) rotateY(0deg); } 90%, 100% { opacity: 0; transform: translateX(-50%) rotateY(90deg); } }
 @keyframes question-igor-copy-show { 0%, 82% { opacity: 0; } 94%, 100% { opacity: 1; } }
 @keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
@@ -561,7 +568,7 @@ button { appearance: none; }
   transform-style: preserve-3d;
   animation: story-flip-second linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
   will-change: transform;
 }
 
@@ -577,13 +584,13 @@ button { appearance: none; }
 .story-disc-face--front {
   animation: story-hide-couple linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-disc-face--back {
   animation: story-show-alice-face linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-disc-face--igor {
@@ -591,7 +598,7 @@ button { appearance: none; }
   transform: rotateY(360deg);
   animation: story-show-igor linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-disc-face img {
@@ -652,14 +659,14 @@ button { appearance: none; }
   opacity: 1;
   animation: story-copy-one linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-copy--two {
   opacity: 0;
   animation: story-copy-two linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
 }
 
 .story-alice-copy {
@@ -672,7 +679,7 @@ button { appearance: none; }
   transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
   animation: story-reveal-alice-copy linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
   will-change: opacity;
 }
 
@@ -690,7 +697,7 @@ button { appearance: none; }
   opacity: 0;
   animation: story-reveal-ending-alice linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
   will-change: opacity;
 }
 
@@ -716,7 +723,7 @@ button { appearance: none; }
   transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
   animation: story-reveal-igor-copy linear both;
   animation-timeline: scroll(root);
-  animation-range: 0% 61%;
+  animation-range: 0% 72%;
   will-change: opacity;
 }
 
@@ -974,7 +981,7 @@ button { appearance: none; }
   .story-orb-copy,
   .story-back { transition-duration: 1ms; }
   .is-counting-dots .story-dot-set { animation: none; opacity: 0; transform: scale(1); }
-  .is-counting-dots .story-dot-set--six { opacity: 1; }
+  .is-counting-dots .story-dot-set--five { opacity: 1; }
 }
 
 @media (max-width: 420px) {

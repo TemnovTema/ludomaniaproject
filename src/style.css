@@ -563,11 +563,11 @@ button { appearance: none; }
 .question-orb--igor img { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 @keyframes question-igor-flip {
   0%, 76% { transform: translate(-50%, -50%) rotateY(0deg); }
-  90%, 100% { transform: translate(-50%, -50%) rotateY(180deg); }
+  80%, 100% { transform: translate(-50%, -50%) rotateY(180deg); }
 }
 @keyframes question-igor-copy-show {
   0%, 76% { opacity: 0; transform: rotateY(180deg); }
-  76.1%, 100% { opacity: 1; transform: rotateY(180deg); }
+  78%, 100% { opacity: 1; transform: rotateY(180deg); }
 }
 @keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
 @keyframes question-options-show { 0%, 82% { opacity: 0; } 96%, 100% { opacity: 1; } }

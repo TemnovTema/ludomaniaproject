@@ -444,6 +444,9 @@ button { appearance: none; }
 .question-orb--alice {
   left: 73.3%;
   z-index: 1;
+  animation: question-alice-shift linear both;
+  animation-timeline: scroll(root);
+  animation-range: 72% 100%;
 }
 
 .question-orb--igor {
@@ -550,7 +553,7 @@ button { appearance: none; }
     height: var(--question-size);
   }
   48% {
-    left: 22%;
+    left: 49%;
     width: var(--question-size);
     height: var(--question-size);
   }
@@ -558,6 +561,17 @@ button { appearance: none; }
     left: calc((100% - 100dvh) / 2);
     width: calc(100vw - 100dvh);
     height: calc(100vw - 100dvh);
+  }
+}
+@keyframes question-alice-shift {
+  0%, 30% {
+    left: 73.3%;
+  }
+  48% {
+    left: 67%;
+  }
+  68%, 100% {
+    left: calc(100% - 50dvh);
   }
 }
 @keyframes question-die-grow {

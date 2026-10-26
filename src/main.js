@@ -153,8 +153,8 @@ function activateStorySequence() {
   const endingY = (viewportHeight - compactSize) / 2;
   const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
   const secondShiftEnding = -compactSize / 2 - compactGap / 2;
-  const firstShiftSeparated = viewportHeight + window.innerWidth * .25;
-  const secondShiftSeparated = -window.innerWidth * .25;
+  const firstShiftSeparated = viewportHeight - window.innerWidth * .25;
+  const secondShiftSeparated = window.innerWidth * .25;
   storySequence.style.setProperty('--small-scale', smallScale);
   storySequence.style.setProperty('--ending-scale', endingScale);
   storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
@@ -171,6 +171,23 @@ function activateStorySequence() {
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>
       <p class="story-ending-hint">Кликните на персонажей, по очереди</p>
+      <div class="story-question-layer" aria-label="Вопрос о переменах">
+        <div class="question-orb question-orb--alice">
+          <img src="/story-alice.png" alt="Портрет Алисы" />
+          <p>Какие перемены вы заметили?</p>
+        </div>
+        <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /></div>
+        <div class="question-orb question-orb--die" aria-label="Варианты ответа">
+          <div class="question-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="question-options">
+            <button type="button">Близкий стал чаще сидеть<br />в телефоне, днём и ночью</button>
+            <button type="button">Пропали общие деньги или<br />появились расходы, о<br />которых я не знал(а)</button>
+            <button type="button">Он стал раздражительнее<br />или реже отвечать на<br />обычные вопросы</button>
+            <button type="button">Он начал скрывать траты<br />или уходить от вопросов<br />о деньгах</button>
+            <button type="button">Другое</button>
+          </div>
+        </div>
+      </div>
       <div class="story-track">
         <div class="story-disc story-disc--first">
           <div class="story-copy story-copy--one">
@@ -224,6 +241,15 @@ function activateStorySequence() {
   `;
 
   storySequence.querySelector('.story-back').addEventListener('click', goHome);
+  storySequence.querySelectorAll('.question-options button').forEach((choice) => {
+    choice.addEventListener('click', () => {
+      storySequence.querySelectorAll('.question-options button').forEach((item) => {
+        const selected = item === choice;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+    });
+  });
   document.querySelector('.page-shell').append(storySequence);
   const diceTrigger = storySequence.querySelector('.story-dice-trigger');
   diceObserver?.disconnect();

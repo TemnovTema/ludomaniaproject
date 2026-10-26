@@ -6,7 +6,6 @@ const contentLayout = document.querySelector('#content-layout');
 let storyOrb = null;
 let storyBack = null;
 let storySequence = null;
-let diceObserver = null;
 
 const sections = {
   story: {
@@ -139,126 +138,22 @@ function activateStorySequence() {
   storySequence = document.createElement('section');
   storySequence.className = 'story-sequence';
   storySequence.setAttribute('aria-label', 'История');
-  const viewportHeight = window.innerHeight;
-  const gap = Math.max(6, Math.min(window.innerWidth * 0.006, 10));
-  const availableWidth = Math.max(viewportHeight * 0.34, window.innerWidth - viewportHeight - gap);
-  const smallScale = Math.min(0.82, availableWidth / viewportHeight);
-  const firstShiftAlice = availableWidth / 2 - window.innerWidth / 2 + viewportHeight;
-  const firstShiftIgor = window.innerWidth / 2 + viewportHeight - availableWidth / 2;
-  const secondShiftAlice = window.innerWidth / 2 - viewportHeight / 2;
-  const secondShiftIgor = viewportHeight / 2 - window.innerWidth / 2;
-  const endingScale = .24;
-  const compactSize = viewportHeight * endingScale;
-  const compactGap = Math.max(4, Math.min(window.innerWidth * .005, 8));
-  const endingY = (viewportHeight - compactSize) / 2;
-  const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
-  const secondShiftEnding = -compactSize / 2 - compactGap / 2;
-  const firstShiftSeparated = viewportHeight + window.innerWidth * .25;
-  const secondShiftSeparated = -window.innerWidth * .25;
-  storySequence.style.setProperty('--small-scale', smallScale);
-  storySequence.style.setProperty('--ending-scale', endingScale);
-  storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
-  storySequence.style.setProperty('--first-shift-alice', `${firstShiftAlice}px`);
-  storySequence.style.setProperty('--first-shift-igor', `${firstShiftIgor}px`);
-  storySequence.style.setProperty('--second-shift-alice', `${secondShiftAlice}px`);
-  storySequence.style.setProperty('--second-shift-igor', `${secondShiftIgor}px`);
-  storySequence.style.setProperty('--first-shift-ending', `${firstShiftEnding}px`);
-  storySequence.style.setProperty('--second-shift-ending', `${secondShiftEnding}px`);
-  storySequence.style.setProperty('--ending-y', `${endingY}px`);
-  storySequence.style.setProperty('--first-shift-separated', `${firstShiftSeparated}px`);
-  storySequence.style.setProperty('--second-shift-separated', `${secondShiftSeparated}px`);
   storySequence.innerHTML = `
-    <div class="story-stage">
+    <div class="story-stage story-stage--reset">
       <button class="story-back story-back--sequence" type="button">назад</button>
-      <p class="story-ending-hint">Кликните на персонажей, по очереди</p>
-      <div class="story-question-layer" aria-label="Вопрос о переменах">
-        <div class="question-orb question-orb--alice">
-          <img src="/story-alice.png" alt="Портрет Алисы" />
-        </div>
-        <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /><p>Какие перемены вы заметили?</p></div>
-        <div class="question-orb question-orb--die" aria-label="Варианты ответа">
-          <div class="question-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="question-options">
-            <button type="button">Близкий стал чаще сидеть<br />в телефоне, днём и ночью</button>
-            <button type="button">Пропали общие деньги или<br />появились расходы, о<br />которых я не знал(а)</button>
-            <button type="button">Он стал раздражительнее<br />или реже отвечать на<br />обычные вопросы</button>
-            <button type="button">Он начал скрывать траты<br />или уходить от вопросов<br />о деньгах</button>
-            <button type="button">Другое</button>
-          </div>
-        </div>
-      </div>
-      <div class="story-track">
-        <div class="story-disc story-disc--first">
-          <div class="story-copy story-copy--one">
-            <p>История</p>
-            <h1>Блок текста 1</h1>
-            <p class="story-body">Сначала я думала, что это просто сложный период.<br />Но вопросы о деньгах и исчезающие вечера<br />стали повторяться слишком часто.<br />Тогда я начала искать объяснение.</p>
-          </div>
-          <div class="story-copy story-copy--two">
-            <p>История</p>
-            <h1>Блок текста 2</h1>
-            <p class="story-body">Я узнала, что зависимость касается не одного человека.<br />Она меняет разговоры, планы и чувство безопасности.<br />И всё же можно не оставаться с этим в одиночку.<br />Первый шаг начинается с признания происходящего.</p>
-          </div>
-          <div class="story-alice-copy">
-            <p>Алиса, 25 лет</p>
-            <p>Узнала, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
-          </div>
-          <div class="story-igor-copy">
-            <p>Игорь, 25 лет</p>
-            <p>Узнал, что у меня есть огромная семья<br />И тропинка, и лесок, в поле каждый колосок!</p>
-          </div>
-          <div class="story-disc-image story-disc-image--alice">
-            <img src="/story-alice.png" alt="Портрет Алисы" />
-          </div>
-        </div>
-        <div class="story-disc story-disc--second">
-          <div class="story-disc-flip">
-            <div class="story-disc-face story-disc-face--front">
-              <img src="/story-couple.png" alt="Пара стоит рядом" />
-            </div>
-            <div class="story-disc-face story-disc-face--back">
-              <img src="/story-alice.png" alt="Портрет Алисы" />
-            </div>
-            <div class="story-disc-face story-disc-face--igor">
-              <img src="/story-igor.png" alt="Портрет Игоря" />
-            </div>
-          </div>
-        </div>
-        <div class="story-disc story-disc--problem" aria-hidden="true">
-          <div class="story-problem-die">
-            <span class="story-dot-set story-dot-set--one"><i style="--x:50%;--y:50%"></i></span>
-            <span class="story-dot-set story-dot-set--two"><i style="--x:50%;--y:32%"></i><i style="--x:50%;--y:68%"></i></span>
-            <span class="story-dot-set story-dot-set--three"><i style="--x:30%;--y:30%"></i><i style="--x:50%;--y:50%"></i><i style="--x:70%;--y:70%"></i></span>
-            <span class="story-dot-set story-dot-set--four"><i style="--x:30%;--y:30%"></i><i style="--x:70%;--y:30%"></i><i style="--x:30%;--y:70%"></i><i style="--x:70%;--y:70%"></i></span>
-            <span class="story-dot-set story-dot-set--five"><i style="--x:30%;--y:30%"></i><i style="--x:70%;--y:30%"></i><i style="--x:50%;--y:50%"></i><i style="--x:30%;--y:70%"></i><i style="--x:70%;--y:70%"></i></span>
-            <span class="story-dot-set story-dot-set--six"><i style="--x:30%;--y:26%"></i><i style="--x:70%;--y:26%"></i><i style="--x:30%;--y:50%"></i><i style="--x:70%;--y:50%"></i><i style="--x:30%;--y:74%"></i><i style="--x:70%;--y:74%"></i></span>
-          </div>
-        </div>
+      <div class="story-characters" aria-label="Герои истории">
+        <button class="character-orb character-orb--igor" type="button" aria-label="Игорь">
+          <img src="/story-igor.png" alt="" />
+        </button>
+        <button class="character-orb character-orb--alice" type="button" aria-label="Алиса">
+          <img src="/story-alice.png" alt="" />
+        </button>
       </div>
     </div>
-    <span class="story-dice-trigger" aria-hidden="true"></span>
   `;
 
   storySequence.querySelector('.story-back').addEventListener('click', goHome);
-  storySequence.querySelectorAll('.question-options button').forEach((choice) => {
-    choice.addEventListener('click', () => {
-      storySequence.querySelectorAll('.question-options button').forEach((item) => {
-        const selected = item === choice;
-        item.classList.toggle('is-selected', selected);
-        item.setAttribute('aria-pressed', String(selected));
-      });
-    });
-  });
   document.querySelector('.page-shell').append(storySequence);
-  const diceTrigger = storySequence.querySelector('.story-dice-trigger');
-  diceObserver?.disconnect();
-  diceObserver = new IntersectionObserver((entries) => {
-    if (!entries.some((entry) => entry.isIntersecting)) return;
-    storySequence?.classList.add('is-counting-dots');
-    diceObserver?.disconnect();
-    diceObserver = null;
-  });
-  diceObserver.observe(diceTrigger);
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -273,8 +168,6 @@ function goHome() {
   }
 
   if (storySequence) {
-    diceObserver?.disconnect();
-    diceObserver = null;
     storySequence.remove();
     storySequence = null;
     document.body.classList.remove('is-story-reading');

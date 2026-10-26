@@ -213,36 +213,6 @@ button { appearance: none; }
 
 .story-orb.is-expanded .six-rings { opacity: 0; }
 
-.story-orb-copy {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  gap: 12px;
-  padding: 20%;
-  opacity: 0;
-  text-align: center;
-  transform: scale(calc(1 / var(--story-scale)));
-  transition: opacity 280ms ease 120ms;
-}
-
-.story-orb-copy p {
-  margin: 0;
-  font-size: clamp(14px, 1.4vw, 18px);
-  font-weight: 700;
-}
-
-.story-orb-copy h1 {
-  max-width: 15ch;
-  margin: 0;
-  font-size: clamp(36px, 4.5vw, 72px);
-  font-weight: 700;
-  letter-spacing: -.07em;
-  line-height: .94;
-}
-
-.story-orb.is-ready .story-orb-copy { opacity: 1; }
-
 .story-back {
   position: fixed;
   z-index: 11;
@@ -260,7 +230,8 @@ button { appearance: none; }
   transition: opacity 180ms ease;
 }
 
-.story-back.is-ready {
+.story-back.is-ready,
+.story-back--sequence {
   opacity: 1;
   pointer-events: auto;
 }
@@ -268,601 +239,60 @@ button { appearance: none; }
 .story-back:focus-visible { outline: 2px solid #3d5be1; outline-offset: 3px; }
 
 .is-story-reading {
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: none;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .story-sequence {
-  --small-scale: .4;
-  --ending-scale: .24;
-  --alice-copy-scale: 1.6;
-  --first-shift-alice: 35dvh;
-  --first-shift-igor: 70dvh;
-  --second-shift-alice: 0px;
-  --second-shift-igor: -35dvh;
-  --first-shift-ending: 70dvh;
-  --second-shift-ending: -12dvh;
-  --first-shift-separated: 45dvh;
-  --second-shift-separated: 25dvh;
-  --ending-y: 38dvh;
+  min-height: 100dvh;
+  background: #f5f4ef;
+}
+
+.story-stage--reset {
   position: relative;
-  height: 1400dvh;
-  background: #f5f4ef;
-}
-
-.story-stage {
-  position: sticky;
-  top: 0;
   height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
   background: #f5f4ef;
-  contain: layout paint;
 }
 
-.story-back--sequence {
-  z-index: 3;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.story-ending-hint {
+.story-characters {
   position: absolute;
-  z-index: 2;
-  bottom: clamp(24px, 7vh, 72px);
+  top: 60%;
   left: 50%;
-  margin: 0;
-  opacity: 0;
-  color: #151515;
-  font-size: clamp(11px, .9vw, 14px);
-  transform: translateX(-50%);
-  animation: story-reveal-ending-hint linear both, story-ending-hint-visibility linear both;
-  animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 72%, 0% 100%;
-  will-change: opacity;
-}
-
-.story-track {
-  position: absolute;
-  inset: 0;
-  animation: story-pan linear both, story-track-hide linear both;
-  animation-timeline: scroll(root), scroll(root);
-  animation-range: 15% 28%, 0% 100%;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.story-disc {
-  --disc-size: 100dvh;
-  position: absolute;
-  top: 0;
-  width: var(--disc-size);
-  height: var(--disc-size);
-  border-radius: 50%;
-  background: #d0ff43;
-  overflow: hidden;
-  will-change: opacity;
-}
-
-.story-disc--first {
-  left: 50%;
-  transform: translate3d(-50%, 0, 0);
-  transform-origin: center top;
-  animation: story-position-first linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-disc--second {
-  left: calc(50% + var(--disc-size));
-  opacity: 0;
-  transform: translate3d(-50%, 0, 0);
-  transform-origin: center top;
-  animation:
-    story-reveal-second linear both,
-    story-position-second linear both;
-  animation-timeline: scroll(root), scroll(root);
-  animation-range: 0% 18%, 0% 72%;
-}
-
-.story-disc--problem {
-  top: 0;
-  left: 50%;
-  opacity: 0;
-  transform: translate3d(-50%, 0, 0) scale(0);
-  transform-origin: center top;
-  animation: story-problem-arrive linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-  will-change: opacity, transform;
-}
-
-.story-problem-die,
-.story-dot-set {
-  position: absolute;
-  inset: 0;
-}
-
-.story-dot-set {
-  display: block;
-  opacity: 0;
-  transform: scale(.72);
-}
-
-.story-dot-set--one { opacity: 1; transform: scale(1); }
-
-.story-dot-set i {
-  position: absolute;
-  top: var(--y);
-  left: var(--x);
-  width: 18%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #151515;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, .7vw, 18px);
   transform: translate(-50%, -50%);
 }
 
-.is-counting-dots .story-dot-set--one { animation: story-die-face 1.2s ease-in-out both; }
-.is-counting-dots .story-dot-set--two { animation: story-die-face 1.2s ease-in-out 1.15s both; }
-.is-counting-dots .story-dot-set--three { animation: story-die-face 1.2s ease-in-out 2.3s both; }
-.is-counting-dots .story-dot-set--four { animation: story-die-face 1.2s ease-in-out 3.45s both; }
-.is-counting-dots .story-dot-set--five { animation: story-die-face-last 1.2s ease-in-out 4.6s both; }
-
-.story-dice-trigger {
-  position: absolute;
-  top: 72%;
-  left: 0;
-  width: 1px;
-  height: 1px;
-}
-
-.story-question-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  animation: question-layer-show linear both;
-  animation-timeline: scroll(root);
-  animation-range: 71.8% 72%;
-  perspective: 1100px;
-}
-
-.question-orb {
-  --question-size: 24dvh;
-  position: absolute;
-  top: 50%;
-  width: var(--question-size);
-  height: var(--question-size);
-  overflow: hidden;
-  border-radius: 50%;
-  background: #d0ff43;
-  transform: translate(-50%, -50%);
-  will-change: transform, left, width, height;
-}
-
-.question-orb--alice {
-  left: 73.3%;
-  z-index: 1;
-}
-
-.question-orb--igor {
-  left: 43%;
-  z-index: 4;
-  animation: question-igor-question linear both;
-  animation-timeline: scroll(root);
-  animation-range: 72% 100%;
-}
-
-.question-orb--die {
-  left: 50%;
-  z-index: 3;
-  animation: question-die-grow linear both;
-  animation-timeline: scroll(root);
-  animation-range: 72% 100%;
-}
-
-.question-orb img {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 87%;
-  height: 92%;
-  max-width: none;
-  object-fit: contain;
-  object-position: center bottom;
-  transform: translateX(-50%);
-}
-
-.question-orb--igor p {
-  position: absolute;
-  inset: 0;
+.character-orb {
   display: grid;
-  place-content: center;
+  width: clamp(144px, 24dvh, 310px);
+  aspect-ratio: 1;
+  place-items: end center;
   margin: 0;
-  padding: 16%;
-  opacity: 0;
-  color: #151515;
-  font-size: clamp(14px, 1.35vw, 22px);
-  line-height: 1.02;
-  text-align: center;
-  animation: question-igor-copy-show linear both;
-  animation-timeline: scroll(root);
-  animation-range: 72% 100%;
-  transform-origin: center;
-  will-change: opacity, transform;
-}
-
-.question-pips,
-.question-options { position: absolute; inset: 0; }
-
-.question-pips { animation: question-pips-hide linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
-
-.question-pips i {
-  position: absolute;
-  width: 18%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #151515;
-}
-
-.question-pips i:nth-child(1) { left: 22%; top: 22%; }
-.question-pips i:nth-child(2) { right: 22%; top: 22%; }
-.question-pips i:nth-child(3) { left: 41%; top: 41%; }
-.question-pips i:nth-child(4) { left: 22%; bottom: 22%; }
-.question-pips i:nth-child(5) { right: 22%; bottom: 22%; }
-
-.question-options { opacity: 0; animation: question-options-show linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
-
-.question-options button {
-  position: absolute;
-  width: 34%;
-  aspect-ratio: 1;
-  padding: 8%;
+  padding: 0;
+  overflow: hidden;
   border: 0;
   border-radius: 50%;
-  background: #151515;
-  color: #f5f4ef;
+  background: #d0ff43;
   cursor: pointer;
-  font: inherit;
-  font-size: clamp(11px, 1vw, 17px);
-  line-height: 1.03;
-  text-align: center;
-  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  transition: transform 220ms cubic-bezier(.2, .8, .2, 1);
 }
 
-.question-options button:nth-child(1) { left: 37.7%; top: 2.4%; }
-.question-options button:nth-child(2) { left: 60%; top: 28.2%; }
-.question-options button:nth-child(3) { left: 4.9%; top: 18.1%; }
-.question-options button:nth-child(4) { left: 11.4%; top: 55%; }
-.question-options button:nth-child(5) { left: 48.7%; top: 61.1%; }
-.question-options button:hover { transform: scale(1.05); background: #343434; }
-.question-options button:focus-visible { outline: 3px solid #f5f4ef; outline-offset: 3px; }
-.question-options button.is-selected { background: #f5f4ef; color: #151515; box-shadow: 0 0 0 4px #151515; }
-
-@keyframes question-layer-show { 0% { opacity: 0; pointer-events: none; } .1%, 100% { opacity: 1; pointer-events: auto; } }
-@keyframes story-track-hide { 0%, 71.99% { opacity: 1; } 72%, 100% { opacity: 0; } }
-@keyframes story-ending-hint-visibility { 0%, 72% { visibility: visible; } 72.2%, 100% { visibility: hidden; } }
-@keyframes question-igor-question {
-  0%, 30% {
-    left: 43%;
-    width: var(--question-size);
-    height: var(--question-size);
-  }
-  48% {
-    left: 22%;
-    width: var(--question-size);
-    height: var(--question-size);
-  }
-  70%, 100% {
-    left: calc((100% - 100dvh) / 2);
-    width: calc(100vw - 100dvh);
-    height: calc(100vw - 100dvh);
-  }
-}
-@keyframes question-die-grow {
-  0%, 30% {
-    left: 50%;
-    width: var(--question-size);
-    height: var(--question-size);
-  }
-  68%, 100% {
-    left: calc(100% - 50dvh);
-    width: 100dvh;
-    height: 100dvh;
-  }
-}
-.question-orb--igor img {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-origin: center bottom;
-  animation: question-igor-photo-turn linear both;
-  animation-timeline: scroll(root);
-  animation-range: 72% 100%;
-  will-change: opacity, transform;
-}
-@keyframes question-igor-photo-turn {
-  0%, 47% { opacity: 1; transform: translateX(-50%) rotateY(0deg); }
-  56% { opacity: 0; transform: translateX(-50%) rotateY(90deg); }
-  100% { opacity: 0; transform: translateX(-50%) rotateY(90deg); }
-}
-@keyframes question-igor-copy-show {
-  0%, 51% { opacity: 0; transform: rotateY(-90deg); }
-  60%, 100% { opacity: 1; transform: rotateY(0deg); }
-}
-@keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
-@keyframes question-options-show { 0%, 82% { opacity: 0; } 96%, 100% { opacity: 1; } }
-
-.story-disc-flip {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: story-flip-second linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-  will-change: transform;
-}
-
-.story-disc-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.story-disc-face--back { transform: rotateY(180deg); }
-
-.story-disc-face--front {
-  animation: story-hide-couple linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-disc-face--back {
-  animation: story-show-alice-face linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-disc-face--igor {
-  opacity: 0;
-  transform: rotateY(360deg);
-  animation: story-show-igor linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-disc-face img {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 76%;
-  height: 95%;
-  max-width: none;
-  object-fit: contain;
-  object-position: center bottom;
-  transform: translateX(-50%);
-}
-
-.story-disc-face--back img {
-  width: 87%;
-  height: 92%;
-}
-
-.story-disc-face--igor img {
-  width: 88%;
-  height: 94%;
-}
-
-.story-copy {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  padding: 16%;
-  text-align: center;
-  will-change: opacity, transform;
-}
-
-.story-copy p {
-  margin: 0 0 12px;
-  font-size: clamp(14px, 1.4vw, 18px);
-  font-weight: 700;
-}
-
-.story-copy h1 {
-  max-width: 13ch;
-  margin: 0;
-  font-size: clamp(36px, 4.5vw, 72px);
-  font-weight: 700;
-  letter-spacing: -.07em;
-  line-height: .94;
-}
-
-.story-body {
-  max-width: 35ch;
-  margin: 22px auto 0;
-  font-size: clamp(15px, 1.35vw, 20px);
-  line-height: 1.2;
-}
-
-.story-copy--one {
-  opacity: 1;
-  animation: story-copy-one linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-copy--two {
-  opacity: 0;
-  animation: story-copy-two linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-}
-
-.story-alice-copy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(76%, 25rem);
-  opacity: 0;
-  text-align: center;
-  transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
-  animation: story-reveal-alice-copy linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-  will-change: opacity;
-}
-
-.story-alice-copy p {
-  margin: 0;
-  font-size: clamp(13px, 1.2vw, 17px);
-  line-height: 1.05;
-}
-
-.story-alice-copy p + p { margin-top: 10px; }
-
-.story-disc-image {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  animation: story-reveal-ending-alice linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-  will-change: opacity;
-}
-
-.story-disc-image img {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
+.character-orb img {
+  display: block;
   width: 87%;
   height: 92%;
   max-width: none;
   object-fit: contain;
   object-position: center bottom;
-  transform: translateX(-50%);
 }
 
-.story-igor-copy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(76%, 25rem);
-  opacity: 0;
-  text-align: center;
-  transform: translate(-50%, -50%) scale(var(--alice-copy-scale));
-  animation: story-reveal-igor-copy linear both;
-  animation-timeline: scroll(root);
-  animation-range: 0% 72%;
-  will-change: opacity;
-}
-
-.story-igor-copy p {
-  margin: 0;
-  font-size: clamp(13px, 1.2vw, 17px);
-  line-height: 1.05;
-}
-
-.story-igor-copy p + p { margin-top: 10px; }
-
-@keyframes story-copy-one {
-  0%, 12% { opacity: 1; transform: translateY(0); }
-  18%, 100% { opacity: 0; transform: translateY(-18px); }
-}
-
-@keyframes story-copy-two {
-  0%, 22% { opacity: 0; transform: translateY(18px); }
-  28%, 52% { opacity: 1; transform: translateY(0); }
-  60%, 100% { opacity: 0; transform: translateY(-18px); }
-}
-
-@keyframes story-reveal-second {
-  0%, 52% { opacity: 0; }
-  76%, 100% { opacity: 1; }
-}
-
-@keyframes story-pan {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-100dvh, 0, 0); }
-}
-
-@keyframes story-position-first {
-  0%, 52% { transform: translate3d(-50%, 0, 0) scale(1); }
-  68% { transform: translate3d(calc(-50% + var(--first-shift-alice)), 0, 0) scale(var(--small-scale)); }
-  82% { transform: translate3d(calc(-50% + var(--first-shift-igor)), 0, 0) scale(var(--small-scale)); }
-  90%, 97% { transform: translate3d(calc(-50% + var(--first-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
-  100% { transform: translate3d(calc(-50% + var(--first-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
-}
-
-@keyframes story-position-second {
-  0%, 52% { transform: translate3d(-50%, 0, 0); }
-  68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
-  82% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
-  90%, 100% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
-}
-
-@keyframes story-flip-second {
-  0%, 52% { transform: rotateY(0deg); }
-  68% { transform: rotateY(180deg); }
-  82%, 100% { transform: rotateY(360deg); }
-}
-
-@keyframes story-reveal-alice-copy {
-  0%, 54% { opacity: 0; }
-  62%, 72% { opacity: 1; }
-  80%, 100% { opacity: 0; }
-}
-
-@keyframes story-reveal-igor-copy {
-  0%, 70% { opacity: 0; }
-  76%, 82% { opacity: 1; }
-  84%, 100% { opacity: 0; }
-}
-
-@keyframes story-show-igor {
-  0%, 78% { opacity: 0; }
-  84%, 100% { opacity: 1; }
-}
-
-@keyframes story-reveal-ending-alice {
-  0%, 83.8% { opacity: 0; }
-  88%, 100% { opacity: 1; }
-}
-
-@keyframes story-reveal-ending-hint {
-  0%, 94% { opacity: 0; }
-  98%, 100% { opacity: 1; }
-}
-
-@keyframes story-problem-arrive {
-  0%, 96% { opacity: 0; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(0); }
-  98% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), 12dvh, 0) scale(var(--ending-scale)); }
-  100% { opacity: 1; transform: translate3d(calc(-50% + 100dvh), var(--ending-y), 0) scale(var(--ending-scale)); }
-}
-
-@keyframes story-die-face {
-  0% { opacity: 0; transform: scale(.72); }
-  16%, 80% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(.72); }
-}
-
-@keyframes story-die-face-last {
-  0% { opacity: 0; transform: scale(.72); }
-  20%, 100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes story-hide-couple {
-  0%, 52% { opacity: 1; }
-  60%, 100% { opacity: 0; }
-}
-
-@keyframes story-show-alice-face {
-  0%, 54% { opacity: 0; }
-  62%, 72% { opacity: 1; }
-  80%, 100% { opacity: 0; }
-}
-
+.character-orb:hover { transform: scale(1.02); }
+.character-orb:active { transform: scale(.98); }
+.character-orb:focus-visible { outline: 3px solid #3d5be1; outline-offset: 5px; }
 
 .menu-orb:focus-visible {
   outline: 2px solid #3d5be1;
@@ -998,8 +428,8 @@ button { appearance: none; }
   .content-copy { min-height: 68dvh; padding: 48px 24px; border-right: 0; }
   .content-intro { margin-top: 28px; }
   .content-image { height: 48dvh; }
-  .story-orb-copy { padding: 18%; }
-  .story-disc-face img { width: 88%; }
+  .story-characters { top: 58%; gap: 8px; }
+  .character-orb { width: min(41vw, 190px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1008,10 +438,8 @@ button { appearance: none; }
   .intro.is-story-transition .menu-orb,
   .story-orb,
   .story-orb .six-rings,
-  .story-orb-copy,
-  .story-back { transition-duration: 1ms; }
-  .is-counting-dots .story-dot-set { animation: none; opacity: 0; transform: scale(1); }
-  .is-counting-dots .story-dot-set--five { opacity: 1; }
+  .story-back,
+  .character-orb { transition-duration: 1ms; }
 }
 
 @media (max-width: 420px) {

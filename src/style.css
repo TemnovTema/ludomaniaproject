@@ -778,8 +778,7 @@ button { appearance: none; }
   0%, 52% { transform: translate3d(-50%, 0, 0); }
   68% { transform: translate3d(calc(-50% + var(--second-shift-alice)), 0, 0); }
   82% { transform: translate3d(calc(-50% + var(--second-shift-igor)), 0, 0); }
-  90%, 97% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
-  100% { transform: translate3d(calc(-50% + var(--second-shift-separated)), var(--ending-y), 0) scale(var(--ending-scale)); }
+  90%, 100% { transform: translate3d(calc(-50% + var(--second-shift-ending)), var(--ending-y), 0) scale(var(--ending-scale)); }
 }
 
 @keyframes story-flip-second {

@@ -451,7 +451,7 @@ button { appearance: none; }
 
 .question-orb--igor {
   left: 25%;
-  z-index: 2;
+  z-index: 4;
   transform-style: preserve-3d;
   animation: question-igor-question linear both, question-igor-flip linear both;
   animation-timeline: scroll(root);
@@ -548,8 +548,8 @@ button { appearance: none; }
 @keyframes story-track-hide { 0%, 72% { opacity: 1; } 72.2%, 100% { opacity: 0; } }
 @keyframes story-ending-hint-visibility { 0%, 72% { visibility: visible; } 72.2%, 100% { visibility: hidden; } }
 @keyframes question-igor-question {
-  0%, 60% { left: 25%; width: var(--question-size); height: var(--question-size); }
-  72%, 100% { left: 20%; width: calc(160% - 200dvh); height: calc(160% - 200dvh); }
+  0%, 58% { left: 25%; width: var(--question-size); height: var(--question-size); }
+  66%, 100% { left: 20%; width: calc(160% - 200dvh); height: calc(160% - 200dvh); }
 }
 @keyframes question-alice-hide {
   0%, 58% { left: 75%; opacity: 1; }
@@ -561,12 +561,12 @@ button { appearance: none; }
 }
 .question-orb--igor img { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 @keyframes question-igor-flip {
-  0%, 60% { transform: translate(-50%, -50%) rotateY(0deg); }
-  72%, 100% { transform: translate(-50%, -50%) rotateY(180deg); }
+  0%, 58% { transform: translate(-50%, -50%) rotateY(0deg); }
+  66%, 100% { transform: translate(-50%, -50%) rotateY(180deg); }
 }
 @keyframes question-igor-copy-show {
-  0%, 70% { opacity: 0; transform: rotateY(180deg); }
-  72%, 100% { opacity: 1; transform: rotateY(180deg); }
+  0%, 64% { opacity: 0; transform: rotateY(180deg); }
+  66%, 100% { opacity: 1; transform: rotateY(180deg); }
 }
 @keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
 @keyframes question-options-show { 0%, 82% { opacity: 0; } 96%, 100% { opacity: 1; } }

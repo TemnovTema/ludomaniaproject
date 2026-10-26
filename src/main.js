@@ -153,8 +153,8 @@ function activateStorySequence() {
   const endingY = (viewportHeight - compactSize) / 2;
   const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
   const secondShiftEnding = -compactSize / 2 - compactGap / 2;
-  const firstShiftSeparated = viewportHeight - window.innerWidth * .25;
-  const secondShiftSeparated = window.innerWidth * .25;
+  const firstShiftSeparated = viewportHeight + window.innerWidth * .25;
+  const secondShiftSeparated = -window.innerWidth * .25;
   storySequence.style.setProperty('--small-scale', smallScale);
   storySequence.style.setProperty('--ending-scale', endingScale);
   storySequence.style.setProperty('--alice-copy-scale', 1 / smallScale);
@@ -174,9 +174,8 @@ function activateStorySequence() {
       <div class="story-question-layer" aria-label="Вопрос о переменах">
         <div class="question-orb question-orb--alice">
           <img src="/story-alice.png" alt="Портрет Алисы" />
-          <p>Какие перемены вы заметили?</p>
         </div>
-        <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /></div>
+        <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /><p>Какие перемены вы заметили?</p></div>
         <div class="question-orb question-orb--die" aria-label="Варианты ответа">
           <div class="question-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
           <div class="question-options">

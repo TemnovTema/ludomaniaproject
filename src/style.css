@@ -545,7 +545,7 @@ button { appearance: none; }
 @keyframes story-ending-hint-visibility { 0%, 72% { visibility: visible; } 72.2%, 100% { visibility: hidden; } }
 @keyframes question-igor-question {
   0%, 48% { left: 25%; width: var(--question-size); height: var(--question-size); }
-  76%, 100% { left: 20%; width: 44dvh; height: 44dvh; }
+  76%, 100% { left: 20%; width: calc(160% - 200dvh); height: calc(160% - 200dvh); }
 }
 @keyframes question-alice-hide {
   0%, 48% { left: 75%; opacity: 1; }

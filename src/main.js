@@ -150,6 +150,8 @@ function activateStorySequence() {
   const endingScale = .24;
   const compactSize = viewportHeight * endingScale;
   const compactGap = Math.max(4, Math.min(window.innerWidth * .005, 8));
+  const choiceAnswerSize = Math.min(viewportHeight * .96, window.innerWidth * .62);
+  const choiceQuestionSize = Math.max(compactSize, window.innerWidth - choiceAnswerSize);
   const endingY = (viewportHeight - compactSize) / 2;
   const firstShiftEnding = viewportHeight + compactSize / 2 + compactGap / 2;
   const secondShiftEnding = -compactSize / 2 - compactGap / 2;
@@ -167,23 +169,32 @@ function activateStorySequence() {
   storySequence.style.setProperty('--ending-y', `${endingY}px`);
   storySequence.style.setProperty('--first-shift-separated', `${firstShiftSeparated}px`);
   storySequence.style.setProperty('--second-shift-separated', `${secondShiftSeparated}px`);
+  storySequence.style.setProperty('--choice-start-size', `${compactSize}px`);
+  storySequence.style.setProperty('--choice-gap', `${compactGap}px`);
+  storySequence.style.setProperty('--choice-answer-size', `${choiceAnswerSize}px`);
+  storySequence.style.setProperty('--choice-question-size', `${choiceQuestionSize}px`);
   storySequence.innerHTML = `
     <div class="story-stage">
       <button class="story-back story-back--sequence" type="button">назад</button>
       <p class="story-ending-hint">Кликните на персонажей, по очереди</p>
       <div class="story-question-layer" aria-label="Вопрос о переменах">
-        <div class="question-orb question-orb--alice">
+        <div class="choice-orb choice-orb--alice">
           <img src="/story-alice.png" alt="Портрет Алисы" />
         </div>
-        <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /><p>Какие перемены вы заметили?</p></div>
-        <div class="question-orb question-orb--die" aria-label="Варианты ответа">
-          <div class="question-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="choice-orb choice-orb--die" aria-label="Варианты ответа">
+          <div class="choice-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
           <div class="question-options">
             <button type="button">Близкий стал чаще сидеть<br />в телефоне, днём и ночью</button>
             <button type="button">Пропали общие деньги или<br />появились расходы, о<br />которых я не знал(а)</button>
             <button type="button">Он стал раздражительнее<br />или реже отвечать на<br />обычные вопросы</button>
             <button type="button">Он начал скрывать траты<br />или уходить от вопросов<br />о деньгах</button>
             <button type="button">Другое</button>
+          </div>
+        </div>
+        <div class="choice-orb choice-orb--igor">
+          <div class="choice-orb-flip">
+            <div class="choice-orb-face choice-orb-face--portrait"><img src="/story-igor.png" alt="Портрет Игоря" /></div>
+            <div class="choice-orb-face choice-orb-face--question"><p>Какие перемены<br />вы заметили?</p></div>
           </div>
         </div>
       </div>

@@ -1,0 +1,3 @@
+@import '../../shared/scene.css';
+
+.scene--conversation { background: #405de5; color: #fff; }

@@ -3,47 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#202020" />
-    <title>О лудомании</title>
-    <link rel="stylesheet" href="/src/style.css" />
+    <meta name="theme-color" content="#f5f3eb" />
+    <title>Ставка на себя</title>
   </head>
   <body>
-    <main class="page-shell">
-      <section class="intro" aria-labelledby="intro-title" data-screen="home">
-        <header class="navigation">
-          <button class="round-button" type="button" data-section="self-check">тест</button>
-          <a class="brand-mark" href="#intro-title" data-home>
-            <svg class="brand-shape" viewBox="0 0 338 132" aria-hidden="true" focusable="false">
-              <path d="M66 0C29.5 0 0 29.5 0 66s29.5 66 66 66c28 0 49.5-18.5 71.5-39.5 17.5-16.8 40.5-16.8 63 0C222.5 113.5 244 132 272 132c36.5 0 66-29.5 66-66S308.5 0 272 0c-28 0-49.5 18.5-71.5 39.5-22.5 16.8-45.5 16.8-63 0C115.5 18.5 94 0 66 0Z" />
-            </svg>
-            <span>о лудомании</span>
-          </a>
-          <button class="round-button" type="button" data-section="support">помощь</button>
-        </header>
-
-        <div class="orb-grid">
-          <button class="orb lime-orb menu-orb" type="button" data-section="story" aria-label="Открыть историю">
-            <span class="six-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
-          </button>
-          <button class="orb blue-orb menu-orb" type="button" data-section="signs" aria-label="Как понять, что происходит"><span class="nested-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
-          <button class="orb yellow-orb menu-orb" type="button" data-section="actions" aria-label="Что делать сейчас"><span class="flower-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></button>
-          <button class="orb red-orb menu-orb" type="button" data-section="conversation" aria-label="Как говорить с близким"><span class="vesica-rings" aria-hidden="true"><i></i><i></i><i></i></span></button>
-          <button class="orb black-orb menu-orb" type="button" data-section="self-check" aria-label="Проверить ситуацию"></button>
-          <button class="orb black-orb menu-orb" type="button" data-section="support" aria-label="Где искать помощь"></button>
-        </div>
-
-        <p id="intro-title" class="statement">узнай, где найти поддержку,<br />если твой близкий играет в азартные игры</p>
-      </section>
-
-      <section class="content-screen" data-screen="content" aria-live="polite" tabindex="-1" hidden>
-        <header class="content-navigation">
-          <button class="back-button" type="button" data-home>← На главную</button>
-          <p class="content-kicker">о лудомании</p>
-          <button class="content-help" type="button" data-section="support">нужна помощь?</button>
-        </header>
-        <div class="content-layout" id="content-layout"></div>
-      </section>
-    </main>
+    <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

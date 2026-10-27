@@ -60,7 +60,8 @@
 }
 
 /* Revised phrase layout and the no-match route from the updated storyboard. */
-.conversation-phrases__hint{position:absolute;z-index:3;top:6.5%;right:3%;bottom:auto;left:auto;transform:none;margin:0;white-space:nowrap;text-align:right;font-size:11px;font-weight:400}
+.conversation-phrases__hint{position:absolute;z-index:3;top:6.5%;right:3%;bottom:auto;left:auto;transform:none;margin:0;white-space:nowrap;text-align:right;font-size:11px;font-weight:400;transition:opacity .6s,visibility 0s .6s}
+.conversation--submitted .conversation-phrases__hint{opacity:0;visibility:hidden}
 .conversation-phrases__no-talk{position:absolute;z-index:3;right:3%;bottom:5%;border:0;border-radius:100px;background:var(--lime);color:var(--ink);padding:14px 16px;font:700 11px/1 ConversationGilroy,Arial,sans-serif;cursor:pointer;transition:transform .25s,opacity .25s}
 .conversation-phrases__no-talk:hover{transform:scale(1.045)}
 .conversation-phrases__no-talk:focus-visible{outline:3px solid #679900;outline-offset:4px}

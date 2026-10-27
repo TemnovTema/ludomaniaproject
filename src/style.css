@@ -498,30 +498,15 @@ button { appearance: none; }
   animation-range: 72% 100%;
 }
 
-.question-pips,
 .question-options { position: absolute; inset: 0; }
 
-.question-pips { animation: question-pips-hide linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
-
-.question-pips i {
-  position: absolute;
-  width: 18%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #151515;
-}
-
-.question-pips i:nth-child(1) { left: 22%; top: 22%; }
-.question-pips i:nth-child(2) { right: 22%; top: 22%; }
-.question-pips i:nth-child(3) { left: 41%; top: 41%; }
-.question-pips i:nth-child(4) { left: 22%; bottom: 22%; }
-.question-pips i:nth-child(5) { right: 22%; bottom: 22%; }
-
-.question-options { opacity: 0; animation: question-options-show linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
-
 .question-options button {
+  --pip-size: 18%;
   position: absolute;
-  width: 34%;
+  left: var(--pip-x);
+  top: var(--pip-y);
+  translate: -50% -50%;
+  width: var(--pip-size);
   aspect-ratio: 1;
   padding: 8%;
   border: 0;
@@ -533,15 +518,29 @@ button { appearance: none; }
   font-size: clamp(11px, 1vw, 17px);
   line-height: 1.03;
   text-align: center;
-  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  animation: question-option-expand linear both;
+  animation-timeline: scroll(root);
+  animation-range: 72% 100%;
+  transition: scale 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  will-change: left, top, width;
 }
 
-.question-options button:nth-child(1) { left: 33%; top: 0; }
-.question-options button:nth-child(2) { left: 65.6%; top: 28.5%; }
-.question-options button:nth-child(3) { left: 0.4%; top: 28.5%; }
-.question-options button:nth-child(4) { left: 9.7%; top: 56.3%; }
-.question-options button:nth-child(5) { left: 53%; top: 59.2%; }
-.question-options button:hover { transform: scale(1.05); background: #343434; }
+.question-options button:nth-child(1) { --pip-x: 31%; --pip-y: 31%; --option-x: 50%; --option-y: 17%; }
+.question-options button:nth-child(2) { --pip-x: 69%; --pip-y: 31%; --option-x: 82.6%; --option-y: 45.5%; }
+.question-options button:nth-child(3) { --pip-x: 50%; --pip-y: 50%; --option-x: 17.4%; --option-y: 45.5%; }
+.question-options button:nth-child(4) { --pip-x: 31%; --pip-y: 69%; --option-x: 26.7%; --option-y: 73.3%; }
+.question-options button:nth-child(5) { --pip-x: 69%; --pip-y: 69%; --option-x: 70%; --option-y: 76.2%; }
+
+.question-options button span {
+  display: block;
+  opacity: 0;
+  transform: scale(.82);
+  animation: question-option-label-show linear both;
+  animation-timeline: scroll(root);
+  animation-range: 72% 100%;
+}
+
+.question-options button:hover { scale: 1.05; background: #343434; }
 .question-options button:focus-visible { outline: 3px solid #f5f4ef; outline-offset: 3px; }
 .question-options button.is-selected { background: #f5f4ef; color: #151515; box-shadow: 0 0 0 4px #151515; }
 
@@ -582,8 +581,23 @@ button { appearance: none; }
   62% { opacity: 1; transform: rotateY(-42deg) scale(.98); }
   70%, 100% { opacity: 1; transform: rotateY(0deg) scale(1); }
 }
-@keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
-@keyframes question-options-show { 0%, 82% { opacity: 0; } 96%, 100% { opacity: 1; } }
+@keyframes question-option-expand {
+  0%, 26% {
+    left: var(--pip-x);
+    top: var(--pip-y);
+    width: var(--pip-size);
+  }
+  84%, 100% {
+    left: var(--option-x);
+    top: var(--option-y);
+    width: 34%;
+  }
+}
+
+@keyframes question-option-label-show {
+  0%, 56% { opacity: 0; transform: scale(.82); }
+  84%, 100% { opacity: 1; transform: scale(1); }
+}
 
 .story-disc-flip {
   position: absolute;

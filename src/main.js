@@ -177,13 +177,12 @@ function activateStorySequence() {
         </div>
         <div class="question-orb question-orb--igor"><img src="/story-igor.png" alt="Портрет Игоря" /><p>Какие перемены вы заметили?</p></div>
         <div class="question-orb question-orb--die" aria-label="Варианты ответа">
-          <div class="question-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
           <div class="question-options">
-            <button type="button">Близкий стал чаще сидеть<br />в телефоне, днём и ночью</button>
-            <button type="button">Пропали общие деньги или<br />появились расходы, о<br />которых я не знал(а)</button>
-            <button type="button">Он стал раздражительнее<br />или реже отвечать на<br />обычные вопросы</button>
-            <button type="button">Он начал скрывать траты<br />или уходить от вопросов<br />о деньгах</button>
-            <button type="button">Другое</button>
+            <button type="button" aria-pressed="false"><span>Близкий стал чаще сидеть<br />в телефоне, днём и ночью</span></button>
+            <button type="button" aria-pressed="false"><span>Пропали общие деньги или<br />появились расходы, о<br />которых я не знал(а)</span></button>
+            <button type="button" aria-pressed="false"><span>Он стал раздражительнее<br />или реже отвечать на<br />обычные вопросы</span></button>
+            <button type="button" aria-pressed="false"><span>Он начал скрывать траты<br />или уходить от вопросов<br />о деньгах</span></button>
+            <button type="button" aria-pressed="false"><span>Другое</span></button>
           </div>
         </div>
       </div>

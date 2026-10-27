@@ -67,15 +67,24 @@ export function renderConversation(app) {
   const scene = app.querySelector('.conversation')
   let step = 'intro'
   let revealTimer
+  let transitionTimer
   const setStep = (next) => {
+    if (scene.classList.contains('conversation--transitioning') || step === next) return
     clearTimeout(revealTimer)
-    step = next
-    scene.dataset.step = next
     scene.classList.remove('conversation--ready')
-    window.scrollTo({ top: 0, behavior: 'instant' })
-    if (next === 'alice' || next === 'igor') {
-      revealTimer = window.setTimeout(() => scene.classList.add('conversation--ready'), 1800)
-    }
+    scene.classList.add('conversation--transitioning')
+    scene.dataset.nextStep = next
+    clearTimeout(transitionTimer)
+    transitionTimer = window.setTimeout(() => {
+      step = next
+      scene.dataset.step = next
+      scene.classList.remove('conversation--transitioning')
+      delete scene.dataset.nextStep
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      if (next === 'alice' || next === 'igor') {
+        revealTimer = window.setTimeout(() => scene.classList.add('conversation--ready'), 1550)
+      }
+    }, 750)
   }
   const onScroll = () => {
     if (step === 'intro' && window.scrollY > 35) setStep('alice')
@@ -100,6 +109,17 @@ export function renderConversation(app) {
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
+        const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
+        item.setAttribute('aria-label', label.replaceAll('\n', ' '))
+        item.innerHTML = [...label].map((character, index) => {
+          if (character === '\n') return '<br aria-hidden="true">'
+          const dx = ((index * 37 + Number(item.dataset.phrase) * 19) % 91) - 45
+          const dy = ((index * 53 + Number(item.dataset.phrase) * 29) % 111) - 55
+          const rotation = ((index * 23) % 61) - 30
+          return `<span class="conversation-phrase__letter" aria-hidden="true" style="--dx:${dx}px;--dy:${dy}px;--rot:${rotation}deg;--delay:${(index % 9) * 45}ms">${character === ' ' ? '&nbsp;' : character}</span>`
+        }).join('')
+      })
       scene.classList.add('conversation--submitted')
       return
     }

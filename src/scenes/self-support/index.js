@@ -1,10 +1,133 @@
 import './style.css'
-import { createSceneMarkup } from '../../shared/scene.js'
+
+const asset = '/scenes/self-support/'
+const phrases = [
+  { text: '«я больше не буду играть»', x: 15, y: 29 },
+  { text: '«я отыграюсь<br>и верну деньги»', x: 35, y: 21 },
+  { text: '«на этом можно заработать»', x: 60, y: 22 },
+  { text: '«у меня есть система»', x: 90, y: 23 },
+  { text: '«я могу контролировать игру,<br>играть аккуратно»', x: 74, y: 35 },
+  { text: '«это просто развлечение»', x: 18, y: 45 },
+  { text: '«это лёгкие деньги»', x: 86, y: 45 },
+  { text: '«я знаю то,<br>чего не знают другие»', x: 16, y: 62 },
+  { text: '«я сам справлюсь»', x: 80, y: 62 },
+]
+
+const advice = `
+  <div class="conversation-advice" role="dialog" aria-modal="true" aria-label="Что делать">
+    <div class="conversation-advice__circle">
+      <h2>что делать?</h2>
+      <div class="conversation-advice__copy">
+        <p>После признания можно спросить о конкретных<br class="conversation-desktop-break"> последствиях: сколько денег не хватает,<br class="conversation-desktop-break"> какие платежи предстоят, есть ли ещё долги.</p>
+        <p>Скажите, как это затрагивает вас. Необязательно<br class="conversation-desktop-break"> за один разговор добиться обещания больше никогда<br class="conversation-desktop-break"> не играть: важнее понять, что происходит сейчас<br class="conversation-desktop-break"> и какой следующий шаг человек готов обсудить.</p>
+      </div>
+      <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
+    </div>
+    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
+  </div>`
 
 export function renderSelfSupport(app) {
-  app.innerHTML = createSceneMarkup({
-    id: 'self-support',
-    title: 'Поддержка себя',
-    description: 'Здесь будут практики самоподдержки и напоминания о том, как беречь себя рядом с чужой зависимостью.',
+  app.innerHTML = `
+    <main class="conversation" data-step="intro">
+      <section class="conversation-screen conversation-intro" aria-label="Он признался и пообещал остановиться">
+        <h1>он признался<br>и пообещал остановиться</h1>
+        <div class="conversation-intro__portraits">
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+        </div>
+        <p class="conversation-scroll-hint">скролльте вниз</p>
+      </section>
+      <section class="conversation-screen conversation-alice" aria-label="Алиса хочет верить">
+        <h2>хочет верить, но боится повторения</h2>
+        <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
+        <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
+        <div class="conversation-story-circle conversation-story-circle--dark"><p>Не успела я собраться с мыслями,<br>как Игорь сам начал разговор.<br>Он признался, что проиграл деньги<br>на ставках, и пообещал прекратить.<br>Мне хотелось ему поверить,<br>но я боялась, что это повторится.</p></div>
+        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать игоря</button>
+      </section>
+      <section class="conversation-screen conversation-igor" aria-label="Игорь верит, что сможет остановиться">
+        <h2>верит, что сможет остановиться</h2>
+        <div class="conversation-story-circle conversation-story-circle--light"><p>Я сказал Алисе, что сделал пару<br>ставок и больше играть не буду.<br><br>О том, что уже крупно проиграл<br>и залез в долги, я промолчал. Тогда<br>я верил, что смогу остановиться сам.<br><br>Некоторое время я не играл, потом<br>снова начал ставить понемногу.<br>Постепенно суммы выросли,<br>и я опять проиграл много денег.</p></div>
+        <img class="conversation-igor__figure" src="${asset}igor.png" alt="Игорь">
+        <span class="conversation-person-name conversation-person-name--igor">Игорь</span>
+        <button class="conversation-button conversation-igor__button" type="button" data-next="phrases">далее</button>
+      </section>
+      <section class="conversation-screen conversation-phrases" aria-label="Какие фразы от близкого вы слышали">
+        <h2>какие фразы от близкого вы слышали?</h2>
+        <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
+        <div class="conversation-phrases__field">
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}">${phrase.text}</button>`).join('')}
+          <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
+        </div>
+        <button class="conversation-phrases__no-talk" type="button">мы ещё не говорили об игре</button>
+        <button class="conversation-button conversation-phrases__next" type="button">далее</button>
+        <button class="conversation-button conversation-phrases__advice" type="button">что делать?</button>
+      </section>
+    </main>`
+
+  const scene = app.querySelector('.conversation')
+  let step = 'intro'
+  let revealTimer
+  let transitionTimer
+  const setStep = (next) => {
+    if (scene.classList.contains('conversation--transitioning') || step === next) return
+    clearTimeout(revealTimer)
+    scene.classList.remove('conversation--ready')
+    scene.classList.add('conversation--transitioning')
+    scene.dataset.nextStep = next
+    clearTimeout(transitionTimer)
+    transitionTimer = window.setTimeout(() => {
+      step = next
+      scene.dataset.step = next
+      scene.classList.remove('conversation--transitioning')
+      delete scene.dataset.nextStep
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      if (next === 'alice' || next === 'igor') {
+        revealTimer = window.setTimeout(() => scene.classList.add('conversation--ready'), 1550)
+      }
+    }, 750)
+  }
+  const onScroll = () => {
+    if (step === 'intro' && window.scrollY > 35) setStep('alice')
+  }
+  window.addEventListener('scroll', onScroll, { passive: true })
+  scene.addEventListener('wheel', (event) => {
+    if (step === 'intro' && event.deltaY > 10) setStep('alice')
+  }, { passive: true })
+  let touchStartY = 0
+  scene.addEventListener('touchstart', (event) => { touchStartY = event.touches[0]?.clientY || 0 }, { passive: true })
+  scene.addEventListener('touchend', (event) => {
+    if (step === 'intro' && touchStartY - (event.changedTouches[0]?.clientY || 0) > 35) setStep('alice')
+  }, { passive: true })
+  scene.addEventListener('click', (event) => {
+    const next = event.target.closest('[data-next]')
+    if (next) { setStep(next.dataset.next); return }
+    const phrase = event.target.closest('.conversation-phrase')
+    if (phrase && !scene.classList.contains('conversation--submitted')) {
+      const selected = phrase.getAttribute('aria-pressed') !== 'true'
+      phrase.setAttribute('aria-pressed', String(selected))
+      scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      return
+    }
+    if (event.target.closest('.conversation-phrases__next, .conversation-phrases__no-talk')) {
+      scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
+        const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
+        item.setAttribute('aria-label', label.replaceAll('\n', ' '))
+        item.innerHTML = [...label].map((character, index) => {
+          if (character === '\n') return '<br aria-hidden="true">'
+          const dx = ((index * 37 + Number(item.dataset.phrase) * 19) % 91) - 45
+          const dy = ((index * 53 + Number(item.dataset.phrase) * 29) % 111) - 55
+          const rotation = ((index * 23) % 61) - 30
+          return `<span class="conversation-phrase__letter" aria-hidden="true" style="--dx:${dx}px;--dy:${dy}px;--rot:${rotation}deg;--delay:${(index % 9) * 45}ms">${character === ' ' ? '&nbsp;' : character}</span>`
+        }).join('')
+      })
+      scene.classList.add('conversation--submitted')
+      return
+    }
+    if (event.target.closest('.conversation-phrases__advice')) {
+      scene.insertAdjacentHTML('beforeend', advice)
+      requestAnimationFrame(() => scene.querySelector('.conversation-advice')?.classList.add('is-open'))
+      return
+    }
+    if (event.target.closest('.conversation-advice__close')) scene.querySelector('.conversation-advice')?.remove()
   })
 }

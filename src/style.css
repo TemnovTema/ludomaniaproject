@@ -582,7 +582,7 @@ button { appearance: none; }
   70%, 100% { opacity: 1; transform: rotateY(0deg) scale(1); }
 }
 @keyframes question-option-expand {
-  0%, 26% {
+  0%, 76% {
     left: var(--pip-x);
     top: var(--pip-y);
     width: var(--pip-size);
@@ -595,7 +595,7 @@ button { appearance: none; }
 }
 
 @keyframes question-option-label-show {
-  0%, 56% { opacity: 0; transform: scale(.82); }
+  0%, 84% { opacity: 0; transform: scale(.82); }
   84%, 100% { opacity: 1; transform: scale(1); }
 }
 

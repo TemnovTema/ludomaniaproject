@@ -451,6 +451,8 @@ button { appearance: none; }
 .question-orb--igor {
   left: 25%;
   z-index: 2;
+  perspective: 1200px;
+  transform-style: preserve-3d;
   animation: question-igor-question linear both;
   animation-timeline: scroll(root);
   animation-range: 72% 100%;
@@ -488,7 +490,10 @@ button { appearance: none; }
   font-size: clamp(14px, 1.35vw, 22px);
   line-height: 1.02;
   text-align: center;
-  animation: question-igor-copy-show linear both;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: center;
+  animation: question-igor-copy-reveal linear both;
   animation-timeline: scroll(root);
   animation-range: 72% 100%;
 }
@@ -556,9 +561,27 @@ button { appearance: none; }
   0%, 48% { left: 50%; width: var(--question-size); height: var(--question-size); }
   76%, 100% { left: calc(100% - 50dvh); width: 100dvh; height: 100dvh; }
 }
-.question-orb--igor img { animation: question-igor-image-hide linear both; animation-timeline: scroll(root); animation-range: 72% 100%; }
-@keyframes question-igor-image-hide { 0%, 76% { opacity: 1; transform: translateX(-50%) rotateY(0deg); } 90%, 100% { opacity: 0; transform: translateX(-50%) rotateY(90deg); } }
-@keyframes question-igor-copy-show { 0%, 82% { opacity: 0; } 94%, 100% { opacity: 1; } }
+.question-orb--igor img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: center;
+  animation: question-igor-image-flip linear both;
+  animation-timeline: scroll(root);
+  animation-range: 72% 100%;
+}
+
+/* The portrait and question are two faces of the same moving orb, rather than two fading screens. */
+@keyframes question-igor-image-flip {
+  0%, 48% { opacity: 1; transform: translateX(-50%) rotateY(0deg) scale(1); }
+  61% { opacity: 1; transform: translateX(-50%) rotateY(68deg) scale(.98); }
+  64%, 100% { opacity: 0; transform: translateX(-50%) rotateY(90deg) scale(.97); }
+}
+
+@keyframes question-igor-copy-reveal {
+  0%, 58% { opacity: 0; transform: rotateY(-90deg) scale(.97); }
+  62% { opacity: 1; transform: rotateY(-42deg) scale(.98); }
+  70%, 100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+}
 @keyframes question-pips-hide { 0%, 72% { opacity: 1; } 86%, 100% { opacity: 0; } }
 @keyframes question-options-show { 0%, 82% { opacity: 0; } 96%, 100% { opacity: 1; } }
 

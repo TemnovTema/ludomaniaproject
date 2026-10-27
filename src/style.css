@@ -520,7 +520,8 @@ button { appearance: none; }
   text-align: center;
   animation: question-option-expand linear both;
   animation-timeline: scroll(root);
-  animation-range: 72% 100%;
+  /* Keep the die intact while its outer circle is still growing. */
+  animation-range: 94% 100%;
   transition: scale 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
   will-change: left, top, width;
 }
@@ -537,7 +538,7 @@ button { appearance: none; }
   transform: scale(.82);
   animation: question-option-label-show linear both;
   animation-timeline: scroll(root);
-  animation-range: 72% 100%;
+  animation-range: 94% 100%;
 }
 
 .question-options button:hover { scale: 1.05; background: #343434; }
@@ -582,12 +583,12 @@ button { appearance: none; }
   70%, 100% { opacity: 1; transform: rotateY(0deg) scale(1); }
 }
 @keyframes question-option-expand {
-  0%, 76% {
+  0%, 8% {
     left: var(--pip-x);
     top: var(--pip-y);
     width: var(--pip-size);
   }
-  84%, 100% {
+  75%, 100% {
     left: var(--option-x);
     top: var(--option-y);
     width: 34%;
@@ -595,8 +596,8 @@ button { appearance: none; }
 }
 
 @keyframes question-option-label-show {
-  0%, 84% { opacity: 0; transform: scale(.82); }
-  84%, 100% { opacity: 1; transform: scale(1); }
+  0%, 58% { opacity: 0; transform: scale(.82); }
+  78%, 100% { opacity: 1; transform: scale(1); }
 }
 
 .story-disc-flip {

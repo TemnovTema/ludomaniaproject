@@ -19,8 +19,8 @@ const advice = `
     <div class="conversation-advice__circle">
       <h2>что делать?</h2>
       <div class="conversation-advice__copy">
-        <p>После признания можно спросить о конкретных последствиях: сколько денег не хватает, какие платежи предстоят, есть ли ещё долги.</p>
-        <p>Скажите, как это затрагивает вас. Необязательно за один разговор добиться обещания больше никогда не играть: важнее понять, что происходит сейчас и какой следующий шаг человек готов обсудить.</p>
+        <p>После признания можно спросить о конкретных<br class="conversation-desktop-break"> последствиях: сколько денег не хватает,<br class="conversation-desktop-break"> какие платежи предстоят, есть ли ещё долги.</p>
+        <p>Скажите, как это затрагивает вас. Необязательно<br class="conversation-desktop-break"> за один разговор добиться обещания больше никогда<br class="conversation-desktop-break"> не играть: важнее понять, что происходит сейчас<br class="conversation-desktop-break"> и какой следующий шаг человек готов обсудить.</p>
       </div>
       <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
     </div>
@@ -47,7 +47,7 @@ export function renderConversation(app) {
       </section>
       <section class="conversation-screen conversation-igor" aria-label="Игорь верит, что сможет остановиться">
         <h2>верит, что сможет остановиться</h2>
-        <div class="conversation-story-circle conversation-story-circle--light"><p>Я сказал Алисе, что сделал пару<br>ставок и больше играть не буду.<br><br>О том, что уже крупно проиграл<br>и залез в долги, я промолчал. Тогда<br>я верил, что смогу остановиться сам.<br><br>Некоторое время я не играл, потом<br>снова начал ставить понемногу.<br>Постепенно суммы выросли, и я опять<br>проиграл много денег.</p></div>
+        <div class="conversation-story-circle conversation-story-circle--light"><p>Я сказал Алисе, что сделал пару<br>ставок и больше играть не буду.<br><br>О том, что уже крупно проиграл<br>и залез в долги, я промолчал. Тогда<br>я верил, что смогу остановиться сам.<br><br>Некоторое время я не играл, потом<br>снова начал ставить понемногу.<br>Постепенно суммы выросли,<br>и я опять проиграл много денег.</p></div>
         <img class="conversation-igor__figure" src="${asset}igor.png" alt="Игорь">
         <span class="conversation-person-name conversation-person-name--igor">Игорь</span>
         <button class="conversation-button conversation-igor__button" type="button" data-next="phrases">далее</button>

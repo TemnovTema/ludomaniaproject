@@ -35,3 +35,26 @@
 @keyframes conversation-letter-dissolve{0%{opacity:1;transform:translate(0,0) rotate(0);filter:blur(0)}40%{opacity:.8}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot));filter:blur(5px)}}
 .conversation--submitted .conversation-phrases__advice{animation:conversation-element-in .55s 1.25s both}
 @media(prefers-reduced-motion:reduce){.conversation-intro__ring,.conversation-intro__ring img{transition:none}.conversation--transitioning .conversation-screen,.conversation[data-next-step=alice] .conversation-alice,.conversation[data-next-step=igor] .conversation-igor,.conversation[data-next-step=phrases] .conversation-phrases,.conversation-phrase__letter,.conversation--submitted .conversation-phrases__advice{animation:none!important}.conversation-phrase__letter{opacity:0}}
+
+/* Typography tuned for the 1280 × 832 storyboard viewport. */
+@media (min-width:701px){
+  .conversation-screen h1,.conversation-screen h2{font-size:42px;font-weight:700}
+  .conversation-story-circle{width:min(42vw,67vh)}
+  .conversation-story-circle p{font-size:22px;font-weight:400;line-height:1.06}
+  .conversation-story-circle--light p{padding:5%;font-size:clamp(20px,1.82vw,22px)}
+  .conversation-button{font-size:27px;font-weight:700}
+  .conversation-phrase{font-size:15px;font-weight:400}
+  .conversation-phrase[aria-pressed=true]{font-weight:700}
+  .conversation-intro__person span,.conversation-person-name{font-size:34px}
+  .conversation-advice__circle{width:min(99vh,85vw);padding:4%}
+  .conversation-advice h2{font-size:60px;font-weight:700}
+  .conversation-advice p{font-size:clamp(20px,1.82vw,22px);font-weight:400;line-height:1.06}
+  .conversation-advice a{font-size:16px;font-weight:700}
+}
+@media (max-width:700px){
+  .conversation-story-circle{width:min(78vw,50vh)}
+  .conversation-story-circle p{font-size:13.5px;line-height:1.08;padding:7%}
+  .conversation-advice__circle{padding:7%}
+  .conversation-advice p{font-size:13.5px;line-height:1.08;text-wrap:balance}
+  .conversation-desktop-break{display:none}
+}

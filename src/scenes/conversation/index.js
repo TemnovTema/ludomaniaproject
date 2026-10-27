@@ -56,7 +56,7 @@ export function renderConversation(app) {
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
           ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}">${phrase.text}</button>`).join('')}
-          <img class="conversation-phrases__figure" src="${asset}igor.png" alt="">
+          <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-phrases__no-talk" type="button">мы ещё не говорили об игре</button>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>

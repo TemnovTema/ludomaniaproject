@@ -20,7 +20,7 @@ const advice = `
       </div>
       <a href="#help">Как определить свои границы<br class="conversation-desktop-break"> и разделить ответственность <span aria-hidden="true">➜</span></a>
     </div>
-    <a class="conversation-advice__next" href="#menu">узнать, что было дальше</a>
+    <a class="conversation-advice__next" href="#menu">а что теперь?</a>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 

@@ -28,16 +28,7 @@ const advice = `
 
 export function renderHelp(app) {
   app.innerHTML = `
-    <main class="conversation conversation--help" data-step="intro">
-      <section class="conversation-screen conversation-intro" aria-label="Долгов оказалось больше, и он попросил помочь">
-        <h1>долгов оказалось больше,<br>и он попросил помочь</h1>
-        <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
-        </div>
-        <p class="conversation-scroll-hint">скролльте вниз</p>
-        <button class="conversation-back conversation-back--intro" type="button" data-back="intro" aria-label="Назад"><svg viewBox="0 0 34 22" width="34" height="22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M33 11H1m0 0 9-9m-9 9 9 9"/></svg></button>
-      </section>
+    <main class="conversation conversation--help" data-step="alice">
       <section class="conversation-screen conversation-alice" aria-label="Алиса хочет помочь, пока не выросли долги">
         <h2>хочет помочь, пока не выросли долги</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
@@ -73,7 +64,7 @@ export function renderHelp(app) {
     item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
   })
   scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
-  let step = 'intro'
+  let step = 'alice'
   let revealTimer
   let transitionTimer
   let adviceRevealTimer
@@ -109,31 +100,21 @@ export function renderHelp(app) {
     clearTimeout(adviceRevealTimer)
     adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
   }
-  if (shouldRestoreAdvice('#recognition/help')) {
+  const restoringAdvice = shouldRestoreAdvice('#recognition/help')
+  if (restoringAdvice) {
     step = 'phrases'
     scene.dataset.step = 'phrases'
     scene.classList.add('conversation--submitted')
     showAdvice()
   }
-  const onScroll = () => {
-    if (step === 'intro' && window.scrollY > 35) setStep('alice')
+  if (!restoringAdvice) {
+    revealTimer = window.setTimeout(() => scene.classList.add('conversation--ready'), 1550)
   }
-  window.addEventListener('scroll', onScroll, { passive: true })
-  scene.addEventListener('wheel', (event) => {
-    if (step === 'intro' && event.deltaY > 10) setStep('alice')
-  }, { passive: true })
-  let touchStartY = 0
-  scene.addEventListener('touchstart', (event) => { touchStartY = event.touches[0]?.clientY || 0 }, { passive: true })
-  scene.addEventListener('touchend', (event) => {
-    if (step === 'intro' && touchStartY - (event.changedTouches[0]?.clientY || 0) > 35) setStep('alice')
-  }, { passive: true })
   scene.addEventListener('click', (event) => {
     const back = event.target.closest('[data-back]')
     if (back) {
-      if (back.dataset.back === 'intro') {
+      if (back.dataset.back === 'alice') {
         returnToPreviousAdvice('#recognition/conversation')
-      } else if (back.dataset.back === 'alice') {
-        setStep('intro')
       } else if (back.dataset.back === 'igor') {
         setStep('alice')
       } else if (back.dataset.back === 'phrases') {

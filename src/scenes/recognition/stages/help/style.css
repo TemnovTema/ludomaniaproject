@@ -84,6 +84,8 @@
 
 /* Keep the same 22px Gilroy Regular as conversation at storyboard width,
    scaling with the circle on narrower desktop viewports. */
+@font-face{font-family:ConversationHelpRegular;src:url('/scenes/recognition/help/gilroy-regular.ttf');font-weight:400}
+.conversation.conversation--help .conversation-alice .conversation-story-circle p{font-family:ConversationHelpRegular,Arial,sans-serif;font-weight:400}
 @media (min-width:701px){
   .conversation-story-circle p,
   .conversation-story-circle--light p{font-size:clamp(16px,1.72vw,22px);font-weight:400}

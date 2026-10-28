@@ -131,3 +131,20 @@
 @keyframes conversation-back-appear{from{opacity:0}to{opacity:1}}
 @keyframes conversation-intro-back-appear{from{opacity:0}to{opacity:.4}}
 @media(prefers-reduced-motion:reduce){.conversation[data-step=phrases] .conversation-phrases .conversation-back,.conversation[data-step=intro] .conversation-intro .conversation-back--intro{animation:none}}
+
+/* Question screens use each chapter colour and the matching text contrast. */
+.conversation.conversation--recognition .conversation-phrases,
+.conversation.conversation--conversation .conversation-phrases,
+.conversation.conversation--help .conversation-phrases,
+.conversation.conversation--self-support .conversation-phrases,
+.conversation.conversation--responsibility .conversation-phrases{background:var(--chapter-accent);color:var(--chapter-accent-text)}
+.conversation .conversation-phrases .conversation-phrase{color:var(--chapter-accent-text);opacity:.58}
+.conversation .conversation-phrases .conversation-phrase:hover,
+.conversation .conversation-phrases .conversation-phrase[aria-pressed=true]{color:var(--chapter-accent-text);opacity:1}
+.conversation .conversation-phrases .conversation-phrases__hint{color:var(--chapter-accent-text);opacity:.5}
+.conversation .conversation-phrases .conversation-back{background:var(--chapter-accent);border-color:var(--chapter-accent-text);color:var(--chapter-accent-text)}
+.conversation.conversation--recognition .conversation-phrases .conversation-button,
+.conversation.conversation--conversation .conversation-phrases .conversation-button,
+.conversation.conversation--help .conversation-phrases .conversation-button,
+.conversation.conversation--self-support .conversation-phrases .conversation-button,
+.conversation.conversation--responsibility .conversation-phrases .conversation-button{background:var(--ink);color:var(--paper)}

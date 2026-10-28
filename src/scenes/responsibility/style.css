@@ -91,3 +91,6 @@
 @media (min-width:701px){
   .conversation.conversation--responsibility .conversation-story-circle p{font-size:clamp(16px,1.72vw,22px);font-weight:400}
 }
+
+/* Keep the full advice button above the answer field after submission. */
+.conversation--responsibility.conversation--submitted .conversation-phrases__advice{z-index:4}

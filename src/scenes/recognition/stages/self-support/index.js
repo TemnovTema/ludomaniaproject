@@ -20,10 +20,9 @@ const advice = `
         <p>Обращаться за поддержкой можно независимо<br class="conversation-desktop-break"> от того, признаёт ли близкий проблему и ищет ли<br class="conversation-desktop-break"> помощь для себя. Разговор с психологом, группа<br class="conversation-desktop-break"> поддержки или доверенный человек могут помочь вам<br class="conversation-desktop-break"> разобраться со своим состоянием и решениями.</p>
         <p>Не нужно ждать, пока ситуация станет ещё тяжелее.</p>
       </div>
-      <a href="#help">Где получить поддержку для себя <span aria-hidden="true">➜</span></a>
+      <p class="conversation-advice__hint">Подробнее о том, где получить поддержку для себя<br>можно прочитать в разделе помощи</p>
     </div>
     <a class="conversation-advice__next" href="#recognition/responsibility">узнать, что было дальше</a>
-    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderSelfSupport(app) {
@@ -32,8 +31,8 @@ export function renderSelfSupport(app) {
       <section class="conversation-screen conversation-intro" aria-label="Помощь нужна не только ему">
         <h1>помощь нужна не только ему</h1>
         <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
@@ -145,10 +144,6 @@ export function renderSelfSupport(app) {
       clearTimeout(adviceRevealTimer)
       adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
-    }
-    if (event.target.closest('.conversation-advice__close')) {
-      clearTimeout(adviceRevealTimer)
-      scene.querySelector('.conversation-advice')?.remove()
     }
   })
 }

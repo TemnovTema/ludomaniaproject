@@ -19,10 +19,9 @@ const advice = `
         <p>Желание немедленно помочь с долгами понятно:<br class="conversation-desktop-break"> вам хочется обезопасить свою семью. Прежде чем<br class="conversation-desktop-break"> передавать деньги или брать кредит, выясните, какие<br class="conversation-desktop-break"> обязательства оформлены на вас и чем вы будете<br class="conversation-desktop-break"> оплачивать собственные необходимые расходы.</p>
         <p>Если близкий готов участвовать, можно вместе собрать<br class="conversation-desktop-break"> сведения о его задолженностях и обратиться<br class="conversation-desktop-break"> за финансовой консультацией — без обещания<br class="conversation-desktop-break"> погасить их за него.</p>
       </div>
-      <a href="#help">Как безопасно помочь близкому <span aria-hidden="true">➜</span></a>
+      <p class="conversation-advice__hint">Подробнее о том, как безопасно помочь близкому<br>можно прочитать в разделе помощи</p>
     </div>
     <a class="conversation-advice__next" href="#recognition/self-support">узнать, что было дальше</a>
-    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderHelp(app) {
@@ -31,8 +30,8 @@ export function renderHelp(app) {
       <section class="conversation-screen conversation-intro" aria-label="Долгов оказалось больше, и он попросил помочь">
         <h1>долгов оказалось больше,<br>и он попросил помочь</h1>
         <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
@@ -144,10 +143,6 @@ export function renderHelp(app) {
       clearTimeout(adviceRevealTimer)
       adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
-    }
-    if (event.target.closest('.conversation-advice__close')) {
-      clearTimeout(adviceRevealTimer)
-      scene.querySelector('.conversation-advice')?.remove()
     }
   })
 }

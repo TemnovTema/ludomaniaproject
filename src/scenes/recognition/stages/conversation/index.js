@@ -23,10 +23,9 @@ const advice = `
         <p>После признания можно спросить о конкретных<br class="conversation-desktop-break"> последствиях: сколько денег не хватает,<br class="conversation-desktop-break"> какие платежи предстоят, есть ли ещё долги.</p>
         <p>Скажите, как это затрагивает вас. Необязательно<br class="conversation-desktop-break"> за один разговор добиться обещания больше никогда<br class="conversation-desktop-break"> не играть: важнее понять, что происходит сейчас<br class="conversation-desktop-break"> и какой следующий шаг человек готов обсудить.</p>
       </div>
-      <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
+      <p class="conversation-advice__hint">Подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
     </div>
     <a class="conversation-advice__next" href="#recognition/help">узнать, что было дальше</a>
-    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderConversation(app) {
@@ -35,8 +34,8 @@ export function renderConversation(app) {
       <section class="conversation-screen conversation-intro" aria-label="Он признался и пообещал остановиться">
         <h1>он признался<br>и пообещал остановиться</h1>
         <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
@@ -148,10 +147,6 @@ export function renderConversation(app) {
       clearTimeout(adviceRevealTimer)
       adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
-    }
-    if (event.target.closest('.conversation-advice__close')) {
-      clearTimeout(adviceRevealTimer)
-      scene.querySelector('.conversation-advice')?.remove()
     }
   })
 }

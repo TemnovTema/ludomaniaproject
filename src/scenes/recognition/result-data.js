@@ -9,6 +9,15 @@ import {
 
 const storageKey = 'stavka-na-sebya:story-answers:v1'
 
+export function resetStoryAnswers() {
+  try {
+    window.localStorage.removeItem(storageKey)
+    return true
+  } catch {
+    return false
+  }
+}
+
 function readStore() {
   try {
     const value = JSON.parse(window.localStorage.getItem(storageKey) || '{}')

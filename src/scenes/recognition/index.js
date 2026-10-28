@@ -1,5 +1,13 @@
 import './style.css'
-import { completeQuestion, getSavedAnswers, saveSelection } from './result-data.js'
+import { completeQuestion, getSavedAnswers, resetStoryAnswers, saveSelection } from './result-data.js'
+
+window.addEventListener('hashchange', (event) => {
+  const previous = new URL(event.oldURL).hash
+  const next = new URL(event.newURL).hash
+  if (next === '#recognition' && (previous === '#menu' || previous === '')) {
+    resetStoryAnswers()
+  }
+})
 
 const asset = '/scenes/recognition/'
 const phrases = [
@@ -18,10 +26,9 @@ const advice = `
       <div class="conversation-advice__copy">
         <p>У перемен могут быть разные причины.<br class="conversation-desktop-break"> Пока вы не знаете, что произошло, отделите факты<br class="conversation-desktop-break"> от догадок: какие расходы вызывают вопросы, хватает<br class="conversation-desktop-break"> ли денег на общие платежи и насколько открыто<br class="conversation-desktop-break"> близкий говорит с вами о финансах. Если затронуты<br class="conversation-desktop-break"> ваши деньги, проверьте счета, к которым у вас есть<br class="conversation-desktop-break"> доступ, и позаботьтесь о сохранности своих средств.</p>
       </div>
-      <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
+      <p class="conversation-advice__hint">Подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
     </div>
     <a class="conversation-advice__next" href="#recognition/conversation">узнать, что было дальше</a>
-    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderRecognition(app) {
@@ -30,8 +37,8 @@ export function renderRecognition(app) {
       <section class="conversation-screen conversation-intro" aria-label="Узнала, что ее близкий сделал ставки и проиграл">
         <h1>узнала, что ее близкий<br>сделал ставки и проиграл</h1>
         <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
@@ -143,10 +150,6 @@ export function renderRecognition(app) {
       clearTimeout(adviceRevealTimer)
       adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
-    }
-    if (event.target.closest('.conversation-advice__close')) {
-      clearTimeout(adviceRevealTimer)
-      scene.querySelector('.conversation-advice')?.remove()
     }
   })
 }

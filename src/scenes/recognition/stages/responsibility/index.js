@@ -20,10 +20,9 @@ const advice = `
         <p>Граница описывает ваши действия: например,<br class="conversation-desktop-break"> «я не буду давать деньги», или «я не буду давать деньги<br class="conversation-desktop-break"> напрямую, но буду оплачивать специалиста или<br class="conversation-desktop-break"> учёбу», или «я продолжу разговор, когда мы оба<br class="conversation-desktop-break"> сможем говорить спокойно».</p>
         <p>Вы можете предложить контакт специалиста<br class="conversation-desktop-break"> и поддержать решение близкого обратиться к нему.<br class="conversation-desktop-break"> Принять это решение и работать над изменениями<br class="conversation-desktop-break"> может только он сам; вам не нужно откладывать<br class="conversation-desktop-break"> собственную жизнь до этого момента.</p>
       </div>
-      <a href="#help">Как определить свои границы<br class="conversation-desktop-break"> и разделить ответственность <span aria-hidden="true">➜</span></a>
+      <p class="conversation-advice__hint">Подробнее о том, как определить свои границы<br>и разделить ответственность можно<br>прочитать в разделе помощи</p>
     </div>
     <a class="conversation-advice__next" href="#menu">а что теперь?</a>
-    <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderResponsibility(app) {
@@ -32,8 +31,8 @@ export function renderResponsibility(app) {
       <section class="conversation-screen conversation-intro" aria-label="Кто за что отвечает">
         <h1>кто за что отвечает?</h1>
         <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
+          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
@@ -145,10 +144,6 @@ export function renderResponsibility(app) {
       clearTimeout(adviceRevealTimer)
       adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
-    }
-    if (event.target.closest('.conversation-advice__close')) {
-      clearTimeout(adviceRevealTimer)
-      scene.querySelector('.conversation-advice')?.remove()
     }
   })
 }

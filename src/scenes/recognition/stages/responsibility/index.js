@@ -24,7 +24,7 @@ const advice = `
       <p class="conversation-advice__hint">подробнее о том, как определить свои границы<br>и разделить ответственность можно<br>прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
-    <a class="conversation-advice__next" href="#menu">а что теперь?</a>
+    <a class="conversation-advice__next" href="#help">а что теперь?</a>
   </div>`
 
 export function renderResponsibility(app) {

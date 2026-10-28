@@ -36,11 +36,20 @@ const advice = `
 export function renderRecognition(app) {
   app.innerHTML = `
     <main class="conversation conversation--recognition" data-step="intro">
-      <section class="conversation-screen conversation-intro" aria-label="Узнала, что ее близкий сделал ставки и проиграл">
-        <h1>узнала, что ее близкий<br>сделал ставки и проиграл</h1>
-        <div class="conversation-intro__portraits">
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div></div>
-          <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
+      <section class="conversation-screen conversation-intro" aria-label="Перед началом истории">
+        <h1>перед началом истории</h1>
+        <div class="conversation-intro__person conversation-intro__person--alice">
+          <div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div>
+          <span>близкий</span>
+        </div>
+        <div class="conversation-intro__disclaimer">
+          <p>История создана на основе интервью<br>с людьми, чьи близкие столкнулись<br>с игровой зависимостью.</p>
+          <p>Она объединяет повторяющиеся ситуации<br>и переживания и не воспроизводит историю<br>одного конкретного человека или пары,<br>а ее герои — собирательные образы игрока<br>и его близкого.</p>
+          <p>Весь материал подготовлен<br>под редакцией клинического психолога.</p>
+        </div>
+        <div class="conversation-intro__person conversation-intro__person--igor">
+          <div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div>
+          <span>игрок</span>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
         <button class="conversation-back conversation-back--intro" type="button" data-back="intro" aria-label="Назад"><svg viewBox="0 0 34 22" width="34" height="22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M33 11H1m0 0 9-9m-9 9 9 9"/></svg></button>

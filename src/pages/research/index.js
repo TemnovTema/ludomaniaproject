@@ -72,7 +72,7 @@ const situations = [
 function renderHeader() {
   return `
     <header class="research-header">
-      <button class="research-header__utility" type="button">тест</button>
+      <a class="research-header__utility" href="#menu">в меню</a>
       <a class="research-header__utility" href="#help">помощь</a>
     </header>
   `

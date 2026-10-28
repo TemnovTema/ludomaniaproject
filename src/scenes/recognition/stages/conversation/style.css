@@ -101,3 +101,24 @@
 .conversation.conversation--conversation .conversation-intro__person:hover .conversation-intro__ring{border-color:rgba(21,20,20,.4)}
 .conversation.conversation--conversation .conversation-scroll-hint{color:rgba(21,20,20,.5);opacity:1}
 .conversation.conversation--conversation .conversation-advice__circle .conversation-advice__hint{color:rgba(21,20,20,.5);font:400 12px/1.05 ConversationGilroy,Arial,sans-serif;margin:0;text-align:center}
+
+/* Landing-button outline and hover response without changing button dimensions. */
+.conversation .conversation-button,
+.conversation .conversation-advice__next {
+  outline: 1.5px solid var(--ink);
+  outline-offset: -1.5px;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .5s;
+}
+.conversation .conversation-phrases .conversation-button,
+.conversation .conversation-igor .conversation-button,
+.conversation .conversation-advice__next { outline-color: var(--paper); }
+.conversation .conversation-button:hover,
+.conversation .conversation-advice__next:hover,
+.conversation .conversation-back:not(.conversation-back--intro):hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.conversation .conversation-igor .conversation-button:hover,
+.conversation .conversation-igor .conversation-back:hover {
+  box-shadow: 5px 5px 0 var(--chapter-accent);
+}

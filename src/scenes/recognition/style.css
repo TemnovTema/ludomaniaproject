@@ -148,3 +148,75 @@
 .conversation.conversation--help .conversation-phrases .conversation-button,
 .conversation.conversation--self-support .conversation-phrases .conversation-button,
 .conversation.conversation--responsibility .conversation-phrases .conversation-button{background:var(--ink);color:var(--paper)}
+
+/* Recognition's opening note replaces the original two-portrait title screen. */
+.conversation--recognition .conversation-intro__person{
+  position:absolute;
+  z-index:2;
+  display:block;
+  width:min(22.35vw,286px);
+  height:auto;
+}
+.conversation--recognition .conversation-intro__person--alice{top:18.5%;left:4.75%}
+.conversation--recognition .conversation-intro__person--igor{top:49.75%;right:4.75%}
+.conversation--recognition .conversation-intro__ring{
+  display:block;
+  width:100%;
+  border:0;
+  border-radius:50%;
+  box-shadow:none;
+  overflow:hidden;
+  clip-path:circle(49.5% at 50% 50%);
+}
+.conversation--recognition .conversation-intro__ring img{display:block;width:100%;height:100%;object-fit:cover}
+.conversation--recognition .conversation-intro__person:hover .conversation-intro__ring{border:0;box-shadow:none;transform:scale(1.045)}
+.conversation--recognition .conversation-intro__person span{position:static;display:block;margin-top:8px;font-size:30px;line-height:1}
+.conversation--recognition .conversation-intro__person--igor span{text-align:right}
+.conversation--recognition .conversation-intro__disclaimer{
+  position:absolute;
+  top:18.5%;
+  left:50%;
+  width:min(42vw,67vh);
+  aspect-ratio:1;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  padding:34px;
+  border-radius:50%;
+  background:var(--paper);
+  text-align:center;
+}
+.conversation--recognition .conversation-intro__disclaimer p{margin:0;font:400 clamp(16px,1.56vw,20px)/1.02 ConversationGilroy,Arial,sans-serif}
+@media(max-width:700px){
+  .conversation--recognition .conversation-intro__person{width:min(35vw,155px)}
+  .conversation--recognition .conversation-intro__person--alice{top:14%;left:4%}
+  .conversation--recognition .conversation-intro__person--igor{top:auto;bottom:12%;right:4%}
+  .conversation--recognition .conversation-intro__person span{font-size:23px}
+  .conversation--recognition .conversation-intro__disclaimer{top:30%;width:min(78vw,390px);gap:10px;padding:7%}
+  .conversation--recognition .conversation-intro__disclaimer p{font-size:clamp(11px,2.55vw,15px);line-height:1.04}
+  .conversation--recognition .conversation-intro__disclaimer br{display:none}
+}
+
+/* Landing-button outline and hover response without changing button dimensions. */
+.conversation .conversation-button,
+.conversation .conversation-advice__next {
+  outline: 1.5px solid var(--ink);
+  outline-offset: -1.5px;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .5s;
+}
+.conversation .conversation-phrases .conversation-button,
+.conversation .conversation-igor .conversation-button,
+.conversation .conversation-advice__next { outline-color: var(--paper); }
+.conversation .conversation-button:hover,
+.conversation .conversation-advice__next:hover,
+.conversation .conversation-back:not(.conversation-back--intro):hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.conversation .conversation-igor .conversation-button:hover,
+.conversation .conversation-igor .conversation-back:hover {
+  box-shadow: 5px 5px 0 var(--chapter-accent);
+}

@@ -1,49 +1,50 @@
 import './style.css'
 
-function rings(count, className = '') {
-  return `<span class="pattern ${className}" aria-hidden="true">${Array.from(
-    { length: count },
-    () => '<i></i>',
-  ).join('')}</span>`
+const navigationTitles = {
+  research: 'research',
+  help: 'помощь',
+  boundaries: 'границы',
+  'self-support': 'поддержка',
+  responsibility: 'ответственность',
 }
 
-function patternMarkup(pattern) {
-  if (pattern === 'six-rings') return rings(6, 'pattern--six')
-  if (pattern === 'wave-rings') return rings(7, 'pattern--wave')
-  if (pattern === 'flower-rings') return rings(6, 'pattern--flower')
-  if (pattern === 'vesica-rings') return rings(3, 'pattern--vesica')
-  return ''
-}
-
-function menuLink(section) {
-  const label = section.title.replace('\n', '<br />')
-
-  return [
-    '<a class="menu-orb menu-orb--', section.tone,
-    '" href="#', section.id,
-    '" aria-label="', section.title.replace('\n', ' '), '">',
-    patternMarkup(section.pattern),
-    '<span class="menu-orb__label">', label, '</span>',
-    '</a>',
-  ].join('')
+function navigationLinks(sections) {
+  return sections
+    .filter(({ id }) => id !== 'recognition')
+    .map(({ id }) => `<a href="#${id}">${navigationTitles[id]}</a>`)
+    .join('')
 }
 
 export function renderLanding(app, sections) {
+  const links = navigationLinks(sections)
+
   app.innerHTML = [
-    '<main class="start-screen">',
-    '<header class="start-header">',
-    '<p class="project-name">ставка<br />на себя.</p>',
-    '<a class="brand-mark" href="#menu" aria-label="О лудомании, к меню">',
-    '<svg viewBox="0 0 260 92" role="img" aria-hidden="true">',
-    '<path d="M46 8C19 8 4 29 4 49s15 35 42 35c27 0 36-21 55-21s28 21 55 21c27 0 42-15 42-35S183 8 156 8c-27 0-36 21-55 21S73 8 46 8Z" />',
-    '</svg><span>о лудомании</span></a>',
-    '<nav class="utility-nav" aria-label="Сервисная навигация">',
-    '<button type="button">тест</button><button type="button">помощь</button>',
-    '</nav></header>',
-    '<section id="menu" class="menu-grid" aria-label="Разделы проекта">',
-    sections.map(menuLink).join(''),
+    '<main class="home">',
+    '<header class="home-header">',
+    '<a class="home-brand" href="#menu" aria-label="Ставка на себя, на главную">ставка<br />на себя.</a>',
+    '<nav class="home-nav" aria-label="Разделы проекта">', links, '</nav>',
+    '<a class="home-header__story" href="#recognition">пройти историю <span aria-hidden="true">↗</span></a>',
+    '<details class="home-menu">',
+    '<summary aria-label="Открыть меню"><span></span><span></span></summary>',
+    '<nav aria-label="Разделы проекта">', links, '<a class="home-menu__story" href="#recognition">пройти историю ↗</a>', '</nav>',
+    '</details>',
+    '</header>',
+    '<section id="menu" class="home-hero" aria-labelledby="home-title">',
+    '<div class="home-hero__copy">',
+    '<p class="home-kicker">проект о&nbsp;лудомании и&nbsp;поддержке близких</p>',
+    '<h1 id="home-title">когда играет близкий,<br />поддержка нужна и&nbsp;вам.</h1>',
+    '<p class="home-lead">Интерактивная история помогает заметить, что&nbsp;с&nbsp;вами происходит, и&nbsp;выбрать следующий бережный шаг.</p>',
+    '<div class="home-actions">',
+    '<a class="home-primary" href="#recognition">начать историю <span aria-hidden="true">→</span></a>',
+    '<p>Несколько минут. Можно остановиться в&nbsp;любой момент.</p>',
+    '</div>',
+    '</div>',
+    '<figure class="home-stage" aria-label="Алиса и Игорь, герои интерактивной истории">',
+    '<div class="home-stage__ellipse" aria-hidden="true"></div>',
+    '<img class="home-stage__alice" src="/scenes/recognition/alice.png" alt="Алиса" />',
+    '<img class="home-stage__igor" src="/scenes/recognition/igor.png" alt="Игорь" />',
+    '</figure>',
     '</section>',
-    '<p class="screen-note">узнай, где найти поддержку,<br />если твой близкий играет в азартные игры</p>',
     '</main>',
   ].join('')
 }

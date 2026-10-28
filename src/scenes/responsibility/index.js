@@ -2,15 +2,12 @@ import './style.css'
 
 const asset = '/scenes/responsibility/'
 const phrases = [
-  { text: '«я больше не буду играть»', x: 15, y: 29 },
-  { text: '«я отыграюсь<br>и верну деньги»', x: 35, y: 21 },
-  { text: '«на этом можно заработать»', x: 60, y: 22 },
-  { text: '«у меня есть система»', x: 90, y: 23 },
-  { text: '«я могу контролировать игру,<br>играть аккуратно»', x: 74, y: 35 },
-  { text: '«это просто развлечение»', x: 18, y: 45 },
-  { text: '«это лёгкие деньги»', x: 86, y: 45 },
-  { text: '«я знаю то,<br>чего не знают другие»', x: 16, y: 62 },
-  { text: '«я сам справлюсь»', x: 80, y: 62 },
+  { text: 'как сказать близкому,<br>что я больше не буду<br>оплачивать его долги', x: 25, y: 28 },
+  { text: 'где получить поддержку для себя', x: 57, y: 22 },
+  { text: 'как предложить близкому<br>обратиться за помощью,<br>если решение остаётся за ним', x: 77, y: 34 },
+  { text: 'что делать с долгом или кредитом,<br>который оформлен на меня', x: 18, y: 49 },
+  { text: 'как понять, на каких условиях<br>я готов(а) продолжать наши отношения', x: 84, y: 59 },
+  { text: 'как защитить свои деньги<br>и сохранить средства<br>на необходимые расходы', x: 18, y: 68 },
 ]
 
 const advice = `
@@ -18,47 +15,47 @@ const advice = `
     <div class="conversation-advice__circle">
       <h2>что делать?</h2>
       <div class="conversation-advice__copy">
-        <p>После признания можно спросить о конкретных<br class="conversation-desktop-break"> последствиях: сколько денег не хватает,<br class="conversation-desktop-break"> какие платежи предстоят, есть ли ещё долги.</p>
-        <p>Скажите, как это затрагивает вас. Необязательно<br class="conversation-desktop-break"> за один разговор добиться обещания больше никогда<br class="conversation-desktop-break"> не играть: важнее понять, что происходит сейчас<br class="conversation-desktop-break"> и какой следующий шаг человек готов обсудить.</p>
+        <p>Граница описывает ваши действия: например,<br class="conversation-desktop-break"> «я не буду давать деньги», или «я не буду давать деньги<br class="conversation-desktop-break"> напрямую, но буду оплачивать специалиста или<br class="conversation-desktop-break"> учёбу», или «я продолжу разговор, когда мы оба<br class="conversation-desktop-break"> сможем говорить спокойно».</p>
+        <p>Вы можете предложить контакт специалиста<br class="conversation-desktop-break"> и поддержать решение близкого обратиться к нему.<br class="conversation-desktop-break"> Принять это решение и работать над изменениями<br class="conversation-desktop-break"> может только он сам; вам не нужно откладывать<br class="conversation-desktop-break"> собственную жизнь до этого момента.</p>
       </div>
-      <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
+      <a href="#help">Как определить свои границы<br class="conversation-desktop-break"> и разделить ответственность <span aria-hidden="true">➜</span></a>
     </div>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderResponsibility(app) {
   app.innerHTML = `
-    <main class="conversation" data-step="intro">
-      <section class="conversation-screen conversation-intro" aria-label="Он признался и пообещал остановиться">
-        <h1>он признался<br>и пообещал остановиться</h1>
+    <main class="conversation conversation--responsibility" data-step="intro">
+      <section class="conversation-screen conversation-intro" aria-label="Кто за что отвечает">
+        <h1>кто за что отвечает?</h1>
         <div class="conversation-intro__portraits">
           <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}alice-portrait.jpg" alt="Портрет Алисы"></div><span>Алиса</span></div>
           <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div><span>Игорь</span></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
       </section>
-      <section class="conversation-screen conversation-alice" aria-label="Алиса хочет верить">
-        <h2>хочет верить, но боится повторения</h2>
+      <section class="conversation-screen conversation-alice" aria-label="Алиса боится обозначения границ">
+        <h2>боится обозначения границ</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
         <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
-        <div class="conversation-story-circle conversation-story-circle--dark"><p>Не успела я собраться с мыслями,<br>как Игорь сам начал разговор.<br>Он признался, что проиграл деньги<br>на ставках, и пообещал прекратить.<br>Мне хотелось ему поверить,<br>но я боялась, что это повторится.</p></div>
+        <div class="conversation-story-circle conversation-story-circle--dark"><p>Психологу я впервые<br>сказала вслух, как боюсь за наше<br>с Игорем будущее и как трудно мне<br>стало ему доверять.<br><br>Я злилась на него, но по-прежнему<br>любила и потому казалось, что<br>решение разделить финансы ещё<br>сильнее нас отдалит. После долгих<br>сомнений я всё же перевела свои<br>деньги на отдельный счёт и сказала,<br>что больше не буду закрывать<br>его долги, но готова быть рядом<br>и помочь найти специалиста,<br>если он захочет обратиться.</p></div>
         <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать игоря</button>
       </section>
-      <section class="conversation-screen conversation-igor" aria-label="Игорь верит, что сможет остановиться">
-        <h2>верит, что сможет остановиться</h2>
-        <div class="conversation-story-circle conversation-story-circle--light"><p>Я сказал Алисе, что сделал пару<br>ставок и больше играть не буду.<br><br>О том, что уже крупно проиграл<br>и залез в долги, я промолчал. Тогда<br>я верил, что смогу остановиться сам.<br><br>Некоторое время я не играл, потом<br>снова начал ставить понемногу.<br>Постепенно суммы выросли,<br>и я опять проиграл много денег.</p></div>
+      <section class="conversation-screen conversation-igor" aria-label="Игорь видит в ее решении недоверие к себе">
+        <h2>видит в ее решении недоверие к себе</h2>
+        <div class="conversation-story-circle conversation-story-circle--light"><p>Меня разозлило, что Алиса<br>отделила свои деньги: будто решила,<br>что я опять всё проиграю.<br><br>Она предложила помочь найти<br>специалиста, и я видел, что мы всё<br>больше отдаляемся. Я не хотел этого,<br>но и рассказывать постороннему<br>человеку о долгах, ещё и платя<br>за консультацию, не был готов.<br><br>Мне казалось, что проблема<br>не настолько серьёзная: я сам<br>разберусь с долгами, а дальше<br>смогу играть аккуратнее.</p></div>
         <img class="conversation-igor__figure" src="${asset}igor.png" alt="Игорь">
         <span class="conversation-person-name conversation-person-name--igor">Игорь</span>
         <button class="conversation-button conversation-igor__button" type="button" data-next="phrases">далее</button>
       </section>
-      <section class="conversation-screen conversation-phrases" aria-label="Какие фразы от близкого вы слышали">
-        <h2>какие фразы от близкого вы слышали?</h2>
+      <section class="conversation-screen conversation-phrases" aria-label="С какими вопросами вам сейчас хотелось бы разобраться">
+        <h2>с какими вопросами вам сейчас<br>хотелось бы разобраться?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
           ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}">${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
-        <button class="conversation-phrases__no-talk" type="button">мы ещё не говорили об игре</button>
+        <button class="conversation-phrases__no-talk" type="button">пока не знаю, с чего начать</button>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
         <button class="conversation-button conversation-phrases__advice" type="button">что делать?</button>
       </section>

@@ -86,3 +86,7 @@
   .conversation-person-name--igor{top:auto;bottom:3%;right:55%}
   .conversation-phrases__figure{height:55%}
 }
+
+@media (min-width:701px){
+  .conversation.conversation--recognition .conversation-story-circle p{font-size:clamp(16px,1.72vw,22px)}
+}

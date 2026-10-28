@@ -5,23 +5,26 @@ import { renderConversation as renderStoryConversation } from '../scenes/recogni
 import { renderHelp as renderStoryHelp } from '../scenes/recognition/stages/help/index.js'
 import { renderSelfSupport as renderStorySelfSupport } from '../scenes/recognition/stages/self-support/index.js'
 import { renderResponsibility as renderStoryResponsibility } from '../scenes/recognition/stages/responsibility/index.js'
-import { renderConversation } from '../scenes/conversation/index.js'
-import { renderHelp } from '../scenes/help/index.js'
-import { renderBoundaries } from '../scenes/boundaries/index.js'
-import { renderSelfSupport } from '../scenes/self-support/index.js'
-import { renderResponsibility } from '../scenes/responsibility/index.js'
+import { renderResearch } from '../pages/research/index.js'
+import { renderHelpPage } from '../pages/help/index.js'
+import { renderBoundariesPage } from '../pages/boundaries/index.js'
+import { renderSelfSupportPage } from '../pages/self-support/index.js'
+import { renderResponsibilityPage } from '../pages/responsibility/index.js'
 
-const sceneRenderers = {
-  recognition: renderRecognition,
-  'recognition/conversation': renderStoryConversation,
-  'recognition/help': renderStoryHelp,
-  'recognition/self-support': renderStorySelfSupport,
-  'recognition/responsibility': renderStoryResponsibility,
-  conversation: renderConversation,
-  help: renderHelp,
-  boundaries: renderBoundaries,
-  'self-support': renderSelfSupport,
-  responsibility: renderResponsibility,
+const storyRoutes = {
+  recognition: { render: renderRecognition, title: 'узнавание' },
+  'recognition/conversation': { render: renderStoryConversation, title: 'разговор' },
+  'recognition/help': { render: renderStoryHelp, title: 'помощь' },
+  'recognition/self-support': { render: renderStorySelfSupport, title: 'поддержка себя' },
+  'recognition/responsibility': { render: renderStoryResponsibility, title: 'разделение ответственности' },
+}
+
+const pageRoutes = {
+  research: renderResearch,
+  help: renderHelpPage,
+  boundaries: renderBoundariesPage,
+  'self-support': renderSelfSupportPage,
+  responsibility: renderResponsibilityPage,
 }
 
 function currentRoute() {
@@ -30,19 +33,25 @@ function currentRoute() {
 
 function renderRoute() {
   const route = currentRoute()
-  const renderScene = sceneRenderers[route]
   const app = document.querySelector('#app')
+  const story = storyRoutes[route]
 
-  if (!renderScene) {
-    document.title = 'Ставка на себя'
-    renderLanding(app, sections)
+  if (story) {
+    document.title = story.title + ' — Ставка на себя'
+    story.render(app)
     return
   }
 
-  const sectionId = route.startsWith('recognition/') ? route.split('/')[1] : route
-  const page = sections.find((section) => section.id === sectionId)
-  document.title = (page?.title || 'Сцена') + ' — Ставка на себя'
-  renderScene(app)
+  const renderPage = pageRoutes[route]
+  if (renderPage) {
+    const page = sections.find((section) => section.id === route)
+    document.title = (page?.title || 'Страница').replace('\n', ' ') + ' — Ставка на себя'
+    renderPage(app)
+    return
+  }
+
+  document.title = 'Ставка на себя'
+  renderLanding(app, sections)
 }
 
 export function startRouter() {

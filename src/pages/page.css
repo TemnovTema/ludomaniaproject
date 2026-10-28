@@ -1,0 +1,24 @@
+/* Temporary layout for pages awaiting their own designs. */
+.project-page {
+  min-height: 100dvh;
+  overflow: auto;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  background: #f4f2e9;
+  color: #151414;
+  text-align: center;
+}
+
+.project-page h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.project-page__back {
+  color: inherit;
+  text-underline-offset: .2em;
+}

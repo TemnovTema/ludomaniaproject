@@ -1,4 +1,5 @@
 import './style.css'
+import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
 import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
 const asset = '/scenes/recognition/conversation/'
@@ -25,6 +26,7 @@ const advice = `
       </div>
       <p class="conversation-advice__hint">Подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
     </div>
+    <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
     <a class="conversation-advice__next" href="#recognition/help">узнать, что было дальше</a>
   </div>`
 
@@ -38,12 +40,14 @@ export function renderConversation(app) {
           <div class="conversation-intro__person"><div class="conversation-intro__ring"><img src="${asset}igor-portrait.jpg" alt="Портрет Игоря"></div></div>
         </div>
         <p class="conversation-scroll-hint">скролльте вниз</p>
+        <button class="conversation-back conversation-back--intro" type="button" data-back="intro" aria-label="Назад"><svg viewBox="0 0 34 22" width="34" height="22" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M33 11H1m0 0 9-9m-9 9 9 9"/></svg></button>
       </section>
       <section class="conversation-screen conversation-alice" aria-label="Алиса хочет верить">
         <h2>хочет верить, но боится повторения</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
         <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
         <div class="conversation-story-circle conversation-story-circle--dark"><p>Не успела я собраться с мыслями,<br>как Игорь сам начал разговор.<br>Он признался, что проиграл деньги<br>на ставках, и пообещал прекратить.<br>Мне хотелось ему поверить,<br>но я боялась, что это повторится.</p></div>
+        <button class="conversation-back" type="button" data-back="alice">назад</button>
         <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать Игоря</button>
       </section>
       <section class="conversation-screen conversation-igor" aria-label="Игорь верит, что сможет остановиться">
@@ -51,6 +55,7 @@ export function renderConversation(app) {
         <div class="conversation-story-circle conversation-story-circle--light"><p>Я сказал Алисе, что сделал пару<br>ставок и больше играть не буду.<br><br>О том, что уже крупно проиграл<br>и залез в долги, я промолчал. Тогда<br>я верил, что смогу остановиться сам.<br><br>Некоторое время я не играл, потом<br>снова начал ставить понемногу.<br>Постепенно суммы выросли,<br>и я опять проиграл много денег.</p></div>
         <img class="conversation-igor__figure" src="${asset}igor.png" alt="Игорь">
         <span class="conversation-person-name conversation-person-name--igor">Игорь</span>
+        <button class="conversation-back" type="button" data-back="igor">назад</button>
         <button class="conversation-button conversation-igor__button" type="button" data-next="phrases">далее</button>
       </section>
       <section class="conversation-screen conversation-phrases" aria-label="Какие фразы от близкого вы слышали">
@@ -61,6 +66,7 @@ export function renderConversation(app) {
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
+        <button class="conversation-back" type="button" data-back="phrases">назад</button>
         <button class="conversation-button conversation-phrases__advice" type="button">что делать?</button>
       </section>
     </main>`
@@ -75,6 +81,13 @@ export function renderConversation(app) {
   let revealTimer
   let transitionTimer
   let adviceRevealTimer
+  const restoreQuiz = () => {
+    scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+      item.innerHTML = phrases[Number(item.dataset.phrase)].text
+      item.removeAttribute('aria-label')
+    })
+    scene.classList.remove('conversation--submitted')
+  }
   const setStep = (next) => {
     if (scene.classList.contains('conversation--transitioning') || step === next) return
     clearTimeout(revealTimer)
@@ -93,6 +106,19 @@ export function renderConversation(app) {
       }
     }, 750)
   }
+  const showAdvice = () => {
+    scene.insertAdjacentHTML('beforeend', advice)
+    const advicePanel = scene.querySelector('.conversation-advice')
+    requestAnimationFrame(() => advicePanel?.classList.add('is-open'))
+    clearTimeout(adviceRevealTimer)
+    adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
+  }
+  if (shouldRestoreAdvice('#recognition/conversation')) {
+    step = 'phrases'
+    scene.dataset.step = 'phrases'
+    scene.classList.add('conversation--submitted')
+    showAdvice()
+  }
   const onScroll = () => {
     if (step === 'intro' && window.scrollY > 35) setStep('alice')
   }
@@ -106,6 +132,24 @@ export function renderConversation(app) {
     if (step === 'intro' && touchStartY - (event.changedTouches[0]?.clientY || 0) > 35) setStep('alice')
   }, { passive: true })
   scene.addEventListener('click', (event) => {
+    const back = event.target.closest('[data-back]')
+    if (back) {
+      if (back.dataset.back === 'intro') {
+        returnToPreviousAdvice('#recognition')
+      } else if (back.dataset.back === 'alice') {
+        setStep('intro')
+      } else if (back.dataset.back === 'igor') {
+        setStep('alice')
+      } else if (back.dataset.back === 'phrases') {
+        restoreQuiz()
+        setStep('igor')
+      } else if (back.dataset.back === 'advice') {
+        clearTimeout(adviceRevealTimer)
+        scene.querySelector('.conversation-advice')?.remove()
+        restoreQuiz()
+      }
+      return
+    }
     const next = event.target.closest('[data-next]')
     if (next) { setStep(next.dataset.next); return }
     const phrase = event.target.closest('.conversation-phrase')
@@ -141,11 +185,7 @@ export function renderConversation(app) {
       return
     }
     if (event.target.closest('.conversation-phrases__advice')) {
-      scene.insertAdjacentHTML('beforeend', advice)
-      const advicePanel = scene.querySelector('.conversation-advice')
-      requestAnimationFrame(() => advicePanel?.classList.add('is-open'))
-      clearTimeout(adviceRevealTimer)
-      adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
+      showAdvice()
       return
     }
   })

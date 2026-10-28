@@ -107,3 +107,18 @@
 .conversation.conversation--recognition .conversation-intro__person:hover .conversation-intro__ring{border-color:rgba(21,20,20,.4)}
 .conversation.conversation--recognition .conversation-scroll-hint{color:rgba(21,20,20,.5);opacity:1}
 .conversation.conversation--recognition .conversation-advice__circle .conversation-advice__hint{color:rgba(21,20,20,.5);font:400 12px/1.05 ConversationGilroy,Arial,sans-serif;margin:0;text-align:center}
+
+/* Quiet, reversible navigation through the story. */
+.conversation .conversation-back{position:absolute;left:3%;bottom:5%;z-index:6;width:104px;height:48px;padding:0;border:1px solid var(--ink);border-radius:100px;background:transparent;color:var(--ink);font:700 15px/1 ConversationGilroy,Arial,sans-serif;cursor:pointer;transition:transform .25s,opacity .4s}
+.conversation .conversation-alice .conversation-back{background:#F4F2E9}
+.conversation .conversation-back:hover{transform:scale(1.045)}
+.conversation .conversation-back:focus-visible{outline:3px solid var(--chapter-accent);outline-offset:4px}
+.conversation .conversation-igor .conversation-back{border-color:var(--chapter-accent);color:var(--paper)}
+.conversation .conversation-intro .conversation-back{border-color:var(--chapter-accent-text);color:var(--chapter-accent-text)}
+.conversation .conversation-intro .conversation-back--intro{display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:0;background:transparent;opacity:.4}
+.conversation .conversation-intro .conversation-back--intro:hover{opacity:.7}
+.conversation .conversation-advice .conversation-back{border-color:var(--ink);color:var(--ink)}
+@media(max-width:700px){.conversation .conversation-back{left:5%;bottom:4%}}
+.conversation--transitioning[data-step=phrases] .conversation-phrases{animation:conversation-leave .75s ease-in both;z-index:2}
+.conversation[data-next-step=intro] .conversation-intro{display:block;animation:conversation-arrive .75s ease-out both;z-index:1}
+@media(prefers-reduced-motion:reduce){.conversation--transitioning[data-step=phrases] .conversation-phrases,.conversation[data-next-step=intro] .conversation-intro{animation:none}}

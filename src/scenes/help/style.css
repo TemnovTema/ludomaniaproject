@@ -86,3 +86,10 @@
   .conversation-person-name--igor{top:auto;bottom:3%;right:55%}
   .conversation-phrases__figure{height:55%}
 }
+
+/* Keep the same 22px Gilroy Regular as conversation at storyboard width,
+   scaling with the circle on narrower desktop viewports. */
+@media (min-width:701px){
+  .conversation-story-circle p,
+  .conversation-story-circle--light p{font-size:clamp(16px,1.72vw,22px);font-weight:400}
+}

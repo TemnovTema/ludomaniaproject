@@ -90,3 +90,16 @@
 @media (min-width:701px){
   .conversation.conversation--recognition .conversation-story-circle p{font-size:clamp(16px,1.72vw,22px)}
 }
+
+/* Compact green buttons from the Recognition storyboard. */
+.conversation.conversation--recognition .conversation-button{font-size:15px;line-height:1;padding:16.5px 30px}
+.conversation.conversation--recognition .conversation-igor__button{left:auto;right:3%;z-index:3}
+.conversation.conversation--recognition .conversation-phrases__advice{z-index:4}
+.conversation.conversation--recognition .conversation-phrases__no-talk{font-size:15px;padding:16.5px 20px}
+
+/* Continue to the next scene after the advice circle has opened. */
+.conversation.conversation--recognition .conversation-advice__next{position:absolute;right:3%;bottom:5%;z-index:2;border-radius:100px;background:var(--ink);color:var(--paper);padding:16.5px 30px;font:700 15px/1 ConversationGilroy,Arial,sans-serif;text-decoration:none;opacity:0;pointer-events:none;transition:opacity .5s,transform .25s}
+.conversation.conversation--recognition .conversation-advice.is-ready .conversation-advice__next{opacity:1;pointer-events:auto}
+.conversation.conversation--recognition .conversation-advice__next:hover{transform:scale(1.045)}
+.conversation.conversation--recognition .conversation-advice__next:focus-visible{outline:3px solid #679900;outline-offset:4px}
+@media(max-width:700px){.conversation.conversation--recognition .conversation-advice__next{right:5%;bottom:4%;font-size:13px;padding:14px 18px}}

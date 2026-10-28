@@ -19,12 +19,13 @@ const advice = `
       </div>
       <a href="#help">Как безопасно помочь близкому <span aria-hidden="true">➜</span></a>
     </div>
+    <a class="conversation-advice__next" href="#boundaries">узнать, что было дальше</a>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
 export function renderHelp(app) {
   app.innerHTML = `
-    <main class="conversation" data-step="intro">
+    <main class="conversation conversation--help" data-step="intro">
       <section class="conversation-screen conversation-intro" aria-label="Долгов оказалось больше, и он попросил помочь">
         <h1>долгов оказалось больше,<br>и он попросил помочь</h1>
         <div class="conversation-intro__portraits">
@@ -38,7 +39,7 @@ export function renderHelp(app) {
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
         <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
         <div class="conversation-story-circle conversation-story-circle--dark"><p>Я думала, что Игорь проиграл только<br>наши накопления, но вскоре узнала<br>о других долгах и просрочках.<br><br>Я пыталась говорить с ним<br>об игре и искала специалиста,<br>а он настаивал, что сначала нужно<br>закрыть долги, и снова обещал<br>остановиться.<br><br>В итоге я взяла кредит, решив,<br>что с игрой мы разберёмся потом.</p></div>
-        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать игоря</button>
+        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать Игоря</button>
       </section>
       <section class="conversation-screen conversation-igor" aria-label="Игорь надеется отыграться и все вернуть">
         <h2>надеется отыграться и все вернуть</h2>
@@ -64,6 +65,7 @@ export function renderHelp(app) {
   let step = 'intro'
   let revealTimer
   let transitionTimer
+  let adviceRevealTimer
   const setStep = (next) => {
     if (scene.classList.contains('conversation--transitioning') || step === next) return
     clearTimeout(revealTimer)
@@ -121,9 +123,15 @@ export function renderHelp(app) {
     }
     if (event.target.closest('.conversation-phrases__advice')) {
       scene.insertAdjacentHTML('beforeend', advice)
-      requestAnimationFrame(() => scene.querySelector('.conversation-advice')?.classList.add('is-open'))
+      const advicePanel = scene.querySelector('.conversation-advice')
+      requestAnimationFrame(() => advicePanel?.classList.add('is-open'))
+      clearTimeout(adviceRevealTimer)
+      adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
     }
-    if (event.target.closest('.conversation-advice__close')) scene.querySelector('.conversation-advice')?.remove()
+    if (event.target.closest('.conversation-advice__close')) {
+      clearTimeout(adviceRevealTimer)
+      scene.querySelector('.conversation-advice')?.remove()
+    }
   })
 }

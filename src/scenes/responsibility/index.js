@@ -20,6 +20,7 @@ const advice = `
       </div>
       <a href="#help">Как определить свои границы<br class="conversation-desktop-break"> и разделить ответственность <span aria-hidden="true">➜</span></a>
     </div>
+    <a class="conversation-advice__next" href="#menu">узнать, что было дальше</a>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
@@ -39,7 +40,7 @@ export function renderResponsibility(app) {
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
         <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
         <div class="conversation-story-circle conversation-story-circle--dark"><p>Психологу я впервые<br>сказала вслух, как боюсь за наше<br>с Игорем будущее и как трудно мне<br>стало ему доверять.<br><br>Я злилась на него, но по-прежнему<br>любила и потому казалось, что<br>решение разделить финансы ещё<br>сильнее нас отдалит. После долгих<br>сомнений я всё же перевела свои<br>деньги на отдельный счёт и сказала,<br>что больше не буду закрывать<br>его долги, но готова быть рядом<br>и помочь найти специалиста,<br>если он захочет обратиться.</p></div>
-        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать игоря</button>
+        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать Игоря</button>
       </section>
       <section class="conversation-screen conversation-igor" aria-label="Игорь видит в ее решении недоверие к себе">
         <h2>видит в ее решении недоверие к себе</h2>
@@ -65,6 +66,7 @@ export function renderResponsibility(app) {
   let step = 'intro'
   let revealTimer
   let transitionTimer
+  let adviceRevealTimer
   const setStep = (next) => {
     if (scene.classList.contains('conversation--transitioning') || step === next) return
     clearTimeout(revealTimer)
@@ -122,9 +124,15 @@ export function renderResponsibility(app) {
     }
     if (event.target.closest('.conversation-phrases__advice')) {
       scene.insertAdjacentHTML('beforeend', advice)
-      requestAnimationFrame(() => scene.querySelector('.conversation-advice')?.classList.add('is-open'))
+      const advicePanel = scene.querySelector('.conversation-advice')
+      requestAnimationFrame(() => advicePanel?.classList.add('is-open'))
+      clearTimeout(adviceRevealTimer)
+      adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
     }
-    if (event.target.closest('.conversation-advice__close')) scene.querySelector('.conversation-advice')?.remove()
+    if (event.target.closest('.conversation-advice__close')) {
+      clearTimeout(adviceRevealTimer)
+      scene.querySelector('.conversation-advice')?.remove()
+    }
   })
 }

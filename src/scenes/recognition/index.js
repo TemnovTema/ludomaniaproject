@@ -18,6 +18,7 @@ const advice = `
       </div>
       <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
     </div>
+    <a class="conversation-advice__next" href="#conversation">узнать, что было дальше</a>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 
@@ -37,7 +38,7 @@ export function renderRecognition(app) {
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>
         <img class="conversation-alice__figure" src="${asset}alice.png" alt="Алиса">
         <div class="conversation-story-circle conversation-story-circle--dark"><p>Игорь стал раздражительным, поздно<br>ложился и подолгу сидел в телефоне.<br>Я думала, дело в работе, пока<br>не заметила, что со счёта<br>на квартиру исчезли деньги.</p></div>
-        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать игоря</button>
+        <button class="conversation-button conversation-alice__button" type="button" data-next="igor">послушать Игоря</button>
       </section>
       <section class="conversation-screen conversation-igor" aria-label="Игорь надеется, что успеет все исправить">
         <h2>надеется, что успеет все исправить</h2>
@@ -63,6 +64,7 @@ export function renderRecognition(app) {
   let step = 'intro'
   let revealTimer
   let transitionTimer
+  let adviceRevealTimer
   const setStep = (next) => {
     if (scene.classList.contains('conversation--transitioning') || step === next) return
     clearTimeout(revealTimer)
@@ -120,9 +122,15 @@ export function renderRecognition(app) {
     }
     if (event.target.closest('.conversation-phrases__advice')) {
       scene.insertAdjacentHTML('beforeend', advice)
-      requestAnimationFrame(() => scene.querySelector('.conversation-advice')?.classList.add('is-open'))
+      const advicePanel = scene.querySelector('.conversation-advice')
+      requestAnimationFrame(() => advicePanel?.classList.add('is-open'))
+      clearTimeout(adviceRevealTimer)
+      adviceRevealTimer = window.setTimeout(() => advicePanel?.classList.add('is-ready'), 1550)
       return
     }
-    if (event.target.closest('.conversation-advice__close')) scene.querySelector('.conversation-advice')?.remove()
+    if (event.target.closest('.conversation-advice__close')) {
+      clearTimeout(adviceRevealTimer)
+      scene.querySelector('.conversation-advice')?.remove()
+    }
   })
 }

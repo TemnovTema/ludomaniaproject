@@ -2,11 +2,12 @@ import './style.css'
 
 const asset = '/scenes/recognition/'
 const phrases = [
-  { text: 'стал заметно более расстроенным,<br>чем обычно, но не говорит, что случилось', x: 47, y: 19 },
+  { text: 'стал заметно более расстроенным,<br>чем обычно, но не говорит, что случилось', x: 34, y: 19 },
   { text: 'он стал раздражительнее или резче<br>отвечать на обычные вопросы', x: 19, y: 36 },
   { text: 'он начал скрывать траты<br>или уходить от вопросов о деньгах', x: 74, y: 34 },
   { text: 'пропали общие деньги<br>или появились расходы, о которых<br>я не знал(а)', x: 83, y: 55 },
   { text: 'близкий стал чаще сидеть<br>в телефоне, в том числе ночью', x: 18, y: 67 },
+  { text: 'ничего из перечисленного', x: 64, y: 20, exclusive: true },
 ]
 
 const advice = `
@@ -51,10 +52,9 @@ export function renderRecognition(app) {
         <h2>какие перемены вы заметили?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}">${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
-        <button class="conversation-phrases__no-talk" type="button">ничего из перечисленного</button>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
         <button class="conversation-button conversation-phrases__advice" type="button">что делать?</button>
       </section>
@@ -101,11 +101,18 @@ export function renderRecognition(app) {
     const phrase = event.target.closest('.conversation-phrase')
     if (phrase && !scene.classList.contains('conversation--submitted')) {
       const selected = phrase.getAttribute('aria-pressed') !== 'true'
+      if (selected) {
+        if (phrase.dataset.exclusive === 'true') {
+          scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]').forEach((item) => item.setAttribute('aria-pressed', 'false'))
+        } else {
+          scene.querySelector('.conversation-phrase[data-exclusive="true"]')?.setAttribute('aria-pressed', 'false')
+        }
+      }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
       return
     }
-    if (event.target.closest('.conversation-phrases__next, .conversation-phrases__no-talk')) {
+    if (event.target.closest('.conversation-phrases__next')) {
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

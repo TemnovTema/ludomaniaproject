@@ -11,6 +11,7 @@ const phrases = [
   { text: '«это лёгкие деньги»', x: 86, y: 45 },
   { text: '«я знаю то,<br>чего не знают другие»', x: 16, y: 62 },
   { text: '«я сам справлюсь»', x: 80, y: 62 },
+  { text: 'мы ещё не говорили<br>об игре', x: 87, y: 72, exclusive: true },
 ]
 
 const advice = `
@@ -56,10 +57,9 @@ export function renderConversation(app) {
         <h2>какие фразы от близкого вы слышали?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}">${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
-        <button class="conversation-phrases__no-talk" type="button">мы ещё не говорили об игре</button>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
         <button class="conversation-button conversation-phrases__advice" type="button">что делать?</button>
       </section>
@@ -106,11 +106,18 @@ export function renderConversation(app) {
     const phrase = event.target.closest('.conversation-phrase')
     if (phrase && !scene.classList.contains('conversation--submitted')) {
       const selected = phrase.getAttribute('aria-pressed') !== 'true'
+      if (selected) {
+        if (phrase.dataset.exclusive === 'true') {
+          scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]').forEach((item) => item.setAttribute('aria-pressed', 'false'))
+        } else {
+          scene.querySelector('.conversation-phrase[data-exclusive="true"]')?.setAttribute('aria-pressed', 'false')
+        }
+      }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
       return
     }
-    if (event.target.closest('.conversation-phrases__next, .conversation-phrases__no-talk')) {
+    if (event.target.closest('.conversation-phrases__next')) {
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

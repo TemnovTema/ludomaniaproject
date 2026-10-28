@@ -1,11 +1,5 @@
-import {
-  answerTopics,
-  maxResultTopics,
-  questionOrder,
-  resultContent,
-  specialAnswers,
-  topicPriority,
-} from './result-config.js'
+import { answerTopics, questionOrder, specialAnswers } from './result-config.js'
+import { buildResult } from './result-engine.js'
 
 const storageKey = 'stavka-na-sebya:story-answers:v1'
 
@@ -73,61 +67,7 @@ export function completeQuestion(questionId) {
   return writeAnswers(answers)
 }
 
-// Returns evidence and editorial slots, never an invented interpretation or URL.
-// The result page can render this only when ready is true.
+// Call when the final button is pressed, so edits to earlier answers are included.
 export function getResultModel() {
-  const answers = getSavedAnswers()
-  const evidence = Object.fromEntries(questionOrder.map((questionId) => [
-    questionId,
-    answers[questionId].selected.map((answerId) => ({
-      answerId,
-      topics: answerTopics[questionId][answerId],
-      special: answerId === specialAnswers[questionId],
-    })),
-  ]))
-
-  const byTopic = new Map()
-  for (const questionId of questionOrder) {
-    for (const item of evidence[questionId]) {
-      for (const topicId of item.topics) {
-        if (!byTopic.has(topicId)) byTopic.set(topicId, { topicId, evidence: [], priority: [] })
-        const topic = byTopic.get(topicId)
-        topic.evidence.push({ questionId, answerId: item.answerId })
-      }
-    }
-  }
-
-  for (const topic of byTopic.values()) {
-    topic.priority = topicPriority.map((questionId) =>
-      topic.evidence.filter((item) => item.questionId === questionId).length)
-  }
-
-  const ranked = [...byTopic.values()].sort((a, b) => {
-    for (let index = 0; index < topicPriority.length; index += 1) {
-      if (a.priority[index] !== b.priority[index]) return b.priority[index] - a.priority[index]
-    }
-    return a.topicId.localeCompare(b.topicId)
-  })
-  const topics = ranked.slice(0, maxResultTopics).map(({ topicId, evidence: matches }) => ({
-    topicId,
-    evidence: matches,
-    observationTemplate: resultContent.observation.byTopic[topicId] ?? null,
-    startingPointTemplate: resultContent.startingPoint.byTopic[topicId] ?? null,
-    materials: resultContent.materialsByTopic[topicId] ?? [],
-  }))
-  const recommendedMaterials = [...new Map(topics.flatMap((topic) =>
-    topic.materials.map((material) => [material.id, material])
-  )).values()].slice(0, maxResultTopics)
-
-  return {
-    ready: questionOrder.every((questionId) => answers[questionId].completed),
-    answers,
-    evidence,
-    topics,
-    recommendedMaterials,
-    noStatedRequest: evidence.responsibility.some((item) => item.answerId === 'unsureWhereToStart'),
-    introductoryMaterial: topics.length === 0 ? resultContent.introductoryMaterial : null,
-    defaultObservationTemplate: resultContent.observation.default,
-    defaultStartingPointTemplate: resultContent.startingPoint.default,
-  }
+  return buildResult(getSavedAnswers())
 }

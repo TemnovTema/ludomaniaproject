@@ -21,7 +21,7 @@ const advice = `
         <p>Обращаться за поддержкой можно независимо<br class="conversation-desktop-break"> от того, признаёт ли близкий проблему и ищет ли<br class="conversation-desktop-break"> помощь для себя. Разговор с психологом, группа<br class="conversation-desktop-break"> поддержки или доверенный человек могут помочь вам<br class="conversation-desktop-break"> разобраться со своим состоянием и решениями.</p>
         <p>Не нужно ждать, пока ситуация станет ещё тяжелее.</p>
       </div>
-      <p class="conversation-advice__hint">Подробнее о том, где получить поддержку для себя<br>можно прочитать в разделе помощи</p>
+      <p class="conversation-advice__hint">подробнее о том, где получить поддержку для себя<br>можно прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
     <a class="conversation-advice__next" href="#recognition/responsibility">узнать, что было дальше</a>

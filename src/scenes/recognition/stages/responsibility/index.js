@@ -1,6 +1,7 @@
 import './style.css'
 import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
-import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
+import { completeQuestion, getResultModel, getSavedAnswers, saveSelection } from '../../result-data.js'
+import { renderResultScreen } from '../../result-screen.js'
 
 const asset = '/scenes/recognition/responsibility/'
 const phrases = [
@@ -21,10 +22,10 @@ const advice = `
         <p>Граница описывает ваши действия: например,<br class="conversation-desktop-break"> «я не буду давать деньги», или «я не буду давать деньги<br class="conversation-desktop-break"> напрямую, но буду оплачивать специалиста или<br class="conversation-desktop-break"> учёбу», или «я продолжу разговор, когда мы оба<br class="conversation-desktop-break"> сможем говорить спокойно».</p>
         <p>Вы можете предложить контакт специалиста<br class="conversation-desktop-break"> и поддержать решение близкого обратиться к нему.<br class="conversation-desktop-break"> Принять это решение и работать над изменениями<br class="conversation-desktop-break"> может только он сам; вам не нужно откладывать<br class="conversation-desktop-break"> собственную жизнь до этого момента.</p>
       </div>
-      <p class="conversation-advice__hint">Подробнее о том, как определить свои границы<br>и разделить ответственность можно<br>прочитать в разделе помощи</p>
+      <p class="conversation-advice__hint">подробнее о том, как определить свои границы<br>и разделить ответственность можно<br>прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
-    <a class="conversation-advice__next" href="#menu">а что теперь?</a>
+    <button class="conversation-advice__next" type="button">а что теперь?</button>
   </div>`
 
 export function renderResponsibility(app) {
@@ -129,6 +130,11 @@ export function renderResponsibility(app) {
     if (step === 'intro' && touchStartY - (event.changedTouches[0]?.clientY || 0) > 35) setStep('alice')
   }, { passive: true })
   scene.addEventListener('click', (event) => {
+    if (event.target.closest('.conversation-advice__next')) {
+      const result = getResultModel()
+      if (result.ready) renderResultScreen(app, result)
+      return
+    }
     const back = event.target.closest('[data-back]')
     if (back) {
       if (back.dataset.back === 'intro') {

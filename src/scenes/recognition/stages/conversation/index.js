@@ -24,7 +24,7 @@ const advice = `
         <p>После признания можно спросить о конкретных<br class="conversation-desktop-break"> последствиях: сколько денег не хватает,<br class="conversation-desktop-break"> какие платежи предстоят, есть ли ещё долги.</p>
         <p>Скажите, как это затрагивает вас. Необязательно<br class="conversation-desktop-break"> за один разговор добиться обещания больше никогда<br class="conversation-desktop-break"> не играть: важнее понять, что происходит сейчас<br class="conversation-desktop-break"> и какой следующий шаг человек готов обсудить.</p>
       </div>
-      <p class="conversation-advice__hint">Подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
+      <p class="conversation-advice__hint">подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
     <a class="conversation-advice__next" href="#recognition/help">узнать, что было дальше</a>

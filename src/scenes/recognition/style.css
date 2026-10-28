@@ -122,3 +122,12 @@
 .conversation--transitioning[data-step=phrases] .conversation-phrases{animation:conversation-leave .75s ease-in both;z-index:2}
 .conversation[data-next-step=intro] .conversation-intro{display:block;animation:conversation-arrive .75s ease-out both;z-index:1}
 @media(prefers-reduced-motion:reduce){.conversation--transitioning[data-step=phrases] .conversation-phrases,.conversation[data-next-step=intro] .conversation-intro{animation:none}}
+
+/* Back controls follow the existing forward-button reveal. */
+.conversation .conversation-alice .conversation-back,.conversation .conversation-igor .conversation-back,.conversation .conversation-advice .conversation-back{opacity:0;pointer-events:none}
+.conversation.conversation--ready .conversation-alice .conversation-back,.conversation.conversation--ready .conversation-igor .conversation-back,.conversation .conversation-advice.is-ready .conversation-back{opacity:1;pointer-events:auto;transition-delay:.1s}
+.conversation[data-step=phrases] .conversation-phrases .conversation-back{animation:conversation-back-appear .5s .35s backwards}
+.conversation[data-step=intro] .conversation-intro .conversation-back--intro{animation:conversation-intro-back-appear .55s .3s backwards}
+@keyframes conversation-back-appear{from{opacity:0}to{opacity:1}}
+@keyframes conversation-intro-back-appear{from{opacity:0}to{opacity:.4}}
+@media(prefers-reduced-motion:reduce){.conversation[data-step=phrases] .conversation-phrases .conversation-back,.conversation[data-step=intro] .conversation-intro .conversation-back--intro{animation:none}}

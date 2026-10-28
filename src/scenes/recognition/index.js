@@ -27,7 +27,7 @@ const advice = `
       <div class="conversation-advice__copy">
         <p>У перемен могут быть разные причины.<br class="conversation-desktop-break"> Пока вы не знаете, что произошло, отделите факты<br class="conversation-desktop-break"> от догадок: какие расходы вызывают вопросы, хватает<br class="conversation-desktop-break"> ли денег на общие платежи и насколько открыто<br class="conversation-desktop-break"> близкий говорит с вами о финансах. Если затронуты<br class="conversation-desktop-break"> ваши деньги, проверьте счета, к которым у вас есть<br class="conversation-desktop-break"> доступ, и позаботьтесь о сохранности своих средств.</p>
       </div>
-      <p class="conversation-advice__hint">Подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
+      <p class="conversation-advice__hint">подробнее о том, как поговорить с близким<br>можно прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
     <a class="conversation-advice__next" href="#recognition/conversation">узнать, что было дальше</a>

@@ -20,7 +20,7 @@ const advice = `
         <p>Желание немедленно помочь с долгами понятно:<br class="conversation-desktop-break"> вам хочется обезопасить свою семью. Прежде чем<br class="conversation-desktop-break"> передавать деньги или брать кредит, выясните, какие<br class="conversation-desktop-break"> обязательства оформлены на вас и чем вы будете<br class="conversation-desktop-break"> оплачивать собственные необходимые расходы.</p>
         <p>Если близкий готов участвовать, можно вместе собрать<br class="conversation-desktop-break"> сведения о его задолженностях и обратиться<br class="conversation-desktop-break"> за финансовой консультацией — без обещания<br class="conversation-desktop-break"> погасить их за него.</p>
       </div>
-      <p class="conversation-advice__hint">Подробнее о том, как безопасно помочь близкому<br>можно прочитать в разделе помощи</p>
+      <p class="conversation-advice__hint">подробнее о том, как безопасно помочь близкому<br>можно прочитать в разделе помощи</p>
     </div>
     <button class="conversation-back conversation-back--advice" type="button" data-back="advice">назад</button>
     <a class="conversation-advice__next" href="#recognition/self-support">узнать, что было дальше</a>

@@ -2,7 +2,7 @@ import './style.css'
 import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
 import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
-const asset = '/scenes/recognition/self-support/'
+const asset = `${import.meta.env.BASE_URL}scenes/recognition/self-support/`
 const phrases = [
   { id: 'onAlert', text: 'я настораживаюсь, когда близкий<br>берёт телефон или меняется<br>его настроение', x: 57, y: 21 },
   { id: 'guiltOrFearToRefuse', text: 'я виню себя в происходящем<br>или боюсь отказать близкому', x: 22, y: 29 },

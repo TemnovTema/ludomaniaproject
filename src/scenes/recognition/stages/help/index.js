@@ -2,7 +2,7 @@ import './style.css'
 import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
 import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
-const asset = '/scenes/recognition/help/'
+const asset = `${import.meta.env.BASE_URL}scenes/recognition/help/`
 const phrases = [
   { id: 'talkedAboutGame', text: 'говорил(а) с близким об игре<br>и просил(а) остановиться', x: 50, y: 21 },
   { id: 'gaveMoneyOrCredit', text: 'давал(а) деньги, закрывал(а) долги<br>или брал(а) для этого кредит', x: 18, y: 34 },

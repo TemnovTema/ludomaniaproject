@@ -10,7 +10,7 @@ window.addEventListener('hashchange', (event) => {
   }
 })
 
-const asset = '/scenes/recognition/'
+const asset = `${import.meta.env.BASE_URL}scenes/recognition/`
 const phrases = [
   { id: 'changedMood', text: 'стал заметно более расстроенным,<br>чем обычно, но не говорит, что случилось', x: 34, y: 19 },
   { id: 'irritability', text: 'он стал раздражительнее или резче<br>отвечать на обычные вопросы', x: 19, y: 36 },

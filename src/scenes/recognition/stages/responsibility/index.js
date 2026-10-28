@@ -2,7 +2,7 @@ import './style.css'
 import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
 import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
-const asset = '/scenes/recognition/responsibility/'
+const asset = `${import.meta.env.BASE_URL}scenes/recognition/responsibility/`
 const phrases = [
   { id: 'stopPayingDebts', text: 'как сказать близкому,<br>что я больше не буду<br>оплачивать его долги', x: 25, y: 28 },
   { id: 'supportForSelf', text: 'где получить поддержку для себя', x: 57, y: 22 },

@@ -2,7 +2,7 @@ import './style.css'
 import { returnToPreviousAdvice, shouldRestoreAdvice } from '../../story-back.js'
 import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
-const asset = '/scenes/recognition/conversation/'
+const asset = `${import.meta.env.BASE_URL}scenes/recognition/conversation/`
 const phrases = [
   { id: 'promiseToStop', text: '«я больше не буду играть»', x: 15, y: 29 },
   { id: 'promiseToWinBack', text: '«я отыграюсь<br>и верну деньги»', x: 35, y: 21 },

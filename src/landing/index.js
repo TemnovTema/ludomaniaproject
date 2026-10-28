@@ -1,6 +1,7 @@
 import './style.css'
 
 export function renderLanding(app) {
+  const asset = `${import.meta.env.BASE_URL}scenes/recognition/`
   app.innerHTML = [
     '<main class="home">',
     '<header class="home-header">',
@@ -23,8 +24,8 @@ export function renderLanding(app) {
     '</div>',
     '<figure class="home-stage" aria-label="Алиса и Игорь, герои интерактивной истории">',
     '<div class="home-stage__ellipse" aria-hidden="true"></div>',
-    '<img class="home-stage__alice" src="/scenes/recognition/alice.png" alt="Алиса" />',
-    '<img class="home-stage__igor" src="/scenes/recognition/igor.png" alt="Игорь" />',
+    `<img class="home-stage__alice" src="${asset}alice.png" alt="Алиса" />`,
+    `<img class="home-stage__igor" src="${asset}igor.png" alt="Игорь" />`,
     '</figure>',
     '</section>',
     '</main>',

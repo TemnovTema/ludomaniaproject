@@ -16,6 +16,10 @@ function patternMarkup(pattern) {
 }
 
 function menuLink(section) {
+  if (section.id !== 'recognition') {
+    return `<span class="menu-orb menu-orb--${section.tone} menu-orb--empty" aria-hidden="true"></span>`
+  }
+
   const label = section.title.replace('\n', '<br />')
 
   return [

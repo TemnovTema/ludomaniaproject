@@ -19,7 +19,7 @@ const advice = `
       </div>
       <a href="#help">Как поговорить с близким <span aria-hidden="true">➜</span></a>
     </div>
-    <a class="conversation-advice__next" href="#conversation">узнать, что было дальше</a>
+    <a class="conversation-advice__next" href="#recognition/conversation">узнать, что было дальше</a>
     <button class="conversation-advice__close" type="button" aria-label="Закрыть">×</button>
   </div>`
 

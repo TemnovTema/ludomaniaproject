@@ -1,4 +1,4 @@
-@font-face{font-family:ConversationGilroy;src:url('/scenes/help/gilroy-regular.ttf')}@font-face{font-family:ConversationGilroy;src:url('/scenes/help/gilroy-bold.ttf');font-weight:700}@font-face{font-family:ConversationPecita;src:url('/scenes/help/pecita.otf')}
+@font-face{font-family:ConversationGilroy;src:url('/scenes/recognition/self-support/gilroy-regular.ttf')}@font-face{font-family:ConversationGilroy;src:url('/scenes/recognition/self-support/gilroy-bold.ttf');font-weight:700}@font-face{font-family:ConversationPecita;src:url('/scenes/recognition/self-support/pecita.otf')}
 .conversation{--ink:#151414;--paper:#F4F2E9;--lime:#D6FC5E;font-family:ConversationGilroy,Arial,sans-serif;color:var(--ink);background:var(--paper);min-height:100vh}.conversation *{box-sizing:border-box}.conversation-screen{position:relative;min-height:100vh;overflow:hidden;padding:3.1vh 3.05vw}.conversation-screen h1,.conversation-screen h2{position:relative;z-index:2;margin:0;font-size:clamp(30px,3.35vw,48px);line-height:.99;font-weight:700;letter-spacing:-.025em}.conversation-screen:not(.conversation-intro){display:none}.conversation[data-step=alice] .conversation-alice,.conversation[data-step=igor] .conversation-igor,.conversation[data-step=phrases] .conversation-phrases{display:block}.conversation[data-step=alice] .conversation-intro,.conversation[data-step=igor] .conversation-intro,.conversation[data-step=phrases] .conversation-intro{display:none}.conversation-button{border:0;border-radius:100px;background:var(--lime);color:var(--ink);font:700 clamp(22px,2.2vw,31px)/1 ConversationGilroy,Arial,sans-serif;padding:1.1em 1.7em;cursor:pointer;transition:transform .25s,opacity .5s}.conversation-button:hover{transform:scale(1.045)}.conversation-button:focus-visible,.conversation-phrase:focus-visible,.conversation-advice a:focus-visible{outline:3px solid #679900;outline-offset:4px}
 .conversation-intro__portraits{display:flex;justify-content:space-between;align-items:center;position:absolute;left:2.5%;right:2.5%;top:21%;bottom:14%}.conversation-intro__person{width:43%;height:100%;position:relative;display:flex;align-items:center;justify-content:center}.conversation-intro__ring{width:min(42vw,65vh);aspect-ratio:1;border:1px solid #aaa9a2;border-radius:50%;display:grid;place-items:center}.conversation-intro__ring img{width:76%;aspect-ratio:1;border-radius:50%;object-fit:cover}.conversation-intro__person span,.conversation-person-name{font:clamp(28px,3vw,43px) ConversationPecita,cursive}.conversation-intro__person:first-child span{position:absolute;left:1%;bottom:0}.conversation-intro__person:last-child span{position:absolute;right:0;bottom:0}.conversation-scroll-hint{position:absolute;bottom:4%;left:0;right:0;text-align:center;color:#aaa;font-size:11px}
 .conversation-alice__figure{position:absolute;height:61%;left:1%;bottom:0;object-fit:contain;object-position:bottom}.conversation-person-name--alice{position:absolute;top:41%;left:4%}.conversation-story-circle{position:absolute;border-radius:50%;width:min(42vw,65vh);aspect-ratio:1;display:grid;place-items:center;text-align:center}.conversation-story-circle p{font-size:clamp(17px,1.8vw,26px);line-height:1.02;margin:0;padding:9%;font-weight:400}.conversation-story-circle--dark{background:var(--ink);color:var(--paper);left:36.5%;top:18%}.conversation-alice__button{position:absolute;right:3%;bottom:5%;opacity:0;pointer-events:none}.conversation--ready .conversation-alice__button,.conversation--ready .conversation-igor__button{opacity:1;pointer-events:auto}
@@ -82,19 +82,17 @@
   .conversation-phrases__figure{height:55%}
 }
 
-/* Keep the same 22px Gilroy Regular as conversation at storyboard width,
-   scaling with the circle on narrower desktop viewports. */
+/* Match help's proportional story text while retaining 22px at storyboard width. */
 @media (min-width:701px){
-  .conversation-story-circle p,
-  .conversation-story-circle--light p{font-size:clamp(16px,1.72vw,22px);font-weight:400}
+  .conversation.conversation--self-support .conversation-story-circle p{font-size:clamp(16px,1.72vw,22px);font-weight:400}
 }
 
 /* Consistent scene buttons and delayed continuation. */
-.conversation.conversation--help .conversation-button{font-size:15px;line-height:1;padding:16.5px 30px}
-.conversation.conversation--help .conversation-igor__button{left:auto;right:3%;z-index:3}
-.conversation.conversation--help .conversation-phrases__advice{z-index:4}
-.conversation.conversation--help .conversation-advice__next{position:absolute;right:3%;bottom:5%;z-index:2;border-radius:100px;background:var(--ink);color:var(--paper);padding:16.5px 30px;font:700 15px/1 ConversationGilroy,Arial,sans-serif;text-decoration:none;opacity:0;pointer-events:none;transition:opacity .5s,transform .25s}
-.conversation.conversation--help .conversation-advice.is-ready .conversation-advice__next{opacity:1;pointer-events:auto}
-.conversation.conversation--help .conversation-advice__next:hover{transform:scale(1.045)}
-.conversation.conversation--help .conversation-advice__next:focus-visible{outline:3px solid #679900;outline-offset:4px}
-@media(max-width:700px){.conversation.conversation--help .conversation-advice__next{right:5%;bottom:4%;font-size:13px;padding:14px 18px}}
+.conversation.conversation--self-support .conversation-button{font-size:15px;line-height:1;padding:16.5px 30px}
+.conversation.conversation--self-support .conversation-igor__button{left:auto;right:3%;z-index:3}
+.conversation.conversation--self-support .conversation-phrases__advice{z-index:4}
+.conversation.conversation--self-support .conversation-advice__next{position:absolute;right:3%;bottom:5%;z-index:2;border-radius:100px;background:var(--ink);color:var(--paper);padding:16.5px 30px;font:700 15px/1 ConversationGilroy,Arial,sans-serif;text-decoration:none;opacity:0;pointer-events:none;transition:opacity .5s,transform .25s}
+.conversation.conversation--self-support .conversation-advice.is-ready .conversation-advice__next{opacity:1;pointer-events:auto}
+.conversation.conversation--self-support .conversation-advice__next:hover{transform:scale(1.045)}
+.conversation.conversation--self-support .conversation-advice__next:focus-visible{outline:3px solid #679900;outline-offset:4px}
+@media(max-width:700px){.conversation.conversation--self-support .conversation-advice__next{right:5%;bottom:4%;font-size:13px;padding:14px 18px}}

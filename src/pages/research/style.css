@@ -1,12 +1,12 @@
 @font-face {
   font-family: ResearchGilroy;
-  src: url('/scenes/conversation/gilroy-regular.ttf');
+  src: url('/scenes/recognition/conversation/gilroy-regular.ttf');
   font-display: swap;
 }
 
 @font-face {
   font-family: ResearchGilroy;
-  src: url('/scenes/conversation/gilroy-bold.ttf');
+  src: url('/scenes/recognition/conversation/gilroy-bold.ttf');
   font-weight: 700 900;
   font-display: swap;
 }

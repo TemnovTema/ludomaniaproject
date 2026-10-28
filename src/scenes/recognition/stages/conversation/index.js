@@ -1,17 +1,18 @@
 import './style.css'
+import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
 const asset = '/scenes/recognition/conversation/'
 const phrases = [
-  { text: '«я больше не буду играть»', x: 15, y: 29 },
-  { text: '«я отыграюсь<br>и верну деньги»', x: 35, y: 21 },
-  { text: '«на этом можно заработать»', x: 60, y: 22 },
-  { text: '«у меня есть система»', x: 90, y: 23 },
-  { text: '«я могу контролировать игру,<br>играть аккуратно»', x: 74, y: 35 },
-  { text: '«это просто развлечение»', x: 18, y: 45 },
-  { text: '«это лёгкие деньги»', x: 86, y: 45 },
-  { text: '«я знаю то,<br>чего не знают другие»', x: 16, y: 62 },
-  { text: '«я сам справлюсь»', x: 80, y: 62 },
-  { text: 'мы ещё не говорили<br>об игре', x: 87, y: 72, exclusive: true },
+  { id: 'promiseToStop', text: '«я больше не буду играть»', x: 15, y: 29 },
+  { id: 'promiseToWinBack', text: '«я отыграюсь<br>и верну деньги»', x: 35, y: 21 },
+  { id: 'earningClaim', text: '«на этом можно заработать»', x: 60, y: 22 },
+  { id: 'systemClaim', text: '«у меня есть система»', x: 90, y: 23 },
+  { id: 'controlClaim', text: '«я могу контролировать игру,<br>играть аккуратно»', x: 74, y: 35 },
+  { id: 'entertainmentClaim', text: '«это просто развлечение»', x: 18, y: 45 },
+  { id: 'easyMoneyClaim', text: '«это лёгкие деньги»', x: 86, y: 45 },
+  { id: 'specialKnowledgeClaim', text: '«я знаю то,<br>чего не знают другие»', x: 16, y: 62 },
+  { id: 'selfRelianceClaim', text: '«я сам справлюсь»', x: 80, y: 62 },
+  { id: 'notDiscussed', text: 'мы ещё не говорили<br>об игре', x: 87, y: 72, exclusive: true },
 ]
 
 const advice = `
@@ -57,7 +58,7 @@ export function renderConversation(app) {
         <h2>какие фразы от близкого вы слышали?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}" data-answer-id="${phrase.id}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
@@ -66,6 +67,11 @@ export function renderConversation(app) {
     </main>`
 
   const scene = app.querySelector('.conversation')
+  const savedSelection = getSavedAnswers()['conversation'].selected
+  scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+    item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
+  })
+  scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
   let step = 'intro'
   let revealTimer
   let transitionTimer
@@ -115,9 +121,12 @@ export function renderConversation(app) {
       }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      saveSelection('conversation', [...scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]')].map((item) => item.dataset.answerId))
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      if (!scene.querySelector('.conversation-phrase[aria-pressed="true"]')) return
+      completeQuestion('conversation')
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

@@ -1,13 +1,14 @@
 import './style.css'
+import { completeQuestion, getSavedAnswers, saveSelection } from './result-data.js'
 
 const asset = '/scenes/recognition/'
 const phrases = [
-  { text: 'стал заметно более расстроенным,<br>чем обычно, но не говорит, что случилось', x: 34, y: 19 },
-  { text: 'он стал раздражительнее или резче<br>отвечать на обычные вопросы', x: 19, y: 36 },
-  { text: 'он начал скрывать траты<br>или уходить от вопросов о деньгах', x: 74, y: 34 },
-  { text: 'пропали общие деньги<br>или появились расходы, о которых<br>я не знал(а)', x: 83, y: 55 },
-  { text: 'близкий стал чаще сидеть<br>в телефоне, в том числе ночью', x: 18, y: 67 },
-  { text: 'ничего из перечисленного', x: 64, y: 20, exclusive: true },
+  { id: 'changedMood', text: 'стал заметно более расстроенным,<br>чем обычно, но не говорит, что случилось', x: 34, y: 19 },
+  { id: 'irritability', text: 'он стал раздражительнее или резче<br>отвечать на обычные вопросы', x: 19, y: 36 },
+  { id: 'hiddenSpending', text: 'он начал скрывать траты<br>или уходить от вопросов о деньгах', x: 74, y: 34 },
+  { id: 'missingSharedMoney', text: 'пропали общие деньги<br>или появились расходы, о которых<br>я не знал(а)', x: 83, y: 55 },
+  { id: 'morePhoneTime', text: 'близкий стал чаще сидеть<br>в телефоне, в том числе ночью', x: 18, y: 67 },
+  { id: 'none', text: 'ничего из перечисленного', x: 64, y: 20, exclusive: true },
 ]
 
 const advice = `
@@ -52,7 +53,7 @@ export function renderRecognition(app) {
         <h2>какие перемены вы заметили?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}" data-answer-id="${phrase.id}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
@@ -61,6 +62,11 @@ export function renderRecognition(app) {
     </main>`
 
   const scene = app.querySelector('.conversation')
+  const savedSelection = getSavedAnswers()['recognition'].selected
+  scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+    item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
+  })
+  scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
   let step = 'intro'
   let revealTimer
   let transitionTimer
@@ -110,9 +116,12 @@ export function renderRecognition(app) {
       }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      saveSelection('recognition', [...scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]')].map((item) => item.dataset.answerId))
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      if (!scene.querySelector('.conversation-phrase[aria-pressed="true"]')) return
+      completeQuestion('recognition')
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

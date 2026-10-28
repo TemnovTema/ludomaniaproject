@@ -1,14 +1,15 @@
 import './style.css'
+import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
 const asset = '/scenes/recognition/self-support/'
 const phrases = [
-  { text: 'я настораживаюсь, когда близкий<br>берёт телефон или меняется<br>его настроение', x: 57, y: 21 },
-  { text: 'я виню себя в происходящем<br>или боюсь отказать близкому', x: 22, y: 29 },
-  { text: 'я отменяю встречи с друзьями,<br>отдых или другие свои планы', x: 78, y: 34 },
-  { text: 'я плохо сплю из-за тревоги<br>об игре или долгах', x: 18, y: 49 },
-  { text: 'мне трудно говорить с ним<br>о чём-то, кроме игры и денег', x: 82, y: 60 },
-  { text: 'я выплачиваю кредит или заём,<br>который взял(а), помогая ему', x: 18, y: 68 },
-  { text: 'ничего из перечисленного', x: 85, y: 21, exclusive: true },
+  { id: 'onAlert', text: 'я настораживаюсь, когда близкий<br>берёт телефон или меняется<br>его настроение', x: 57, y: 21 },
+  { id: 'guiltOrFearToRefuse', text: 'я виню себя в происходящем<br>или боюсь отказать близкому', x: 22, y: 29 },
+  { id: 'cancelledPlans', text: 'я отменяю встречи с друзьями,<br>отдых или другие свои планы', x: 78, y: 34 },
+  { id: 'poorSleep', text: 'я плохо сплю из-за тревоги<br>об игре или долгах', x: 18, y: 49 },
+  { id: 'hardToTalk', text: 'мне трудно говорить с ним<br>о чём-то, кроме игры и денег', x: 82, y: 60 },
+  { id: 'repayingCredit', text: 'я выплачиваю кредит или заём,<br>который взял(а), помогая ему', x: 18, y: 68 },
+  { id: 'none', text: 'ничего из перечисленного', x: 85, y: 21, exclusive: true },
 ]
 
 const advice = `
@@ -54,7 +55,7 @@ export function renderSelfSupport(app) {
         <h2>как эта ситуация повлияла на вас?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}" data-answer-id="${phrase.id}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
@@ -63,6 +64,11 @@ export function renderSelfSupport(app) {
     </main>`
 
   const scene = app.querySelector('.conversation')
+  const savedSelection = getSavedAnswers()['self-support'].selected
+  scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+    item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
+  })
+  scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
   let step = 'intro'
   let revealTimer
   let transitionTimer
@@ -112,9 +118,12 @@ export function renderSelfSupport(app) {
       }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      saveSelection('self-support', [...scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]')].map((item) => item.dataset.answerId))
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      if (!scene.querySelector('.conversation-phrase[aria-pressed="true"]')) return
+      completeQuestion('self-support')
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

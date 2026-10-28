@@ -1,14 +1,15 @@
 import './style.css'
+import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
 const asset = '/scenes/recognition/responsibility/'
 const phrases = [
-  { text: 'как сказать близкому,<br>что я больше не буду<br>оплачивать его долги', x: 25, y: 28 },
-  { text: 'где получить поддержку для себя', x: 57, y: 22 },
-  { text: 'как предложить близкому<br>обратиться за помощью,<br>если решение остаётся за ним', x: 77, y: 34 },
-  { text: 'что делать с долгом или кредитом,<br>который оформлен на меня', x: 18, y: 49 },
-  { text: 'как понять, на каких условиях<br>я готов(а) продолжать наши отношения', x: 84, y: 59 },
-  { text: 'как защитить свои деньги<br>и сохранить средства<br>на необходимые расходы', x: 18, y: 68 },
-  { text: 'пока не знаю, с чего начать', x: 86, y: 68, exclusive: true },
+  { id: 'stopPayingDebts', text: 'как сказать близкому,<br>что я больше не буду<br>оплачивать его долги', x: 25, y: 28 },
+  { id: 'supportForSelf', text: 'где получить поддержку для себя', x: 57, y: 22 },
+  { id: 'suggestHelp', text: 'как предложить близкому<br>обратиться за помощью,<br>если решение остаётся за ним', x: 77, y: 34 },
+  { id: 'ownDebt', text: 'что делать с долгом или кредитом,<br>который оформлен на меня', x: 18, y: 49 },
+  { id: 'relationshipTerms', text: 'как понять, на каких условиях<br>я готов(а) продолжать наши отношения', x: 84, y: 59 },
+  { id: 'protectOwnMoney', text: 'как защитить свои деньги<br>и сохранить средства<br>на необходимые расходы', x: 18, y: 68 },
+  { id: 'unsureWhereToStart', text: 'пока не знаю, с чего начать', x: 86, y: 68, exclusive: true },
 ]
 
 const advice = `
@@ -54,7 +55,7 @@ export function renderResponsibility(app) {
         <h2>с какими вопросами вам сейчас<br>хотелось бы разобраться?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}" data-answer-id="${phrase.id}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
@@ -63,6 +64,11 @@ export function renderResponsibility(app) {
     </main>`
 
   const scene = app.querySelector('.conversation')
+  const savedSelection = getSavedAnswers()['responsibility'].selected
+  scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+    item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
+  })
+  scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
   let step = 'intro'
   let revealTimer
   let transitionTimer
@@ -112,9 +118,12 @@ export function renderResponsibility(app) {
       }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      saveSelection('responsibility', [...scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]')].map((item) => item.dataset.answerId))
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      if (!scene.querySelector('.conversation-phrase[aria-pressed="true"]')) return
+      completeQuestion('responsibility')
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

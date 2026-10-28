@@ -1,13 +1,14 @@
 import './style.css'
+import { completeQuestion, getSavedAnswers, saveSelection } from '../../result-data.js'
 
 const asset = '/scenes/recognition/help/'
 const phrases = [
-  { text: 'говорил(а) с близким об игре<br>и просил(а) остановиться', x: 50, y: 21 },
-  { text: 'давал(а) деньги, закрывал(а) долги<br>или брал(а) для этого кредит', x: 18, y: 34 },
-  { text: 'искал(а) для него специалиста<br>или группу поддержки', x: 78, y: 34 },
-  { text: 'обращался(ась) к другим близким,<br>чтобы вместе решить, что делать.', x: 17, y: 60 },
-  { text: 'проверял(а) его расходы,<br>телефон или игровые приложения', x: 82, y: 60 },
-  { text: 'ничего из перечисленного', x: 18, y: 77, exclusive: true },
+  { id: 'talkedAboutGame', text: 'говорил(а) с близким об игре<br>и просил(а) остановиться', x: 50, y: 21 },
+  { id: 'gaveMoneyOrCredit', text: 'давал(а) деньги, закрывал(а) долги<br>или брал(а) для этого кредит', x: 18, y: 34 },
+  { id: 'soughtSpecialist', text: 'искал(а) для него специалиста<br>или группу поддержки', x: 78, y: 34 },
+  { id: 'involvedFamily', text: 'обращался(ась) к другим близким,<br>чтобы вместе решить, что делать.', x: 17, y: 60 },
+  { id: 'checkedExpensesOrPhone', text: 'проверял(а) его расходы,<br>телефон или игровые приложения', x: 82, y: 60 },
+  { id: 'none', text: 'ничего из перечисленного', x: 18, y: 77, exclusive: true },
 ]
 
 const advice = `
@@ -53,7 +54,7 @@ export function renderHelp(app) {
         <h2>что вы делали, когда узнали<br>об игре и ее последствиях?</h2>
         <p class="conversation-phrases__hint">можно выбрать несколько вариантов</p>
         <div class="conversation-phrases__field">
-          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
+          ${phrases.map((phrase, index) => `<button class="conversation-phrase" type="button" aria-pressed="false" style="--x:${phrase.x}%;--y:${phrase.y}%;--i:${index}" data-phrase="${index}" data-answer-id="${phrase.id}"${phrase.exclusive ? ' data-exclusive="true"' : ''}>${phrase.text}</button>`).join('')}
           <img class="conversation-phrases__figure" src="${asset}alice-igor.png" alt="">
         </div>
         <button class="conversation-button conversation-phrases__next" type="button">далее</button>
@@ -62,6 +63,11 @@ export function renderHelp(app) {
     </main>`
 
   const scene = app.querySelector('.conversation')
+  const savedSelection = getSavedAnswers()['help'].selected
+  scene.querySelectorAll('.conversation-phrase').forEach((item) => {
+    item.setAttribute('aria-pressed', String(savedSelection.includes(item.dataset.answerId)))
+  })
+  scene.classList.toggle('conversation--has-selection', savedSelection.length > 0)
   let step = 'intro'
   let revealTimer
   let transitionTimer
@@ -111,9 +117,12 @@ export function renderHelp(app) {
       }
       phrase.setAttribute('aria-pressed', String(selected))
       scene.classList.toggle('conversation--has-selection', !!scene.querySelector('.conversation-phrase[aria-pressed="true"]'))
+      saveSelection('help', [...scene.querySelectorAll('.conversation-phrase[aria-pressed="true"]')].map((item) => item.dataset.answerId))
       return
     }
     if (event.target.closest('.conversation-phrases__next')) {
+      if (!scene.querySelector('.conversation-phrase[aria-pressed="true"]')) return
+      completeQuestion('help')
       scene.querySelectorAll('.conversation-phrase[aria-pressed="false"]').forEach((item) => {
         const label = item.innerHTML.replaceAll('<br>', '\n').replace(/<[^>]+>/g, '')
         item.setAttribute('aria-label', label.replaceAll('\n', ' '))

@@ -37,6 +37,8 @@ function renderRoute() {
   const app = document.querySelector('#app')
   const story = storyRoutes[route]
 
+  document.body.classList.toggle('story-route', Boolean(story))
+
   if (story) {
     document.title = story.title + ' — Ставка на себя'
     story.render(app)

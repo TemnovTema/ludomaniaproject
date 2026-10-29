@@ -1,4 +1,5 @@
 import './style.css'
+import { trackGoal } from '../../shared/metrica.js'
 
 const topics = [
   {
@@ -221,6 +222,7 @@ export function renderHelpPage(app) {
 
     app.querySelectorAll('[data-select-topic]').forEach((button) => {
       button.addEventListener('click', () => {
+        trackGoal('help_topic_selected')
         activeTopic = topics.find((topic) => topic.id === button.dataset.selectTopic)
         screen = 'article'
         render()

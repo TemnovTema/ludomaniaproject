@@ -1,4 +1,5 @@
 import './style.css'
+import { trackGoal } from '../../shared/metrica.js'
 
 const situations = [
   {
@@ -153,6 +154,7 @@ export function renderResearch(app) {
     else app.innerHTML = renderIntro()
 
     app.querySelector('[data-show-situations]')?.addEventListener('click', () => {
+      trackGoal('open_research_situations')
       screen = 'choice'
       render()
     })
@@ -169,6 +171,7 @@ export function renderResearch(app) {
 
     app.querySelectorAll('[data-select-situation]').forEach((button) => {
       button.addEventListener('click', () => {
+        trackGoal('research_topic_selected')
         activeSituation = situations.find((situation) => situation.id === button.dataset.selectSituation)
         screen = 'result'
         render()
@@ -176,6 +179,7 @@ export function renderResearch(app) {
     })
 
     app.querySelector('[data-survey]')?.addEventListener('click', () => {
+      trackGoal('survey_interest')
       app.querySelector('[data-survey-notice]').textContent = 'Ссылка на анонимный опрос появится здесь после подключения Google Form.'
     })
   }

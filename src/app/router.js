@@ -10,6 +10,7 @@ import { renderHelpPage } from '../pages/help/index.js'
 import { renderBoundariesPage } from '../pages/boundaries/index.js'
 import { renderSelfSupportPage } from '../pages/self-support/index.js'
 import { renderResponsibilityPage } from '../pages/responsibility/index.js'
+import { trackGoal, trackPageView } from '../shared/metrica.js'
 
 const storyRoutes = {
   recognition: { render: renderRecognition, title: 'узнавание' },
@@ -39,6 +40,7 @@ function renderRoute() {
   if (story) {
     document.title = story.title + ' — Ставка на себя'
     story.render(app)
+    trackPageView(route)
     return
   }
 
@@ -47,6 +49,7 @@ function renderRoute() {
     const page = sections.find((section) => section.id === route)
     document.title = (page?.title || 'Страница').replace('\n', ' ') + ' — Ставка на себя'
     renderPage(app)
+    trackPageView(route)
     return
   }
 
@@ -55,6 +58,16 @@ function renderRoute() {
 }
 
 export function startRouter() {
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]')
+    if (!link) return
+
+    const href = link.getAttribute('href')
+    if (href === '#recognition') trackGoal('open_story')
+    if (href === '#research') trackGoal('open_research')
+    if (href === '#help') trackGoal('open_help')
+    if (link.target === '_blank') trackGoal('outbound_resource')
+  })
   window.addEventListener('hashchange', renderRoute)
   renderRoute()
 }

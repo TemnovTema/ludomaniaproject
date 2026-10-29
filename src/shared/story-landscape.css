@@ -31,6 +31,26 @@ body.story-route .conversation-home:focus-visible {
   outline-offset: 4px;
 }
 
+/* The home control follows the same surface treatment as the local back
+   control, so it remains readable as a chapter shifts from paper to ink. */
+body.story-route .conversation[data-step='igor'] .conversation-home {
+  border-color: var(--chapter-accent);
+  background: transparent;
+  color: var(--paper);
+}
+
+body.story-route .conversation[data-step='phrases'] .conversation-home {
+  border-color: var(--chapter-accent-text);
+  background: var(--chapter-accent);
+  color: var(--chapter-accent-text);
+}
+
+body.story-route .conversation:has(.conversation-advice.is-open) .conversation-home {
+  border-color: var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+
 @media (orientation: landscape) and (max-height: 600px),
   (orientation: landscape) and (hover: none) and (pointer: coarse) {
   .conversation-home {

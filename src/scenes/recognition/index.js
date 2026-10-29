@@ -36,6 +36,7 @@ const advice = `
 export function renderRecognition(app) {
   app.innerHTML = `
     <main class="conversation conversation--recognition" data-step="intro">
+      <a class="conversation-home" href="#">на главную</a>
       <section class="conversation-screen conversation-intro" aria-label="Перед началом истории">
         <h1>перед началом истории</h1>
         <div class="conversation-intro__person conversation-intro__person--alice">

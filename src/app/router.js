@@ -28,6 +28,9 @@ const pageRoutes = {
   responsibility: renderResponsibilityPage,
 }
 
+const storyReturnOrientationKey = 'story-return-orientation-pending'
+const compactLandscapeQuery = window.matchMedia('(orientation: landscape) and (max-height: 600px)')
+
 function currentRoute() {
   return window.location.hash.replace(/^#/, '')
 }
@@ -36,8 +39,15 @@ function renderRoute() {
   const route = currentRoute()
   const app = document.querySelector('#app')
   const story = storyRoutes[route]
+  const returnPending = sessionStorage.getItem(storyReturnOrientationKey) === 'true'
+  const shouldRequestPortrait = route === 'help' && returnPending && compactLandscapeQuery.matches
 
   document.body.classList.toggle('story-route', Boolean(story))
+  document.body.classList.toggle('story-return-pending', shouldRequestPortrait)
+
+  if (route !== 'help' || (returnPending && !shouldRequestPortrait)) {
+    sessionStorage.removeItem(storyReturnOrientationKey)
+  }
 
   if (story) {
     document.title = story.title + ' — Ставка на себя'
@@ -65,10 +75,19 @@ export function startRouter() {
     if (!link) return
 
     const href = link.getAttribute('href')
+    if (href === '#help' && link.classList.contains('conversation-advice__next')) {
+      sessionStorage.setItem(storyReturnOrientationKey, 'true')
+    }
     if (href === '#recognition') trackGoal('open_story')
     if (href === '#research') trackGoal('open_research')
     if (href === '#help') trackGoal('open_help')
     if (link.target === '_blank') trackGoal('outbound_resource')
+  })
+  compactLandscapeQuery.addEventListener('change', (event) => {
+    if (!event.matches && currentRoute() === 'help') {
+      sessionStorage.removeItem(storyReturnOrientationKey)
+      document.body.classList.remove('story-return-pending')
+    }
   })
   window.addEventListener('hashchange', renderRoute)
   renderRoute()

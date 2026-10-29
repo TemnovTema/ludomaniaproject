@@ -3,8 +3,64 @@
  * separate from the desktop storyboard so the original wide layouts stay
  * untouched while a phone retains its circular geometry.
  */
+body.story-route .conversation-home {
+  position: fixed;
+  z-index: 30;
+  bottom: calc(5% + 62px);
+  left: 3%;
+  display: grid;
+  min-width: 118px;
+  height: 44px;
+  padding: 0 20px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 13px/1 ConversationGilroy, Arial, sans-serif;
+  text-decoration: none;
+  transition: transform .25s;
+}
+
+body.story-route .conversation-home:hover {
+  transform: scale(1.04);
+}
+
+body.story-route .conversation-home:focus-visible {
+  outline: 3px solid var(--chapter-accent, var(--lime));
+  outline-offset: 4px;
+}
+
 @media (orientation: landscape) and (max-height: 600px),
   (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  .conversation-home {
+    position: fixed;
+    z-index: 30;
+    bottom: calc(4% + 56px);
+    left: 3%;
+    display: grid;
+    min-width: 104px;
+    height: 38px;
+    padding: 0 17px;
+    place-items: center;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font: 700 11px/1 ConversationGilroy, Arial, sans-serif;
+    text-decoration: none;
+    transition: transform .25s;
+  }
+
+  .conversation-home:hover {
+    transform: scale(1.04);
+  }
+
+  .conversation-home:focus-visible {
+    outline: 3px solid var(--chapter-accent, var(--lime));
+    outline-offset: 4px;
+  }
+
   html,
   body.story-route,
   body.story-route #app {
@@ -151,6 +207,22 @@
     width: min(38vw, 66dvh);
     height: min(38vw, 66dvh);
     aspect-ratio: auto;
+  }
+
+  /* The opening portraits have their own art direction. Their wrapper must
+     still reserve a square before an image is laid out, otherwise portrait
+     source proportions turn the circular mask into an oval on a phone. */
+  body.story-route .conversation--recognition .conversation-intro__ring {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  body.story-route .conversation--recognition .conversation-intro__ring img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
   }
 
   .conversation-intro__person span {

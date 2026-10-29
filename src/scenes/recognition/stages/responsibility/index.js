@@ -30,6 +30,7 @@ const advice = `
 export function renderResponsibility(app) {
   app.innerHTML = `
     <main class="conversation conversation--responsibility" data-step="alice">
+      <a class="conversation-home" href="#">на главную</a>
       <section class="conversation-screen conversation-alice" aria-label="Алиса боится обозначения границ">
         <h2>боится обозначения границ</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>

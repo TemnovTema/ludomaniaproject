@@ -33,6 +33,7 @@ const advice = `
 export function renderConversation(app) {
   app.innerHTML = `
     <main class="conversation conversation--conversation" data-step="alice">
+      <a class="conversation-home" href="#">на главную</a>
       <section class="conversation-screen conversation-alice" aria-label="Алиса хочет верить">
         <h2>хочет верить, но боится повторения</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>

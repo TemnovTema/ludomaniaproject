@@ -29,6 +29,7 @@ const advice = `
 export function renderHelp(app) {
   app.innerHTML = `
     <main class="conversation conversation--help" data-step="alice">
+      <a class="conversation-home" href="#">на главную</a>
       <section class="conversation-screen conversation-alice" aria-label="Алиса хочет помочь, пока не выросли долги">
         <h2>хочет помочь, пока не выросли долги</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>

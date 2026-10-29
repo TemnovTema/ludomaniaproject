@@ -30,6 +30,7 @@ const advice = `
 export function renderSelfSupport(app) {
   app.innerHTML = `
     <main class="conversation conversation--self-support" data-step="alice">
+      <a class="conversation-home" href="#">на главную</a>
       <section class="conversation-screen conversation-alice" aria-label="Алиса больше не может справляться одной">
         <h2>больше не получается справляться одной</h2>
         <span class="conversation-person-name conversation-person-name--alice">Алиса</span>

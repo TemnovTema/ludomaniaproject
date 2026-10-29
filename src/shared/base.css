@@ -27,6 +27,63 @@ button { border: 0; }
   display: none;
 }
 
+.story-return-orientation-lock {
+  display: none;
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  body.story-return-pending {
+    overflow: hidden;
+  }
+
+  body.story-return-pending .story-return-orientation-lock {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 14px;
+    padding: 32px;
+    background: #f4f2e9;
+    color: #151414;
+    text-align: center;
+  }
+
+  .story-return-orientation-lock__device {
+    position: relative;
+    display: block;
+    width: 44px;
+    height: 68px;
+    margin-bottom: 10px;
+    border: 2px solid currentColor;
+    border-radius: 9px;
+  }
+
+  .story-return-orientation-lock__device::before {
+    content: '';
+    position: absolute;
+    right: 6px;
+    bottom: 5px;
+    left: 6px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+  }
+
+  .story-return-orientation-lock p {
+    max-width: 340px;
+    margin: 0;
+    font: 700 clamp(28px, 5vw, 42px) / .95 ConversationGilroy, Arial, sans-serif;
+    letter-spacing: -.03em;
+  }
+
+  .story-return-orientation-lock > span:last-child {
+    max-width: 290px;
+    font: 400 16px / 1.15 ConversationGilroy, Arial, sans-serif;
+  }
+}
+
 @media (max-width: 760px) and (orientation: portrait) {
   body.story-route {
     overflow: hidden;

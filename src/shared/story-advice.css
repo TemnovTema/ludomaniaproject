@@ -1,0 +1,104 @@
+/*
+ * These three chapters carry more guidance than the short recognition advice.
+ * The circle remains a circle at every size; copy reflows inside it instead of
+ * spilling beneath the modal.
+ */
+.conversation.conversation--help .conversation-advice__circle,
+.conversation.conversation--self-support .conversation-advice__circle,
+.conversation.conversation--responsibility .conversation-advice__circle {
+  width: min(99dvh, 90vw);
+  height: min(99dvh, 90vw);
+  aspect-ratio: auto;
+  justify-content: center;
+  gap: clamp(10px, 1.8vmin, 22px);
+  padding: clamp(30px, 5vmin, 56px);
+}
+
+.conversation.conversation--help .conversation-advice h2,
+.conversation.conversation--self-support .conversation-advice h2,
+.conversation.conversation--responsibility .conversation-advice h2 {
+  font-size: clamp(36px, 6vmin, 60px);
+}
+
+.conversation.conversation--help .conversation-advice__copy,
+.conversation.conversation--self-support .conversation-advice__copy,
+.conversation.conversation--responsibility .conversation-advice__copy {
+  width: 78%;
+  max-width: 620px;
+}
+
+.conversation.conversation--help .conversation-advice__copy p,
+.conversation.conversation--self-support .conversation-advice__copy p,
+.conversation.conversation--responsibility .conversation-advice__copy p {
+  margin: 0;
+  font-size: clamp(14px, 2.25vmin, 18px);
+  line-height: 1.07;
+}
+
+.conversation.conversation--help .conversation-advice__copy p + p,
+.conversation.conversation--self-support .conversation-advice__copy p + p,
+.conversation.conversation--responsibility .conversation-advice__copy p + p {
+  margin-top: clamp(12px, 2vmin, 20px);
+}
+
+body.story-route .conversation.conversation--help .conversation-advice__circle .conversation-advice__hint,
+body.story-route .conversation.conversation--self-support .conversation-advice__circle .conversation-advice__hint,
+body.story-route .conversation.conversation--responsibility .conversation-advice__circle .conversation-advice__hint {
+  max-width: 72%;
+  margin: 0;
+  font-size: clamp(10px, 1.65vmin, 13px);
+  line-height: 1.08;
+}
+
+.conversation.conversation--help .conversation-advice .conversation-desktop-break,
+.conversation.conversation--self-support .conversation-advice .conversation-desktop-break,
+.conversation.conversation--responsibility .conversation-advice .conversation-desktop-break {
+  display: none;
+}
+
+/* The story itself is viewed in landscape on a phone. Keep room for the
+   fixed navigation while preserving a true circle and readable paragraphs. */
+@media (orientation: landscape) and (max-height: 600px),
+  (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  body.story-route .conversation.conversation--help .conversation-advice__circle,
+  body.story-route .conversation.conversation--self-support .conversation-advice__circle,
+  body.story-route .conversation.conversation--responsibility .conversation-advice__circle {
+    width: min(88dvh, 64vw);
+    height: min(88dvh, 64vw);
+    padding: clamp(20px, 4.5vmin, 36px);
+    gap: clamp(7px, 1.35vmin, 12px);
+  }
+
+  body.story-route .conversation.conversation--help .conversation-advice h2,
+  body.story-route .conversation.conversation--self-support .conversation-advice h2,
+  body.story-route .conversation.conversation--responsibility .conversation-advice h2 {
+    font-size: clamp(30px, 8vh, 42px);
+  }
+
+  body.story-route .conversation.conversation--help .conversation-advice__copy,
+  body.story-route .conversation.conversation--self-support .conversation-advice__copy,
+  body.story-route .conversation.conversation--responsibility .conversation-advice__copy {
+    width: 76%;
+  }
+
+  body.story-route .conversation.conversation--help .conversation-advice__copy p,
+  body.story-route .conversation.conversation--self-support .conversation-advice__copy p,
+  body.story-route .conversation.conversation--responsibility .conversation-advice__copy p {
+    font-size: clamp(10px, 2.45vh, 13px);
+    line-height: 1.04;
+  }
+
+  body.story-route .conversation.conversation--help .conversation-advice__copy p + p,
+  body.story-route .conversation.conversation--self-support .conversation-advice__copy p + p,
+  body.story-route .conversation.conversation--responsibility .conversation-advice__copy p + p {
+    margin-top: clamp(7px, 1.35vmin, 12px);
+  }
+
+  body.story-route .conversation.conversation--help .conversation-advice__circle .conversation-advice__hint,
+  body.story-route .conversation.conversation--self-support .conversation-advice__circle .conversation-advice__hint,
+  body.story-route .conversation.conversation--responsibility .conversation-advice__circle .conversation-advice__hint {
+    max-width: 68%;
+    font-size: clamp(9px, 2vh, 11px);
+    line-height: 1.04;
+  }
+}
